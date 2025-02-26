@@ -1,0 +1,24 @@
+#siteName {
+    display: inline;
+    text-align: left;
+}
+
+#loginButtons {
+    display: inline;
+    align-items: end;
+}
+
+
+main {
+    display: flex;
+    border: 1px solid black;
+}
+
+#popular {
+    border: 1px solid black;
+    max-width: 20%;
+}
+
+#feed {
+    align-items: center;
+}
