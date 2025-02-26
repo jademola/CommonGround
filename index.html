@@ -15,6 +15,10 @@
         </div>
     </header>
 
+    <div id="nav-placeholder">
+        
+    </div>
+
     <main>
         <section id="webActivity">
             <h2>Activity:</h2>
@@ -38,5 +42,13 @@
             <img src="images/icon.png" alt="">
         </section>
     </main>
+
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script>
+        $.get("navigation.html", function(data){
+            $("#nav-placeholder").replaceWith(data);
+        });
+    </script>
+
 </body>
 </html>
