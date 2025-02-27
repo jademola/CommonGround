@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Common Ground</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Feed and Post Styling */
+        #page {
+            display: flex;
+        }
+        
+        .feed {
+            flex: 2;
+            padding: 15px;
+            background-color: #ffffff;
+        }
+
+        .feed-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .post {
+            border: 2px solid black;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            background-color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-header {
+            display: flex;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            align-items: flex-start;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            overflow: hidden;
+            background-color: #f5f5f5;
+        }
+
+        .user-info {
+            flex: 1;
+            line-height: 1.4;
+        }
+
+        .timestamp {
+            font-size: 0.8rem;
+            color: #666;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+
+        .post-title {
+            border: 1px solid #ccc;
+            padding: 5px;
+            margin: 5px 0;
+            font-weight: bold;
+            background-color: #f9f9f9;
+            border-radius: 3px;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: #f1f1f1;
+            padding: 2px 8px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .post-content {
+            padding: 15px;
+            border-bottom: 1px solid #ccc;
+            min-height: 100px;
+            line-height: 1.5;
+            font-size: 1rem;
+        }
+
+        .post-footer {
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .like-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .like-btn:hover {
+            background-color: #f1f1f1;
+        }
+
+        .comments-section {
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+
+        .comment {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            padding: 5px 0;
+        }
+
+        .comment-checkbox {
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        .comment-user {
+            margin-right: 10px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .comment-body {
+            flex: 1;
+            line-height: 1.4;
+        }
+
+        .comment-date {
+            font-size: 0.8rem;
+            color: #666;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+
+        .comment-form {
+            display: flex;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .comment-input {
+            flex: 1;
+            margin-right: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .post-comment-btn {
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            align-self: flex-end;
+            transition: background-color 0.2s;
+        }
+
+        .post-comment-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        #webActivity {
+            width: 250px;
+        }
+
+        #profile {
+            width: 250px
+        }
+
+        /* Responsive adjustments for feed */
+        @media (max-width: 768px) {
+            .feed {
+                padding: 10px;
+            }
+
+            .post-header {
+                flex-direction: column;
+            }
+
+            .timestamp {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1 id="siteName">Common Ground</h1>
+        <div id="loginButtons">
+            <button>Login</button>
+            <button>Sign Up</button>
+        </div>
+    </header>
+
+    <div id="page">
+        <div id="nav-placeholder">
+
+        </div>
+
+        <aside id="webActivity">
+            <h2>Activity:</h2>
+            <div id="popular">
+                <h3>popular:</h3>
+                <ul>
+                    <li>title</li>
+                    <li>title</li>
+                    <li>title</li>
+                    <li>title</li>
+                </ul>
+            </div>
+        </aside>
+        <main id="feed">
+            <div id="main_content">
+
+            </div>
+        </main>
+        <aside id="profile">
+            <img src="images/icon.png" alt="profile picture" id="pfp">
+        </aside>
+    </div>
+
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script>
+
+        <!-- if user is logged in, change side bar on the right -->
+        $.get("home.html", function (data) {
+            $("#main_\content").replaceWith(data);
+        });
+
+
+        $.get("navigation.html", function (data) {
+            $("#nav-placeholder").replaceWith(data);
+        });
+    </script>
+
+
+</body>
+
+</html>
