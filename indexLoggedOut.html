@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Name</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            max-width: 100%;
+            margin: 0 auto;
+            border: 2px solid black;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #ccc;
+            position: relative;
+        }
+
+        .site-name {
+            font-size: 2rem;
+            font-weight: bold;
+            font-style: italic;
+            margin: 0 auto;
+        }
+
+        .login-btn {
+            border: 2px solid black;
+            border-radius: 0.5rem;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: black;
+        }
+
+        .nav {
+            display: flex;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-right: 1px solid #ccc;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+
+        .nav-item:last-child {
+            border-right: none;
+        }
+
+        .main-content {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            padding: 15px;
+            border-right: 1px solid #ccc;
+        }
+
+        .sidebar-header {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .popular-list {
+            list-style-type: none;
+            margin-bottom: 20px;
+        }
+
+        .popular-list li {
+            margin-bottom: 10px;
+        }
+
+        .notification-box {
+            border: 2px solid black;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .feed {
+            flex: 2;
+            padding: 15px;
+        }
+
+        .feed-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .post {
+            border: 2px solid black;
+            margin-bottom: 20px;
+        }
+
+        .post-header {
+            display: flex;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .timestamp {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .post-title {
+            border: 1px solid #ccc;
+            padding: 5px;
+            margin: 5px 0;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: #f1f1f1;
+            padding: 2px 8px;
+            margin-right: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .post-content {
+            padding: 15px;
+            border-bottom: 1px solid #ccc;
+            min-height: 100px;
+        }
+
+        .post-footer {
+            padding: 10px;
+        }
+
+        .like-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .comments-section {
+            padding: 10px;
+            border-top: 1px solid #ccc;
+        }
+
+        .comment {
+            margin-bottom: 10px;
+            display: flex;
+        }
+
+        .comment-user {
+            margin-right: 10px;
+        }
+
+        .comment-date {
+            font-size: 0.8rem;
+            color: #666;
+            margin-left: auto;
+        }
+
+        .comment-form {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .comment-input {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .profile-sidebar {
+            width: 250px;
+            padding: 15px;
+            border-left: 1px solid #ccc;
+        }
+
+        .profile-header {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .profile-card {
+            border: 2px solid black;
+            padding: 10px;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border: 1px solid black;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-username {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .profile-bio {
+            border: 1px solid #ccc;
+            padding: 5px;
+            margin: 10px 0;
+            min-height: 60px;
+        }
+
+        .profile-buttons {
+            margin-top: 10px;
+            align-items: center;
+        }
+
+        .profile-buttons button {
+            display: block;
+            padding: 0.25rem;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .popular-list {
+            border: 2px solid black;
+            padding: 0.25rem;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        .post-comment-btn {
+            padding: 0.25rem;
+        }
+
+        #post-img {
+            width: 10%;
+        }
+
+        #signin-buttons a {
+            margin-left: 0.25rem;
+            margin-right: 0.25rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h1 class="site-name">Common Ground</h1>
+        <div id="signin-buttons">
+            <a href="#" class="login-btn">Login</a>
+            <a href="#" class="login-btn">Sign Up</a>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <a href="#" class="nav-item">New Post</a>
+        <a href="#" class="nav-item">Activity</a>
+        <a href="#" class="nav-item">Home</a>
+        <a href="#" class="nav-item">Profile</a>
+        <a href="#" class="nav-item">Search</a>
+    </nav>
+
+    <div class="main-content">
+        <aside class="sidebar">
+            <h2 class="sidebar-header">Activity:</h2>
+            <ul class="popular-list">
+                <li>Popular:</li>
+                <li>* title 1</li>
+                <li>* title 2</li>
+                <li>* title 3</li>
+                <li>* title 4</li>
+            </ul>
+            <div class="notification-box">
+                7 new Notifications
+            </div>
+        </aside>
+
+        <main class="feed">
+            <h2 class="feed-header">FOR YOU/FEED:</h2>
+            <div class="post">
+                <div class="post-header">
+                    <img src="images/icon.png" alt="" id="post-img">
+                    <div class="user-info">
+                        <div>Username</div>
+                        <div>Bio: Lorem ipsum</div>
+                        <div>
+                            <span class="tag">FUNNY</span>
+                            <span class="tag">FAMILY</span>
+                        </div>
+                    </div>
+                    <div class="timestamp">4:10pm, January 29th, 2025</div>
+                </div>
+                <div class="post-title">Title: Lorem ipsum dolor sit amet</div>
+                <div class="post-content">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ligula diam, vestibulum non nunc
+                    congue, euismod posuere nulla. Sed elit lectus, convallis nec convallis at, dignissim a diam. Mauris
+                    nisl risus, fermentum nec sollicitudin eget, euismod eget nisi. Ut et pellentesque dui, non volutpat
+                    quam. Duis id tellus est. Nullam at felis ligula
+                </div>
+                <div class="post-footer">
+                    <button class="like-btn" onclick="changeHeart(this)">♡ Like</button>
+                    <script>
+                        function changeHeart(button) {
+                            if (button.textContent.includes('♡')) {
+                                button.textContent = '♥ Like';
+                            } else {
+                                button.textContent = '♡ Like';
+                            }
+                        }
+                    </script>
+                </div>
+                <div class="comments-section">
+                    <div>Comments:</div>
+                    <div class="comment">
+                        <div class="comment-checkbox">□</div>
+                        <div class="comment-user">Username:</div>
+                        <div class="comment-body">Comment body</div>
+                        <div class="comment-date">01/29/25</div>
+                    </div>
+                    <button class="post-comment-btn">Post Comment</button>
+                </div>
+            </div>
+        </main>
+
+        <aside class="profile-sidebar">
+            <h2 class="profile-header">Profile:</h2>
+            <div class="profile-card">
+                <img src="images/icon.png" alt="">
+                <div class="profile-username">Username</div>
+                <div class="profile-bio">
+                    This is the text in the bio shown below
+                </div>
+                <div class="profile-buttons">
+                    <button>Login</button>
+                    <button>Sign-up</button>
+                </div>
+            </div>
+        </aside>
+    </div>
+</body>
+
+</html>
