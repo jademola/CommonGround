@@ -10,7 +10,7 @@
 
 
 main {
-    display: flex;
+    display: grid;
     border: 1px solid black;
 }
 
@@ -21,4 +21,12 @@ main {
 
 #feed {
     align-items: center;
+}
+
+#pfp, #logo {
+    width: 10%;
+}
+
+section {
+    border: 1px solid black;
 }
