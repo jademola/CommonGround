@@ -315,3 +315,35 @@ img {
     cursor: pointer;
   }
   
+/* ============================= */
+/*       Blog Post Styles        */
+/* ============================= */
+.new-post-form {
+    border: 2px solid black;
+    padding: 10px;
+    max-width: 600px; /* should probably change this to match whatever is the standard when its known */
+  }
+  
+  .new-post-form label {
+    font-weight: bold;
+  }
+  
+  .new-post-form input[type="text"],
+  .new-post-form textarea {
+    width: 100%;
+    padding: 5px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+  }
+  
+  .new-post-form button {
+    padding: 0.5rem 1rem;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+  .new-post-form button:hover {
+    background-color: #e0e0e0;
+  }
+  
