@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Search Results</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="site-name">Common Ground - Admin</h1>
+    <a href="#" class="logout-btn">Logout</a>
+  </header>
+
+  <!-- just to clarify - these don't work (yet), replace as needed -->
+  <nav class="nav">
+    <a href="home.html" class="nav-item">Home</a>
+    <a href="search.html" class="nav-item">Search</a>
+    <a href="activity.html" class="nav-item">Activity</a>
+    <a href="profile.html" class="nav-item">Profile</a>
+    <a href="admin-search.html" class="nav-item">Admin</a>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Admin sidebar (might be useful later)-->
+    <aside class="sidebar">
+      <h2 class="sidebar-header">Admin Tools</h2>
+      <ul class="popular-list">
+        <li>Manage Users</li>
+        <li>Review Posts</li>
+      </ul>
+      <div class="notification-box">
+        <p>2 Pending Reviews</p>
+      </div>
+    </aside>
+
+    <main class="feed">
+      <h2 class="feed-header">User Search Results</h2>
+      <p><em>Showing 3 results for “John” (mock data)</em></p>
+      <!-- Use form from CSS style  -->
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Demo rows -->
+          <tr>
+            <td>JohnDoe</td>
+            <td>john@example.com</td>
+            <td>User</td>
+            <td>
+              <button class="admin-btn" onclick="confirmDelete('JohnDoe')">Delete</button>
+              <button class="admin-btn" onclick="editUser('JohnDoe')">Edit</button>
+            </td>
+          </tr>
+          <tr>
+            <td>JohnSmith22</td>
+            <td>johnsmith22@example.com</td>
+            <td>User</td>
+            <td>
+              <button class="admin-btn" onclick="confirmDelete('JohnSmith22')">Delete</button>
+              <button class="admin-btn" onclick="editUser('JohnSmith22')">Edit</button>
+            </td>
+          </tr>
+          <tr>
+            <td>JohnnyAdmin</td>
+            <td>johnnyadmin@example.com</td>
+            <td>Admin</td>
+            <td>
+              <button class="admin-btn" onclick="confirmDelete('JohnnyAdmin')">Delete</button>
+              <button class="admin-btn" onclick="editUser('JohnnyAdmin')">Edit</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p><a href="admin-search.html" style="text-decoration: none; font-weight: bold;">← Back to Search</a></p>
+    </main>
+  </div>
+
+  <script>
+    function confirmDelete(username) {
+      if (confirm(`Are you sure you want to delete ${username}?`)) {
+        alert("User deleted (placeholder).");
+        // Send form request in actual app (or AJAX idk what we're using)
+      }
+    }
+    function editUser(username) {
+      alert(`Edit user: ${username} (placeholder).`);
+      // Redirect or open form in actual app
+    }
+  </script>
+</body>
+</html>
