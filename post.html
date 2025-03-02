@@ -4,251 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Common Ground</title>
+    <link rel="stylesheet" href = "styles.css">
+
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-        body {
-            max-width: 100%;
-            margin: 0 auto;
-            border: 2px solid black;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            border-bottom: 1px solid #ccc;
-            position: relative;
-        }
-        .site-name {
-            font-size: 2rem;
-            font-weight: bold;
-            font-style: italic;
-            margin: 0 auto;
-        }
-        .logout-btn {
-            border: 2px solid black;
-            border-radius: 0.5rem;
-            padding: 5px 10px;
-            text-decoration: none;
-            color: black;
-        }
-        .nav {
-            display: flex;
-            border-bottom: 1px solid #ccc;
-        }
-        .nav-item {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            border-right: 1px solid #ccc;
-            text-decoration: none;
-            color: black;
-            font-weight: bold;
-        }
-        .nav-item:last-child {
-            border-right: none;
-        }
-        .main-content {
-            display: flex;
-        }
-        .sidebar {
-            width: 250px;
-            padding: 15px;
-            border-right: 1px solid #ccc;
-        }
-        .sidebar-header {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        .popular-list {
-            list-style-type: none;
-            margin-bottom: 20px;
-        }
-        .popular-list li {
-            margin-bottom: 10px;
-        }
-        .notification-box {
-            border: 2px solid black;
-            padding: 10px;
-            margin-top: 20px;
-        }
-        .feed {
-            flex: 2;
-            padding: 15px;
-        }
-        .feed-header {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
+       
+     #family-tag {
+        background-color: #ffe89d;
+     }
 
-        .feed-header a {
-            text-decoration: none;
-            color: gray;
-            border: 1px solid black;
-            border-radius: 0.25rem;
-            padding: 0.25rem;
-        }
-        .post {
-            border: 2px solid black;
-            margin-bottom: 20px;
-        }
-        .post-header {
-            display: flex;
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-        .user-avatar {
-            width: 50px;
-            height: 50px;
-            border: 1px solid black;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-        }
-        .user-info {
-            flex: 1;
-        }
-        .timestamp {
-            font-size: 0.8rem;
-            color: #666;
-        }
-        .post-title {
-            border: 1px solid #ccc;
-            padding: 5px;
-            margin: 5px 0;
-        }
-        .tag {
-            display: inline-block;
-            background-color: #f1f1f1;
-            padding: 2px 8px;
-            margin-right: 5px;
-            border: 1px solid #ccc;
-        }
-        .post-content {
-            padding: 15px;
-            border-bottom: 1px solid #ccc;
-            min-height: 100px;
-        }
-        .post-footer {
-            padding: 10px;
-        }
-        .like-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-        .comments-section {
-            padding: 10px;
-            border-top: 1px solid #ccc;
-        }
-        .comment {
-            margin-bottom: 10px;
-            display: flex;
-        }
-        .comment-user {
-            margin-right: 10px;
-        }
-        .comment-date {
-            font-size: 0.8rem;
-            color: #666;
-            margin-left: auto;
-        }
-        .comment-form {
-            display: flex;
-            margin-top: 10px;
-        }
-        .comment-input {
-            flex: 1;
-            margin-right: 10px;
-        }
-        .profile-sidebar {
-            width: 250px;
-            padding: 15px;
-            border-left: 1px solid #ccc;
-        }
-        .profile-header {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        .profile-card {
-            border: 2px solid black;
-            padding: 10px;
-        }
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
-            border: 1px solid black;
-            margin: 0 auto 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .profile-username {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .profile-bio {
-            border: 1px solid #ccc;
-            padding: 5px;
-            margin: 10px 0;
-            min-height: 60px;
-        }
-        .profile-tags {
-            margin-top: 10px;
-        }
+     #travel-tag {
+        background-color: #afff94;
+     }
 
-        .popular-list {
-            border: 2px solid black;
-            padding: 0.25rem;
-        }
+     #food-tag {
+        background-color: #dfc8a8;
+     }
+     #sports-tag {
+        background-color: #8dbae1;
+     }
 
-        img {
-            width: 100%;
-        }
-
-        .post-comment-btn {
-            padding: 0.25rem;
-        }
-
-        #post-img {
-            width: 10%;
-        }
     </style>
 </head>
 <body>
+    <nav class="nav">
+        <a href="newpost.html" class="nav-item">New Post</a>
+        <a href="activity.html" class="nav-item">Activity</a>
+        <a href="indexLoggedOut.html" class="nav-item">Home</a>
+        <a href="login.html" class="nav-item">Profile</a>
+        <a href="search.html" class="nav-item">Search</a>
+    </nav>
     <header class="header">
         <h1 class="site-name">Common Ground</h1>
         <a href="#" class="logout-btn">Logout</a>
     </header>
-    
-    <nav class="nav">
-        <a href="#" class="nav-item">New Post</a>
-        <a href="#" class="nav-item">Activity</a>
-        <a href="#" class="nav-item">Home</a>
-        <a href="#" class="nav-item">Profile</a>
-        <a href="#" class="nav-item">Search</a>
-    </nav>
     
     <div class="main-content">
         <aside class="sidebar">
             <h2 class="sidebar-header">Activity:</h2>
             <ul class="popular-list">
                 <li>Popular:</li>
-                <li>* title 1</li>
-                <li>* title 2</li>
-                <li>* title 3</li>
-                <li>* title 4</li>
+                <li>1. The Secret to Building a Successful Morning Routine</li>
+                <li>2. The Best Books You’ve Never Heard of: A Reading List for the Curious</li>
+                <li>3. The Most Beautiful Places You’ve Never Seen: Iceland</li>
             </ul>
             <div class="notification-box">
                 7 new Notifications
@@ -264,8 +61,8 @@
                         <div>Username</div>
                         <div>Bio: Lorem ipsum</div>
                         <div>
-                            <span class="tag">FUNNY</span>
-                            <span class="tag">FAMILY</span>
+                            <span class="tag" id="travel-tag">Travel</span>
+                            <span class="tag" id="family-tag">Family</span>
                         </div>
                     </div>
                     <div class="timestamp">4:10pm, January 29th, 2025</div>
@@ -308,11 +105,10 @@
                     This is the text in the bio shown below
                 </div>
                 <div class="profile-tags">
-                    <div>Tags:</div>
-                    <span class="tag">UBCO</span>
+                    <div><b>Tags: </b></div>
                     <div>
-                        <span class="tag">SPORTS</span>
-                        <span class="tag">FOOD</span>
+                        <span class="tag" id="sports-tag">Sports</span>
+                        <span class="tag" id="food-tag">Food</span>
                     </div>
                 </div>
             </div>
