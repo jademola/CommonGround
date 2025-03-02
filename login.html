@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Common Ground - Login</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="site-name">Common Ground</h1>
+    <!-- Replace this link -->
+    <a href="#" class="logout-btn">Need Help?</a>
+  </header>
+
+  <!-- Navigation (if we want main nav on login page) -->
+  <nav class="nav">
+    <a href="home.html" class="nav-item">Home</a>
+    <a href="search.html" class="nav-item">Search</a>
+    <a href="profile.html" class="nav-item">Profile</a>
+    <a href="newpost.html" class="nav-item">New Post</a>
+    <a href="login.html" class="nav-item">Login</a>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Sidebar for consistency in layout -->
+    <aside class="sidebar">
+      <h2 class="sidebar-header">Quick Links</h2>
+      <ul class="popular-list">
+        <li>About Us</li>
+        <li>Contact Support</li>
+        <li>FAQs</li>
+      </ul>
+      <div class="notification-box">Welcome!</div>
+    </aside>
+
+    <main class="feed">
+      <h2 class="feed-header">Login</h2>
+
+      <!-- Login Form -->
+      <form id="loginForm" class="auth-form">
+        <label for="loginUsername">Username or Email:</label>
+        <input 
+          type="text" 
+          id="loginUsername" 
+          name="loginUsername" 
+          placeholder="Enter username or email" 
+          required
+        >
+
+        <label for="loginPassword">Password:</label>
+        <input 
+          type="password" 
+          id="loginPassword" 
+          name="loginPassword" 
+          placeholder="Enter password" 
+          required
+        >
+
+        <button type="submit">Login</button>
+      </form>
+
+      <p>
+        Don’t have an account?
+        <a href="signup.html">Sign Up</a>
+      </p>
+    </main>
+  </div>
+
+  <!-- Client-Side Validation -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginForm = document.getElementById('loginForm');
+      loginForm.addEventListener('submit', (e) => {
+        const username = document.getElementById('loginUsername').value.trim();
+        const password = document.getElementById('loginPassword').value.trim();
+
+        if (!username || !password) {
+          e.preventDefault();
+          alert('Please fill out both fields before logging in.');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

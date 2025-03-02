@@ -347,3 +347,39 @@ img {
     background-color: #e0e0e0;
   }
   
+/* ========================= */
+/* Auth Form (Login/Sign-Up) */
+/* ========================= */
+
+.auth-form {
+    border: 2px solid black;    
+    padding: 10px;              
+    max-width: 400px;           
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;                  
+    margin-bottom: 20px;        
+  }
+  
+  .auth-form label {
+    font-weight: bold;
+  }
+  
+  .auth-form input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    width: 100%;               /* Form inputs stretch across container */
+  }
+  
+  .auth-form button {
+    padding: 0.5rem 1rem;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+  
+  .auth-form button:hover {
+    background-color: #e0e0e0;
+  }
+  
