@@ -5,3 +5,8 @@
 - [ ] Feature 3
 - [ ] Feature 4
 - [ ] Feature 5
+
+
+- [ ] Post page navigation for different uses 
+- [ ] Search page navigation for different uses 
+- [ ] Profile Page Query for requested User

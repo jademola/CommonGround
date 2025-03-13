@@ -10,7 +10,9 @@ body {
     margin: 0 auto;
     background-image: url(images/background.jpeg);
 }
-
+/* ========================= */
+/* Header (Name and Nav bar) */
+/* ========================= */
 .header {
     display: flex;
     justify-content: space-between;
@@ -70,6 +72,10 @@ body {
 .main-content {
     display: flex;
 }
+
+/* =========================*/
+/* Acvtivity (Left) sidebar */
+/* =========================*/
 
 .sidebar {
     width: 250px;
@@ -231,6 +237,10 @@ body {
     margin-left: 85%;
 }
 
+/* ==================== */
+/* Post (main) Styling  */
+/* ==================== */
+
 .post-content {
     font-family: 'Trebuchet MS';
     padding: 15px;
@@ -279,6 +289,39 @@ body {
     flex: 1;
     margin-right: 10px;
 }
+
+.post-comment-btn {
+    padding: 0.25rem;
+}
+
+#post-img {
+    width: 10%;
+}
+
+/* View Single Post*/ 
+
+#results-return a {
+        color: white;
+        text-decoration: none;
+}
+
+/* Search Page */
+.search-bar {
+    color: white
+}
+ 
+#bar {
+    background-color: white;
+    margin-top: 10px;
+    height: 25px;
+    width: 90%;
+}
+
+
+
+/* =====================*/
+/* User (Right) Sidebar */
+/* =====================*/
 
 .profile-sidebar {
     width: 250px;
@@ -336,149 +379,13 @@ img {
     width: 100%;
 }
 
-.post-comment-btn {
-    padding: 0.25rem;
-}
-
-#post-img {
-    width: 10%;
-}
+/* ========================*/
+/* Search results (centre) */
+/* ========================*/
 
 .sortby {
+    color: white;
     text-align: end;
     margin-bottom: 0.25rem;
 }
 
-<<<<<<< Updated upstream
-/* ============================= */
-/*         Admin Styles          */
-/* ============================= */
-
-
-.admin-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-  }
-  
-  .admin-table th,
-  .admin-table td {
-    border: 1px solid #ccc;
-    padding: 8px 10px;
-    text-align: left;
-  }
-  
-  .admin-table th {
-    background-color: #f7f7f7;
-  }
-  
-  /* Admin action buttons */
-  .admin-btn {
-    padding: 5px 10px;
-    border: 2px solid black;
-    border-radius: 4px;
-    background-color: #f0f0f0;
-    cursor: pointer;
-    margin-right: 5px;
-  }
-  
-  .admin-btn:hover {
-    background-color: #e0e0e0;
-  }
-
-  /* Admin search form container */
-.admin-search-form {
-    border: 2px solid black;
-    padding: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .admin-search-form label {
-    font-weight: bold;
-    margin-right: 5px;
-  }
-  
-  .admin-search-form input[type="text"] {
-    margin: 0 10px;
-    padding: 5px;
-    width: 200px;
-  }
-  
-  .admin-search-form button {
-    padding: 5px 10px;
-    border: 2px solid black;
-    border-radius: 4px;
-    background-color: #f0f0f0;
-    cursor: pointer;
-  }
-  
-/* ============================= */
-/*       Blog Post Styles        */
-/* ============================= */
-.new-post-form {
-    border: 2px solid black;
-    padding: 10px;
-    max-width: 600px; /* should probably change this to match whatever is the standard when its known */
-  }
-  
-  .new-post-form label {
-    font-weight: bold;
-  }
-  
-  .new-post-form input[type="text"],
-  .new-post-form textarea {
-    width: 100%;
-    padding: 5px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-  }
-  
-  .new-post-form button {
-    padding: 0.5rem 1rem;
-    border: 2px solid black;
-    border-radius: 4px;
-    background-color: #f0f0f0;
-    cursor: pointer;
-  }
-  .new-post-form button:hover {
-    background-color: #e0e0e0;
-  }
-  
-/* ========================= */
-/* Auth Form (Login/Sign-Up) */
-/* ========================= */
-
-.auth-form {
-    border: 2px solid black;    
-    padding: 10px;              
-    max-width: 400px;           
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;                  
-    margin-bottom: 20px;        
-  }
-  
-  .auth-form label {
-    font-weight: bold;
-  }
-  
-  .auth-form input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    width: 100%;               /* Form inputs stretch across container */
-  }
-  
-  .auth-form button {
-    padding: 0.5rem 1rem;
-    border: 2px solid black;
-    border-radius: 4px;
-    background-color: #f0f0f0;
-    cursor: pointer;
-  }
-  
-  .auth-form button:hover {
-    background-color: #e0e0e0;
-  }
-  
-=======
->>>>>>> Stashed changes

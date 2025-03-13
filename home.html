@@ -3,7 +3,385 @@
 <head>
     <meta http-equiv="refresh" content="0; url=indexLoggedIn.html">
 </head>
-<body>
-    <p>Redirecting to main page...</p>
-</body>
+<style>
+    * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    max-width: 100%;
+    margin: 0 auto;
+    background-image: url(images/background.jpeg);
+}
+/* ========================= */
+/* Header (Name and Nav bar) */
+/* ========================= */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    position: relative;
+    margin-top: 10px;
+}
+
+.site-name {
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: fantasy;
+    margin: auto;
+    color: #fff9f0; 
+    text-shadow: 4px 4px #081f5c;
+    border-radius: 20px;
+}
+
+.login-btn {
+    border-radius: 0.5rem;
+    font-family: 'Trebuchet MS';
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #081f5c;
+    background-color: white;
+}
+
+.logout-btn {
+    border-radius: 0.5rem;
+    font-family: 'Trebuchet MS';
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #081f5c;
+    background-color: white;
+}
+
+.nav {
+    display: flex;
+    background-color: white;
+    padding: 10px;
+}
+
+.nav-item {
+    flex: 1;
+    text-align: center;
+    font-size: large;
+    text-decoration: none;
+    font-family: 'Trebuchet MS';
+    color: #081f5c;
+}
+
+.nav-item:last-child {
+    border-right: none;
+}
+
+.main-content {
+    display: flex;
+}
+
+/* =========================*/
+/* Acvtivity (Left) sidebar */
+/* =========================*/
+
+.sidebar {
+    width: 250px;
+    padding: 15px;
+    margin-left: 40px;
+}
+
+.sidebar-header {
+    font-family: 'Trebuchet MS';
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.popular-list {
+    list-style-type: none;
+    margin-bottom: 20px;
+    padding: 1rem;
+    background-color: white;
+}
+
+.popular-list li {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    font-family: 'Trebuchet MS';
+}
+
+.notification-box {
+    font-family: 'Trebuchet MS';
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #bad6eb;
+    border-radius: 10px;
+}
+
+/* ====================================*/
+/* User Profile (main section) Styling */
+/* ====================================*/
+
+.userProfile {
+    flex: 2;
+    padding: 15px;
+    background-color: white;
+    font-size: large;
+    margin-top: 10px;
+    margin-right: 60px;
+}
+
+.userProfile-header {
+    font-size: 1.5rem;
+    border-top: 2px solid black;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    margin-top: 10px;
+    padding-top: 5px;
+    margin-bottom: 15px;
+    margin-left: 20px;
+}
+
+.profile-header {
+    display: flex;
+    padding: 10px;
+    background-color: white;
+    border-radius: 15px;
+}
+
+.profileBio-content {
+    font-family: 'Trebuchet MS';
+    padding: 15px;
+    min-height: 100px;
+    margin-left: 20px;
+    color: black;
+    margin-right: 20px;
+}
+
+#user-profile-img {
+    margin-left: 10px;
+    width: 200px; 
+    height: 200px; 
+}
+
+/* ========================*/
+/* Acvtivity (main) sidebar */
+/* ========================*/
+
+.feed {
+    flex: 2;
+    padding: 15px;
+}
+
+.feed-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: white;
+    font-family: 'Trebuchet MS';
+}
+
+.post {
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+.post-header {
+    display: flex;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.user-info {
+    flex: 1;
+    font-family: 'Trebuchet MS';
+    margin-left: 10px;
+}
+
+.timestamp {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.post-title {
+    font-family: 'Trebuchet MS';
+    padding: 5px;
+    margin: 5px 0;
+}
+
+.tag {
+    display: inline-block;
+    font-family: 'Trebuchet MS';
+    padding: 5px 10px;
+    margin-left: 5px;
+    border-radius: 15px;
+}
+
+.profile-tags {
+    margin-top: 20px;
+    display: flex;
+}
+
+.post-tags{
+    margin-top: 10px;
+}
+
+.edit-profile-btn {
+    font-family: 'Trebuchet MS';
+    font-size: small;
+    background-color: #bad6eb;
+    padding: 0.25rem;
+    border-radius: 10px;
+    height: 40px;
+    width: 100px;
+    margin-bottom: 20px;
+    margin-left: 85%;
+}
+
+/* ====================*/
+/* Post (main) Styling */
+/* ====================*/
+
+
+.post-content {
+    font-family: 'Trebuchet MS';
+    padding: 15px;
+    min-height: 100px;
+}
+
+.post-footer {
+    padding: 10px;
+}
+
+.like-btn {
+    font-family: 'Trebuchet MS';
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.comments-section {
+    padding: 15px;
+    border-top: 1px solid #ccc;
+}
+
+.comment {
+    margin-bottom: 10px;
+    font-family: 'Trebuchet MS';
+    display: flex;
+}
+
+.comment-user {
+    margin-right: 10px;
+}
+
+.comment-date {
+    font-size: 0.8rem;
+    color: #666;
+    margin-left: auto;
+}
+
+.comment-form {
+    display: flex;
+    margin-top: 10px;
+}
+
+.comment-input {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.post-comment-btn {
+    padding: 0.25rem;
+}
+
+#post-img {
+    width: 10%;
+}
+
+/* =====================*/
+/* User (Right) Sidebar */
+/* =====================*/
+
+.profile-sidebar {
+    width: 250px;
+    padding: 15px;
+    margin-right: 40px;
+}
+
+.profile-header {
+    font-family: 'Trebuchet MS';
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    background: none;
+}
+
+.profile-card {
+    background-color: white;
+    padding: 10px;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    border: 1px solid black;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-username {
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.profile-bio {
+    font-family: 'Trebuchet MS';
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 10px 0;
+    min-height: 60px;
+}
+
+.side-profile-tags {
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+#side-profile-tags-whitespace {
+    margin-top: 5px;
+}
+
+img {
+    width: 100%;
+}
+
+/* ========================*/
+/* Search results (centre) */
+/* ========================*/
+
+.sortby {
+    text-align: end;
+    margin-bottom: 0.25rem;
+}
+
+
+</style>
 </html>

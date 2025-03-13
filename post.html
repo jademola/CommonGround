@@ -6,8 +6,8 @@
     <title>Common Ground</title>
     <link rel="stylesheet" href = "styles.css">
 
+    <!-- Temporary, to be replaced once DB implemented-->
     <style>
-       
      #family-tag {
         background-color: #ffe89d;
      }
@@ -22,10 +22,12 @@
      #sports-tag {
         background-color: #8dbae1;
      }
-
     </style>
+
 </head>
 <body>
+
+    <!--Navigation Bar-->
     <nav class="nav">
         <a href="newpost.html" class="nav-item">New Post</a>
         <a href="activity.html" class="nav-item">Activity</a>
@@ -33,12 +35,16 @@
         <a href="login.html" class="nav-item">Profile</a>
         <a href="search.html" class="nav-item">Search</a>
     </nav>
+
+    <!-- Header -->
     <header class="header">
         <h1 class="site-name">Common Ground</h1>
         <a href="#" class="logout-btn">Logout</a>
     </header>
     
+    <!-- Main Content -->
     <div class="main-content">
+        <!-- Popular Post Sidebar -->
         <aside class="sidebar">
             <h2 class="sidebar-header">Activity:</h2>
             <ul class="popular-list">
@@ -47,13 +53,18 @@
                 <li>2. The Best Books You’ve Never Heard of: A Reading List for the Curious</li>
                 <li>3. The Most Beautiful Places You’ve Never Seen: Iceland</li>
             </ul>
+            <!-- Notification Alert Bar -->
             <div class="notification-box">
                 7 new Notifications
             </div>
         </aside>
-        
+
+        <!-- Main: View Post-->
         <main class="feed">
-            <h2 class="feed-header"><a href="search.html">&lt; Return to Search Results</a></h2>
+
+            <!-- Return to Results-->
+            <h2 class="feed-header" id="results-return"><a href="search.html">&lt; Return to Search Results</a></h2>
+            <!-- Post Body -->
             <div class="post">
                 <div class="post-header">
                     <img src="images/icon.png" alt="" id="post-img">

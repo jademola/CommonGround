@@ -6,31 +6,34 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Header -->
+
+  <!--Navigation Bar-->
+  <nav class="nav">
+    <a href="newpost.html" class="nav-item">New Post</a>
+    <a href="activity.html" class="nav-item">Activity</a>
+    <a href="indexLoggedIn.html" class="nav-item">Home</a>
+    <a href="progileLoggedIn.html" class="nav-item">Profile</a>
+    <a href="search.html" class="nav-item">Search</a>
+</nav>
+
+  <!-- Header --> 
   <header class="header">
     <h1 class="site-name">Common Ground</h1>
     <a href="#" class="logout-btn">Logout</a>
   </header>
 
-  <!-- just to clarify - these don't work (yet), replace as needed -->
-  <nav class="nav">
-    <a href="home.html" class="nav-item">Home</a>
-    <a href="search.html" class="nav-item">Search</a>
-    <a href="profile.html" class="nav-item">Profile</a>
-    <a href="newpost.html" class="nav-item">New Post</a>
-  </nav>
-
   <!-- Main Content -->
   <div class="main-content">
-    <!-- Sidebar (consistency with other two pages)-->
+    <!-- Popular Post Sidebar -->
     <aside class="sidebar">
       <h2 class="sidebar-header">Popular Topics</h2>
       <ul class="popular-list">
-        <li>Travel</li>
-        <li>Food</li>
-        <li>Programming</li>
-        <li>Fitness</li>
-      </ul>
+        <li id="popular-box-title">Popular:</li>
+          <li class="popularPost">1. The Secret to Building a Successful Morning Routine</li>
+          <li class="popularPost">2. The Best Books You’ve Never Heard of: A Reading List for the Curious</li>
+          <li class="popularPost">3. The Most Beautiful Places You’ve Never Seen: Iceland</li>
+          </ul>
+      <!-- Notifications Alert Bar -->
       <div class="notification-box">No new notifications</div>
     </aside>
 
