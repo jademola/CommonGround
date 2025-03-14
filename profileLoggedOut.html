@@ -7,6 +7,7 @@
     <title>Common Ground</title>
     <link rel="stylesheet" href = "styles.css">
 
+    <!-- Temporary, to be replaced once DB implemented-->
     <style>
         #fashion-tag {
             background-color: #ebbae2;
@@ -28,13 +29,15 @@
 
 <body>
 
+    <!--Navigation Bar-->
     <nav class="nav">
-        <a href="newpost.html" class="nav-item">New Post</a>
+        <a href="login.html" class="nav-item">New Post</a>
         <a href="activity.html" class="nav-item">Activity</a>
         <a href="indexLoggedOut.html" class="nav-item">Home</a>
         <a href="login.html" class="nav-item">Profile</a>
         <a href="search.html" class="nav-item">Search</a>
     </nav>
+    <!-- Header -->
     <header class="header">
         <h1 class="site-name">Common Ground</h1>
         <div id="signin-buttons">
@@ -43,8 +46,10 @@
         </div>
     </header>
 
+    <!-- Main Content -->
     <div class="main-content">
         <aside class="sidebar">
+            <!-- Popular Post Sidebar -->
             <h2 class="sidebar-header">Activity:</h2>
             <ul class="popular-list">
                 <li id="popular-box-title">Popular:</li>
@@ -52,11 +57,13 @@
                 <li class="popularPost">2. The Best Books You’ve Never Heard of: A Reading List for the Curious</li>
                 <li class="popularPost">3. The Most Beautiful Places You’ve Never Seen: Iceland</li>
             </ul>
+            <!-- Notification Alert Bar -->
             <div class="notification-box">
                 Sign-Up Today
             </div>
         </aside>
 
+        <!-- Main: View Profile -->
         <main class="userProfile">
             <h2 class="userProfile-header">@CharBear97</h2>
                 <div class="profile-header">
@@ -64,6 +71,7 @@
                     </div>
                      <div class="profileBio-content">
                    
+                        <!-- Username Display - Replace with DB -->
                         <div>
                             <div id = "username-display"><b>Username: </b>CharBear97</div>
                         </div>
@@ -75,7 +83,7 @@
 
 
 
-                      
+                        <!-- Tags - Replace with DB-->
                         <div class="profile-tags">
                             <p><b>User Tags:</b></p>
                             <span class="tag" id="fashion-tag">Fashion</span>

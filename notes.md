@@ -5,3 +5,8 @@
 - [ ] Background Image is to only be featured on each user's profile. Find way to fill negative space on general website, or allow each user to have a custom background??
 - [ ] Feature 4
 - [ ] Feature 5
+
+
+- [ ] Post page navigation for different uses 
+- [ ] Search page navigation for different uses 
+- [ ] Profile Page Query for requested User

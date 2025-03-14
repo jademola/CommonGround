@@ -7,8 +7,8 @@
     <title>Common Ground</title>
     <link rel="stylesheet" href = "styles.css">
 
+    <!-- Temporary, to be replaced once DB implemented -->
     <style>
-
         #funny-tag {
             background-color: #bad6eb;
         }
@@ -25,26 +25,27 @@
             padding-top: 5px;
             text-align: center;
         }
-     
-
-   
     </style>
 </head>
 
 <body>
 
+    <!--Navigation Bar-->
     <nav class="nav">
         <a href="newpost.html" class="nav-item">New Post</a>
         <a href="activity.html" class="nav-item">Activity</a>
-        <a href="indexLoggedOut.html" class="nav-item">Home</a>
-        <a href="login.html" class="nav-item">Profile</a>
+        <a href="indexLoggedIn.html" class="nav-item">Home</a>
+        <a href="profileLoggedIn.html" class="nav-item">Profile</a>
         <a href="search.html" class="nav-item">Search</a>
     </nav>
+    <!-- Header -->
     <header class="header">
         <h1 class="site-name">Common Ground</h1>
     </header>
 
+    <!-- Main Content -->
     <div class="main-content">
+        <!-- Popular Post Sidebar -->
         <aside class="sidebar">
             <h2 class="sidebar-header">Activity:</h2>
             <ul class="popular-list">
@@ -53,11 +54,13 @@
                 <li class="popularPost">2. The Best Books You’ve Never Heard of: A Reading List for the Curious</li>
                 <li class="popularPost">3. The Most Beautiful Places You’ve Never Seen: Iceland</li>
             </ul>
+            <!-- Notification Alert Bar -->
             <div class="notification-box">
                 7 new Notifications!
             </div>
         </aside>
 
+        <!-- Main: View Profile -->
         <main class="userProfile">
             <h2 class="userProfile-header">@Sofi-Grace207</h2>
                 <div class="profile-header">
@@ -66,6 +69,7 @@
                     </div>
                      <div class="profileBio-content">
                    
+                        <!-- Username Display - Replace with DB -->
                         <div>
                             <div id = "username-display"><b>Username: </b>Sofi-Grace207</div>
                         </div>
@@ -78,7 +82,7 @@
                         luxuries without losing sight of the bigger picture. Come along with me 
                         as I discover new places and live a life full of balance and gratitude. 🌍✨
 
-                      
+                      <!-- Tags - Replace with DB-->
                         <div class="profile-tags">
                             <p><b>User Tags:</b></p>
                             <span class="tag" id="funny-tag">Travel</span>
@@ -87,6 +91,7 @@
                 </div>
        
             </div>
+            <!-- Edit Profile Button -->
             <div id="test">
                 <button class="edit-profile-btn">Edit Profile</button>
             </div>
@@ -94,7 +99,4 @@
     </div>
     
 </body>
-<footer class="footer">
-
-</footer>
 </html>
