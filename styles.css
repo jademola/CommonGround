@@ -8,7 +8,8 @@
 body {
     max-width: 100%;
     margin: 0 auto;
-    background-image: url(images/background.jpeg);
+    /* background-image: url(images/background.jpeg); */
+    background-color: lightblue;
 }
 /* ========================= */
 /* Header (Name and Nav bar) */
