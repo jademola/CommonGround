@@ -32,7 +32,6 @@ body {
     color: #fff9f0;
     text-shadow: 4px 4px #081f5c;
     border-radius: 20px;
-    text-decoration: none;
 }
 
 .login-btn {
@@ -540,5 +539,100 @@ img {
 }
 
 #loginButton:hover {
+    background-color: #9abdd6;
+}
+
+/* ========================*/
+/* Signup Page Styling */
+/* ========================*/
+
+#signupForm {
+    background-color: whitesmoke;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+#signUsername {
+    margin-bottom: 15px;
+}
+
+#signUsername label {
+    display: block;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#signupUsername {
+    width: 100%;
+    padding: 8px;
+    font-family: 'Trebuchet MS';
+}
+
+#signEmail {
+    margin-bottom: 15px;
+}
+
+#signEmail label {
+    display: block;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#signupEmail {
+    width: 100%;
+    padding: 8px;
+    font-family: 'Trebuchet MS';
+}
+
+#signPassword {
+    margin-bottom: 15px;
+}
+
+#signPassword label {
+    display: block;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#signupPassword {
+    width: 100%;
+    padding: 8px;
+    font-family: 'Trebuchet MS';
+}
+
+#confirmPass {
+    margin-bottom: 15px;
+}
+
+#confirmPass label {
+    display: block;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#confirmPassword {
+    width: 100%;
+    padding: 8px;
+    font-family: 'Trebuchet MS';
+}
+
+#signupButton {
+    padding: 8px 15px;
+    background-color: #bad6eb;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+#signupButton:hover {
     background-color: #9abdd6;
 }

@@ -11,14 +11,14 @@ if (!isset($_SESSION['loggedIn'])) {
         <?php else: ?>
             <div id="signin-buttons">
                 <a href="login.php" class="login-btn">Login</a>
-                <a href="signup.html" class="login-btn">Sign Up</a>
+                <a href="signup.php" class="login-btn">Sign Up</a>
             </div>
         <?php endif; ?>
     </header>
 
     <nav class="nav">
         <?php if ($_SESSION['loggedIn']): ?>
-            <a href="newpost.html" class="nav-item">New Post</a>
+            <a href="newpost.php" class="nav-item">New Post</a>
             <a href="activity.html" class="nav-item">Activity</a>
             <a href="index.php" class="nav-item">Home</a>
             <a href="profile.php" class="nav-item">Profile</a>
