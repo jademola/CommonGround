@@ -7,20 +7,7 @@
 </head>
 <body>
 
-  <!--Navigation Bar-->
-  <nav class="nav">
-    <a href="newpost.html" class="nav-item">New Post</a>
-    <a href="activity.html" class="nav-item">Activity</a>
-    <a href="index.php" class="nav-item">Home</a>
-    <a href="profile.php" class="nav-item">Profile</a>
-    <a href="search.html" class="nav-item">Search</a>
-</nav>
-
-  <!-- Header --> 
-  <header class="header">
-    <h1 class="site-name">Common Ground</h1>
-    <a href="logout.php" class="logout-btn">Logout</a>
-  </header>
+  <?php include "header.php"?>
 
   <!-- Main Content -->
   <div class="main-content">
