@@ -31,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
   <!-- Navigation (if we want main nav on login page) -->
+  <!-- TODO: I think we should remove the nav while logging in -->
   <nav class="nav">
     <a href="login.php" class="nav-item">New Post</a>
     <a href="activity.html" class="nav-item">Activity</a>
@@ -63,6 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <h2 class="feed-header">Login</h2>
 
       <!-- Login Form -->
+       <!-- Expand the size to match the V2 document -->
       <form id="loginForm" class="auth-form" method="post">
         <label for="loginUsername">Username or Email:</label>
         <input
