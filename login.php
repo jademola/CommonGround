@@ -32,19 +32,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
   <!-- Navigation (if we want main nav on login page) -->
   <!-- TODO: I think we should remove the nav while logging in -->
-  <nav class="nav">
+  <!-- <nav class="nav">
     <a href="login.php" class="nav-item">New Post</a>
     <a href="activity.html" class="nav-item">Activity</a>
     <a href="index.php" class="nav-item">Home</a>
     <a href="login.php" class="nav-item">Profile</a>
     <a href="search.html" class="nav-item">Search</a>
-  </nav>
+  </nav> -->
 
   <!-- Header -->
   <header class="header">
     <h1 class="site-name">Common Ground</h1>
     <!-- Replace this link -->
-    <a href="#" class="logout-btn">Need Help?</a>
+    <!-- <a href="#faq.html" class="logout-btn">Need Help?</a> -->
   </header>
 
   <!-- Main Content -->
@@ -66,29 +66,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <!-- Login Form -->
        <!-- Expand the size to match the V2 document -->
       <form id="loginForm" class="auth-form" method="post">
-        <label for="loginUsername">Username or Email:</label>
-        <input
-          type="text"
-          id="loginUsername"
-          name="loginUsername"
-          placeholder="Enter username or email"
-          required>
+        <div id="login">
+          <label for="loginUsername">Username or Email:</label>
+          <input
+            type="text"
+            id="loginUsername"
+            name="loginUsername"
+            placeholder="Enter username or email"
+            required>
+        </div>
 
-        <label for="loginPassword">Password:</label>
-        <input
-          type="password"
-          id="loginPassword"
-          name="loginPassword"
-          placeholder="Enter password"
-          required>
+        <div id="password">
+          <label for="loginPassword">Password:</label>
+          <input
+            type="password"
+            id="loginPassword"
+            name="loginPassword"
+            placeholder="Enter password"
+            required>
+        </div>
 
-        <button type="submit">Login</button>
+        <button type="submit" id="loginButton">Login</button>
+
+        <p>
+        Don’t have an account?
+        <a href="signup.php">Sign Up</a>
+      </p>
       </form>
 
-      <p>
-        Don’t have an account?
-        <a href="signup.html">Sign Up</a>
-      </p>
+      
     </main>
   </div>
 
