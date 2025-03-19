@@ -1,12 +1,11 @@
 # Things to Implement:
 
-- [ ] Create seperate HTML files with activity and discover/profile pages which can permanently be shown on the sides. These will have different values depending on whether user is logged in
-- [ ] Current files are placeholders, the idea is to build the skeleton of the website which will eventually be filled with dynamic posts and user information
+- [ ] Styling should be done this week to better match the skeleton to the design document. Need consistency with fonts, text and buttons.
 - [ ] Background Image is to only be featured on each user's profile. Find way to fill negative space on general website, or allow each user to have a custom background??
-- [ ] Feature 4
-- [ ] Feature 5
+- [ ] Adjust login / signup pages to better match the V2 document.
+- [ ] Implement DB, to have post examples, profile examples and whetever else specified in DDL
 
 
 - [ ] Post page navigation for different uses 
 - [ ] Search page navigation for different uses 
-- [ ] Profile Page Query for requested User
+- [ ] Profile Page Query for requested user
