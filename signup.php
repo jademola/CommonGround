@@ -70,7 +70,6 @@
         </div>
 
         <button type="submit" id="signupButton">Sign Up</button>
-
         <p>
           Already have an account?
           <a href="login.php">Login</a>
