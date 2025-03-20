@@ -80,7 +80,7 @@ if (!isset($_SESSION['loggedIn'])) {
                 <?php else: ?>
                     <div class="profile-buttons">
                         <button onclick="window.location.href='login.php'">Login</button>
-                        <button onclick="window.location.href='signup.html'">Sign-up</button>
+                        <button onclick="window.location.href='signup.php'">Sign-up</button>
                     </div>
                 <?php endif; ?>
             </div>

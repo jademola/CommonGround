@@ -11,7 +11,7 @@ if (!isset($_SESSION['loggedIn'])) {
         <?php else: ?>
             <div id="signin-buttons">
                 <a href="login.php" class="login-btn">Login</a>
-                <a href="signup.html" class="login-btn">Sign Up</a>
+                <a href="signup.php" class="login-btn">Sign Up</a>
             </div>
         <?php endif; ?>
     </header>

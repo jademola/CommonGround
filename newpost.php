@@ -29,46 +29,54 @@
       <h2 class="feed-header">Create a New Post</h2>
       
       <form id="newPostForm" class="new-post-form">
-        <!-- Title -->
-        <label for="postTitle">Title:</label>
-        <input 
-          type="text" 
-          id="postTitle" 
-          name="postTitle" 
-          placeholder="Enter your post title..."
-          required
-        >
+        <div id="titleContent">
+          <!-- Title -->
+          <label for="postTitle">Title:</label>
+          <input 
+            type="text" 
+            id="postTitle" 
+            name="postTitle" 
+            placeholder="Enter your post title..."
+            required
+          >
+        </div id=tit>
 
-        <!-- Content -->
-        <label for="postContent">Content:</label>
-        <textarea 
-          id="postContent" 
-          name="postContent" 
-          rows="6"  
-          placeholder="Write your blog post here..." 
-          required
-        ></textarea>
+        <div id="blogContent">
+          <!-- Content -->
+          <label for="postContent">Content:</label>
+          <textarea 
+            id="postContent" 
+            name="postContent" 
+            rows="6"  
+            placeholder="Write your blog post here..." 
+            required
+          ></textarea>
+        </div>
 
-        <!-- Tags -->
-        <label for="postTags">Tags (comma-separated):</label>
-        <input 
-          type="text" 
-          id="postTags" 
-          name="postTags" 
-          placeholder="e.g. travel, food"
-        >
+        <div id="tagContent">
+          <!-- Tags -->
+          <label for="postTags">Tags (comma-separated):</label>
+          <input 
+            type="text" 
+            id="postTags" 
+            name="postTags" 
+            placeholder="e.g. travel, food"
+          >
+        </div>
 
-        <!-- Adding image -->
-        <label for="postImage">Upload Image (optional):</label>
-        <input 
-          type="file" 
-          id="postImage" 
-          name="postImage"
-          accept="image/*"
-        >
+        <div id="uploadImage">
+          <!-- Adding image -->
+          <label for="postImage">Upload Image (optional):</label>
+          <input 
+            type="file" 
+            id="postImage" 
+            name="postImage"
+            accept="image/*"
+          >
+        </div>
 
         <!-- Publish Button -->
-        <button type="submit">Publish</button>
+        <button type="submit" id="submitBlog">Publish</button>
       </form>
     </main>
   </div>

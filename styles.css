@@ -11,6 +11,7 @@ body {
     /* background-image: url(images/background.jpeg); */
     background-color: lightblue;
 }
+
 /* ========================= */
 /* Header (Name and Nav bar) */
 /* ========================= */
@@ -28,7 +29,7 @@ body {
     font-weight: bold;
     font-family: fantasy;
     margin: auto;
-    color: #fff9f0; 
+    color: #fff9f0;
     text-shadow: 4px 4px #081f5c;
     border-radius: 20px;
 }
@@ -153,8 +154,8 @@ body {
 
 #user-profile-img {
     margin-left: 10px;
-    width: 200px; 
-    height: 200px; 
+    width: 200px;
+    height: 200px;
 }
 
 .feed {
@@ -222,7 +223,7 @@ body {
     display: flex;
 }
 
-.post-tags{
+.post-tags {
     margin-top: 10px;
 }
 
@@ -299,18 +300,18 @@ body {
     width: 10%;
 }
 
-/* View Single Post*/ 
+/* View Single Post*/
 
 #results-return a {
-        color: white;
-        text-decoration: none;
+    color: white;
+    text-decoration: none;
 }
 
 /* Search Page */
 .search-bar {
     color: white
 }
- 
+
 #bar {
     background-color: white;
     margin-top: 10px;
@@ -390,3 +391,248 @@ img {
     margin-bottom: 0.25rem;
 }
 
+/* ========================*/
+/* New Post Styling */
+/* ========================*/
+
+.new-post-form {
+    background-color: whitesmoke;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+#titleContent {
+    margin-bottom: 15px;
+}
+
+#titleContent label {
+    display: block;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#postTitle {
+    width: 100%;
+    padding: 8px;
+    font-family: 'Trebuchet MS';
+}
+
+#blogContent {
+    margin-bottom: 15px;
+}
+
+#blogContent label {
+    display: block;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#postContent {
+    width: 100%;
+    min-height: 150px;
+    padding: 8px;
+    font-family: 'Trebuchet MS';
+}
+
+#tagContent {
+    margin-bottom: 15px;
+}
+
+#tagContent label {
+    display: block;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#postTags {
+    width: 50%;
+    padding: 8px;
+    font-family: 'Trebuchet MS';
+}
+
+#uploadImage {
+    margin-bottom: 20px;
+}
+
+#uploadImage label {
+    display: block;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#submitBlog {
+    padding: 8px 15px;
+    background-color: #bad6eb;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+#submitBlog:hover {
+    background-color: #9abdd6;
+}
+
+/* ========================*/
+/* Login Page Styling */
+/* ========================*/
+
+#loginForm {
+    background-color: whitesmoke;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+#login {
+    margin-bottom: 15px;
+}
+
+#login label {
+    display: block;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#loginUsername {
+    width: 100%;
+    padding: 8px;
+    font-family: 'Trebuchet MS';
+}
+
+#password {
+    margin-bottom: 15px;
+}
+
+#password label {
+    display: block;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#loginPassword {
+    width: 100%;
+    padding: 8px;
+    font-family: 'Trebuchet MS';
+}
+
+#loginButton {
+    padding: 8px 15px;
+    background-color: #bad6eb;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+#loginButton:hover {
+    background-color: #9abdd6;
+}
+
+/* ========================*/
+/* Signup Page Styling */
+/* ========================*/
+
+#signupForm {
+    background-color: whitesmoke;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+#signUsername {
+    margin-bottom: 15px;
+}
+
+#signUsername label {
+    display: block;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#signupUsername {
+    width: 100%;
+    padding: 8px;
+    font-family: 'Trebuchet MS';
+}
+
+#signEmail {
+    margin-bottom: 15px;
+}
+
+#signEmail label {
+    display: block;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#signupEmail {
+    width: 100%;
+    padding: 8px;
+    font-family: 'Trebuchet MS';
+}
+
+#signPassword {
+    margin-bottom: 15px;
+}
+
+#signPassword label {
+    display: block;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#signupPassword {
+    width: 100%;
+    padding: 8px;
+    font-family: 'Trebuchet MS';
+}
+
+#confirmPass {
+    margin-bottom: 15px;
+}
+
+#confirmPass label {
+    display: block;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#confirmPassword {
+    width: 100%;
+    padding: 8px;
+    font-family: 'Trebuchet MS';
+}
+
+#signupButton {
+    padding: 8px 15px;
+    background-color: #bad6eb;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+#signupButton:hover {
+    background-color: #9abdd6;
+}
