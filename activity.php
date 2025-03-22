@@ -1,107 +1,213 @@
+<?php
+// Include the database connection
+require_once 'db_connect.php';
+
+// Initialize message variables
+$error_message = "";
+$success_message = "";
+
+// Process comment form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
+    // Get form data
+    $post_id = $_POST["post_id"];
+    $comment_content = $_POST["comment_content"];
+    
+    // Get current user - in a real application, this would come from a session
+    $current_user = $_SESSION["username"] ?? ""; // Assume username is stored in session
+    
+    // For testing purposes, if no session is available, use a default user
+    if (empty($current_user)) {
+        $current_user = "TroyBoy78"; // Use an existing user from the database for testing
+    }
+    
+    // Validate inputs
+    if (empty($comment_content) || empty($post_id)) {
+        $error_message = "Comment content cannot be empty.";
+    } else {
+        // Prepare and execute SQL query to insert comment
+        $stmt = $conn->prepare("INSERT INTO comments (author, content, post_id, date) VALUES (?, ?, ?, CURRENT_DATE())");
+        $stmt->bind_param("ssi", $current_user, $comment_content, $post_id);
+        
+        if ($stmt->execute()) {
+            // Comment added successfully
+            $success_message = "Comment added successfully!";
+            
+            // Redirect to avoid form resubmission
+            header("Location: activity.php");
+            exit();
+        } else {
+            // Error occurred
+            $error_message = "Error adding comment: " . $conn->error;
+        }
+        
+        $stmt->close();
+    }
+}
+
+// Fetch posts with their comments
+$sql = "SELECT p.*, u.username 
+        FROM post p 
+        JOIN userInfo u ON p.author = u.username 
+        ORDER BY p.date DESC";
+$result = $conn->query($sql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Common Ground</title>
     <link rel="stylesheet" href="styles.css">
-
-    <style>
-        #family-tag {
-            background-color: #ffe89d;
-        }
-
-        #travel-tag {
-            background-color: #afff94;
-        }
-
-        #ubco-tag {
-            background-color: #9da9ff;
-        }
-
-        #food-tag {
-            background-color: #dfc8a8;
-        }
-
-        #sports-tag {
-            background-color: #8dbae1;
-        }
-    </style>
 </head>
-
 <body>
-    <?php include "header.php" ?>
-
+    <?php include "header.php"; ?>
+    
     <div class="main-content">
         <aside class="sidebar">
             <h2 class="sidebar-header">Activity:</h2>
             <ul class="popular-list">
                 <li id="popular-box-title">Popular:</li>
                 <li class="popularPost">1. The Secret to Building a Successful Morning Routine</li>
-                <li class="popularPost">2. The Best Books You’ve Never Heard of: A Reading List for the Curious</li>
-                <li class="popularPost">3. The Most Beautiful Places You’ve Never Seen: Iceland</li>
+                <li class="popularPost">2. The Best Books You've Never Heard of: A Reading List for the Curious</li>
+                <li class="popularPost">3. The Most Beautiful Places You've Never Seen: Iceland</li>
             </ul>
             <div class="notification-box">
                 7 new Notifications
             </div>
         </aside>
-
+        
         <main class="feed">
             <h2 class="feed-header">Your Activity:</h2>
             <h3 class="sortby">Sorted by date</h3>
-            <div class="post">
-                <div class="post-header">
-                    <img src="images/icon.png" alt="" id="post-img">
-                    <div class="user-info">
-                        <div>Username</div>
-                        <div>Bio: Lorem ipsum</div>
-                        <div>
-                            <span class="tag" id="travel-tag">Travel</span>
-                            <span class="tag" id="family-tag">Family</span>
+            
+            <?php if (!empty($error_message)): ?>
+                <div class="error-message"><?php echo $error_message; ?></div>
+            <?php endif; ?>
+            
+            <?php if (!empty($success_message)): ?>
+                <div class="success-message"><?php echo $success_message; ?></div>
+            <?php endif; ?>
+            
+            <?php if ($result && $result->num_rows > 0): ?>
+                <?php while($post = $result->fetch_assoc()): ?>
+                    <div class="post">
+                        <div class="post-header">
+                            <img src="images/icon.png" alt="" id="post-img">
+                            <div class="user-info">
+                                <div><?php echo htmlspecialchars($post["author"]); ?></div>
+                                <?php
+                                // Fetch user bio
+                                $bio_sql = "SELECT bio FROM profile WHERE username = ?";
+                                $bio_stmt = $conn->prepare($bio_sql);
+                                $bio_stmt->bind_param("s", $post["author"]);
+                                $bio_stmt->execute();
+                                $bio_result = $bio_stmt->get_result();
+                                if ($bio_row = $bio_result->fetch_assoc()) {
+                                    echo '<div>Bio: ' . htmlspecialchars(substr($bio_row["bio"], 0, 50)) . '...</div>';
+                                }
+                                $bio_stmt->close();
+                                ?>
+                                <div>
+                                    <?php
+                                    // Fetch tags for this post
+                                    $tag_sql = "SELECT t.name, t.id FROM tags t 
+                                                JOIN post_tags pt ON t.id = pt.tag_id 
+                                                WHERE pt.post_id = ?";
+                                    $tag_stmt = $conn->prepare($tag_sql);
+                                    $tag_stmt->bind_param("i", $post["id"]);
+                                    $tag_stmt->execute();
+                                    $tag_result = $tag_stmt->get_result();
+                                    
+                                    while($tag = $tag_result->fetch_assoc()) {
+                                        $tag_id = htmlspecialchars(strtolower($tag["name"])) . "-tag";
+                                        echo '<span class="tag" id="' . $tag_id . '">' . htmlspecialchars($tag["name"]) . '</span>';
+                                    }
+                                    $tag_stmt->close();
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="timestamp"><?php echo date("g:ia, F jS, Y", strtotime($post["date"])); ?></div>
+                        </div>
+                        <div class="post-title">Title: <?php echo htmlspecialchars($post["title"]); ?></div>
+                        <div class="post-content">
+                            <?php echo htmlspecialchars(substr($post["content"], 0, 200)) . (strlen($post["content"]) > 200 ? "..." : ""); ?>
+                        </div>
+                        <div class="post-footer">
+                            <button class="like-btn" onclick="changeHeart(this)" data-post-id="<?php echo $post['id']; ?>">♡ Like</button>
+                        </div>
+                        
+                        <!-- Comments Section -->
+                        <div class="comments-section">
+                            <div>Comments:</div>
+                            
+                            <?php
+                            // Fetch comments for this post
+                            $comment_sql = "SELECT c.*, u.username FROM comments c 
+                                           JOIN userInfo u ON c.author = u.username 
+                                           WHERE c.post_id = ? 
+                                           ORDER BY c.date DESC";
+                            $comment_stmt = $conn->prepare($comment_sql);
+                            $comment_stmt->bind_param("i", $post["id"]);
+                            $comment_stmt->execute();
+                            $comment_result = $comment_stmt->get_result();
+                            
+                            if ($comment_result->num_rows > 0) {
+                                while($comment = $comment_result->fetch_assoc()) {
+                                    ?>
+                                    <div class="comment">
+                                        <div class="comment-checkbox">□</div>
+                                        <div class="comment-user"><?php echo htmlspecialchars($comment["author"]); ?>:</div>
+                                        <div class="comment-body"><?php echo htmlspecialchars($comment["content"]); ?></div>
+                                        <div class="comment-date"><?php echo date("m/d/y", strtotime($comment["date"])); ?></div>
+                                    </div>
+                                    <?php
+                                }
+                            } else {
+                                echo '<div class="no-comments">No comments yet. Be the first to comment!</div>';
+                            }
+                            $comment_stmt->close();
+                            ?>
+                            
+                            <!-- Add Comment Form -->
+                            <form class="comment-form" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                                <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
+                                <textarea name="comment_content" placeholder="Write a comment..." required></textarea>
+                                <button type="submit" name="submit_comment" class="post-comment-btn">Post Comment</button>
+                            </form>
                         </div>
                     </div>
-                    <div class="timestamp">4:10pm, January 29th, 2025</div>
-                </div>
-                <div class="post-title">Title: Lorem ipsum dolor sit amet</div>
-                <div class="post-content">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ligula diam, vestibulum non nunc
-                    congue, euismod posuere nulla. Sed elit lectus, convallis nec convallis at, dignissim a diam. Mauris
-                    nisl risus, fermentum nec sollicitudin eget, euismod eget nisi. Ut et pellentesque dui, non volutpat
-                    quam. Duis id tellus est. Nullam at felis ligula
-                </div>
-                <div class="post-footer">
-                    <button class="like-btn" onclick="changeHeart(this)">♡ Like</button>
-                    <script>
-                        function changeHeart(button) {
-                            if (button.textContent.includes('♡')) {
-                                button.textContent = '♥ Like';
-                            } else {
-                                button.textContent = '♡ Like';
-                            }
-                        }
-                    </script>
-                </div>
-                <div class="comments-section">
-                    <div>Comments:</div>
-                    <div class="comment">
-                        <div class="comment-checkbox">□</div>
-                        <div class="comment-user">Username:</div>
-                        <div class="comment-body">Comment body</div>
-                        <div class="comment-date">01/29/25</div>
-                    </div>
-                    <button class="post-comment-btn">Post Comment</button>
-                </div>
-            </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <div class="no-posts">No posts found.</div>
+            <?php endif; ?>
         </main>
-
+        
         <aside class="profile-sidebar">
             <h2 class="profile-header">Profile:</h2>
             <div class="profile-card">
                 <img src="images/icon.png" alt="">
-                <div class="profile-username">Username</div>
+                <div class="profile-username">
+                    <?php echo isset($_SESSION["username"]) ? htmlspecialchars($_SESSION["username"]) : "Guest"; ?>
+                </div>
                 <div class="profile-bio">
-                    This is the text in the bio shown below
+                    <?php
+                    if (isset($_SESSION["username"])) {
+                        $user_bio_sql = "SELECT bio FROM profile WHERE username = ?";
+                        $user_bio_stmt = $conn->prepare($user_bio_sql);
+                        $user_bio_stmt->bind_param("s", $_SESSION["username"]);
+                        $user_bio_stmt->execute();
+                        $user_bio_result = $user_bio_stmt->get_result();
+                        if ($user_bio_row = $user_bio_result->fetch_assoc()) {
+                            echo htmlspecialchars(substr($user_bio_row["bio"], 0, 100)) . '...';
+                        } else {
+                            echo "No bio available.";
+                        }
+                        $user_bio_stmt->close();
+                    } else {
+                        echo "Please log in to view your profile.";
+                    }
+                    ?>
                 </div>
                 <div class="profile-tags">
                     <div>Tags:</div>
@@ -113,6 +219,20 @@
             </div>
         </aside>
     </div>
+    
+    <script>
+        function changeHeart(button) {
+            if (button.textContent.includes('♡')) {
+                button.textContent = '♥ Like';
+            } else {
+                button.textContent = '♡ Like';
+            }
+        }
+    </script>
 </body>
-
 </html>
+
+<?php
+// Close the database connection
+$conn->close();
+?>
