@@ -5,44 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Common Ground</title>
-    <link rel="stylesheet" href = "styles.css">
+    <link rel="stylesheet" href="styles.css">
 
     <style>
-        
-     #family-tag {
-        background-color: #ffe89d;
-     }
+        #family-tag {
+            background-color: #ffe89d;
+        }
 
-     #travel-tag {
-        background-color: #afff94;
-     }
+        #travel-tag {
+            background-color: #afff94;
+        }
 
-     #ubco-tag {
-        background-color: #9da9ff;
-     }
+        #ubco-tag {
+            background-color: #9da9ff;
+        }
 
-     #food-tag {
-        background-color: #dfc8a8;
-     }
-     #sports-tag {
-        background-color: #8dbae1;
-     }
+        #food-tag {
+            background-color: #dfc8a8;
+        }
 
+        #sports-tag {
+            background-color: #8dbae1;
+        }
     </style>
 </head>
 
 <body>
-    <nav class="nav">
-        <a href="newpost.html" class="nav-item">New Post</a>
-        <a href="activity.html" class="nav-item">Activity</a>
-        <a href="indexLoggedIn.html" class="nav-item">Home</a>
-        <a href="profileLoggedIn.html" class="nav-item">Profile</a>
-        <a href="search.html" class="nav-item">Search</a>
-    </nav>
-    <header class="header">
-        <h1 class="site-name">Common Ground</h1>
-        <a href="#" class="logout-btn">Logout</a>
-    </header>
+    <?php include "header.php" ?>
 
     <div class="main-content">
         <aside class="sidebar">
