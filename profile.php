@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Common Ground</title>
     <link rel="stylesheet" href="styles.css">
+    <?php include "db_connect.php"; ?>
+
 
     <!-- Temporary, to be replaced once DB implemented -->
     <style>
@@ -35,15 +37,11 @@
 
     <!-- Main Content -->
     <div class="main-content">
+
         <!-- Popular Post Sidebar -->
         <aside class="sidebar">
-            <h2 class="sidebar-header">Activity:</h2>
-            <ul class="popular-list">
-                <li id="popular-box-title">Popular:</li>
-                <li class="popularPost">1. The Secret to Building a Successful Morning Routine</li>
-                <li class="popularPost">2. The Best Books You’ve Never Heard of: A Reading List for the Curious</li>
-                <li class="popularPost">3. The Most Beautiful Places You’ve Never Seen: Iceland</li>
-            </ul>
+           <?php include "popularsidebar.php"; ?> 
+    </br>
             <!-- Notification Alert Bar -->
             <div class="notification-box">
                 7 new Notifications!
@@ -52,7 +50,7 @@
 
         <!-- Main: View Profile -->
         <main class="userProfile">
-            <h2 class="userProfile-header">@Sofi-Grace207</h2>
+            <h2 class="userProfile-header"><?php $username ?></h2>
             <div class="profile-header">
                 <div class="user-avatar">
                     <img src="images/profile1.jpg" alt="" id="#user-profile-img">

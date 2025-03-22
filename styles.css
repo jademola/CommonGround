@@ -100,6 +100,11 @@ body {
     background-color: white;
 }
 
+.popularPost a {
+    text-decoration: none;
+    color: black;
+}
+
 .popular-list li {
     margin-left: 10px;
     margin-bottom: 10px;

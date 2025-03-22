@@ -1,4 +1,6 @@
 <?php
+include "db_connect";
+
 session_start();
 if (!isset($_SESSION['loggedIn'])) {
     $_SESSION['loggedIn'] = false;
@@ -28,13 +30,9 @@ if (!isset($_SESSION['loggedIn'])) {
     <div class="main-content">
         <!-- Sidebar content remains the same for both states -->
         <aside class="sidebar">
-            <h2 class="sidebar-header">Activity:</h2>
-            <ul class="popular-list">
-                <li>Popular:</li>
-                <li>1. The Secret to Building a Successful Morning Routine</li>
-                <li>2. The Best Books You've Never Heard of: A Reading List for the Curious</li>
-                <li>3. The Most Beautiful Places You've Never Seen: Iceland</li>
-            </ul>
+                <!-- Top three posts (by likes, in order) -->  
+                <?php include "popularsidebar.php"; ?> 
+
             <div class="notification-box">
                 7 new Notifications
             </div>
