@@ -1,57 +1,11 @@
 <?php
-// Include the database connection
-require_once 'db_connect.php';
+include "db_connect";
 
-// Initialize message variables
-$error_message = "";
-$success_message = "";
-
-// Process comment form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
-    // Get form data
-    $post_id = $_POST["post_id"];
-    $comment_content = $_POST["comment_content"];
-    
-    // Get current user - in a real application, this would come from a session
-    $current_user = $_SESSION["username"] ?? ""; // Assume username is stored in session
-    
-    // For testing purposes, if no session is available, use a default user
-    if (empty($current_user)) {
-        $current_user = "TroyBoy78"; // Use an existing user from the database for testing
-    }
-    
-    // Validate inputs
-    if (empty($comment_content) || empty($post_id)) {
-        $error_message = "Comment content cannot be empty.";
-    } else {
-        // Prepare and execute SQL query to insert comment
-        $stmt = $conn->prepare("INSERT INTO comments (author, content, post_id, date) VALUES (?, ?, ?, CURRENT_DATE())");
-        $stmt->bind_param("ssi", $current_user, $comment_content, $post_id);
-        
-        if ($stmt->execute()) {
-            // Comment added successfully
-            $success_message = "Comment added successfully!";
-            
-            // Redirect to avoid form resubmission
-            header("Location: activity.php");
-            exit();
-        } else {
-            // Error occurred
-            $error_message = "Error adding comment: " . $conn->error;
-        }
-        
-        $stmt->close();
-    }
+session_start();
+if (!isset($_SESSION['loggedIn'])) {
+    $_SESSION['loggedIn'] = false;
 }
-
-// Fetch posts with their comments
-$sql = "SELECT p.*, u.username 
-        FROM post p 
-        JOIN userInfo u ON p.author = u.username 
-        ORDER BY p.date DESC";
-$result = $conn->query($sql);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,167 +13,78 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Common Ground</title>
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Temporary, to be replaced once DB implemented-->
+    <style>
+     #family-tag { background-color: #ffe89d; }
+     #travel-tag { background-color: #afff94; }
+     #ubco-tag { background-color: #9da9ff; }
+     #food-tag { background-color: #dfc8a8; }
+     #sports-tag { background-color: #8dbae1; }
+    </style>
 </head>
 <body>
-    <?php include "header.php"; ?>
-    
+
+    <?php include "header.php" ?>
+
     <div class="main-content">
+        <!-- Sidebar content remains the same for both states -->
         <aside class="sidebar">
-            <h2 class="sidebar-header">Activity:</h2>
-            <ul class="popular-list">
-                <li id="popular-box-title">Popular:</li>
-                <li class="popularPost">1. The Secret to Building a Successful Morning Routine</li>
-                <li class="popularPost">2. The Best Books You've Never Heard of: A Reading List for the Curious</li>
-                <li class="popularPost">3. The Most Beautiful Places You've Never Seen: Iceland</li>
-            </ul>
+                <!-- Top three posts (by likes, in order) -->  
+                <?php include "popularsidebar.php"; ?> 
+
             <div class="notification-box">
                 7 new Notifications
             </div>
         </aside>
-        
+
+        <!-- Main feed content -->
         <main class="feed">
-            <h2 class="feed-header">Your Activity:</h2>
-            <h3 class="sortby">Sorted by date</h3>
-            
-            <?php if (!empty($error_message)): ?>
-                <div class="error-message"><?php echo $error_message; ?></div>
-            <?php endif; ?>
-            
-            <?php if (!empty($success_message)): ?>
-                <div class="success-message"><?php echo $success_message; ?></div>
-            <?php endif; ?>
-            
-            <?php if ($result && $result->num_rows > 0): ?>
-                <?php while($post = $result->fetch_assoc()): ?>
-                    <div class="post">
-                        <div class="post-header">
-                            <img src="images/icon.png" alt="" id="post-img">
-                            <div class="user-info">
-                                <div><?php echo htmlspecialchars($post["author"]); ?></div>
-                                <?php
-                                // Fetch user bio
-                                $bio_sql = "SELECT bio FROM profile WHERE username = ?";
-                                $bio_stmt = $conn->prepare($bio_sql);
-                                $bio_stmt->bind_param("s", $post["author"]);
-                                $bio_stmt->execute();
-                                $bio_result = $bio_stmt->get_result();
-                                if ($bio_row = $bio_result->fetch_assoc()) {
-                                    echo '<div>Bio: ' . htmlspecialchars(substr($bio_row["bio"], 0, 50)) . '...</div>';
-                                }
-                                $bio_stmt->close();
-                                ?>
-                                <div>
-                                    <?php
-                                    // Fetch tags for this post
-                                    $tag_sql = "SELECT t.name, t.id FROM tags t 
-                                                JOIN post_tags pt ON t.id = pt.tag_id 
-                                                WHERE pt.post_id = ?";
-                                    $tag_stmt = $conn->prepare($tag_sql);
-                                    $tag_stmt->bind_param("i", $post["id"]);
-                                    $tag_stmt->execute();
-                                    $tag_result = $tag_stmt->get_result();
-                                    
-                                    while($tag = $tag_result->fetch_assoc()) {
-                                        $tag_id = htmlspecialchars(strtolower($tag["name"])) . "-tag";
-                                        echo '<span class="tag" id="' . $tag_id . '">' . htmlspecialchars($tag["name"]) . '</span>';
-                                    }
-                                    $tag_stmt->close();
-                                    ?>
-                                </div>
-                            </div>
-                            <div class="timestamp"><?php echo date("g:ia, F jS, Y", strtotime($post["date"])); ?></div>
-                        </div>
-                        <div class="post-title">Title: <?php echo htmlspecialchars($post["title"]); ?></div>
-                        <div class="post-content">
-                            <?php echo htmlspecialchars(substr($post["content"], 0, 200)) . (strlen($post["content"]) > 200 ? "..." : ""); ?>
-                        </div>
-                        <div class="post-footer">
-                            <button class="like-btn" onclick="changeHeart(this)" data-post-id="<?php echo $post['id']; ?>">♡ Like</button>
-                        </div>
-                        
-                        <!-- Comments Section -->
-                        <div class="comments-section">
-                            <div>Comments:</div>
-                            
-                            <?php
-                            // Fetch comments for this post
-                            $comment_sql = "SELECT c.*, u.username FROM comments c 
-                                           JOIN userInfo u ON c.author = u.username 
-                                           WHERE c.post_id = ? 
-                                           ORDER BY c.date DESC";
-                            $comment_stmt = $conn->prepare($comment_sql);
-                            $comment_stmt->bind_param("i", $post["id"]);
-                            $comment_stmt->execute();
-                            $comment_result = $comment_stmt->get_result();
-                            
-                            if ($comment_result->num_rows > 0) {
-                                while($comment = $comment_result->fetch_assoc()) {
-                                    ?>
-                                    <div class="comment">
-                                        <div class="comment-checkbox">□</div>
-                                        <div class="comment-user"><?php echo htmlspecialchars($comment["author"]); ?>:</div>
-                                        <div class="comment-body"><?php echo htmlspecialchars($comment["content"]); ?></div>
-                                        <div class="comment-date"><?php echo date("m/d/y", strtotime($comment["date"])); ?></div>
-                                    </div>
-                                    <?php
-                                }
-                            } else {
-                                echo '<div class="no-comments">No comments yet. Be the first to comment!</div>';
-                            }
-                            $comment_stmt->close();
-                            ?>
-                            
-                            <!-- Add Comment Form -->
-                            <form class="comment-form" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                                <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
-                                <textarea name="comment_content" placeholder="Write a comment..." required></textarea>
-                                <button type="submit" name="submit_comment" class="post-comment-btn">Post Comment</button>
-                            </form>
+            <h2 class="feed-header">Your Feed:</h2>
+            <div class="post">
+                <div class="post-header">
+                    <img src="images/icon.png" alt="" id="post-img">
+                    <div class="user-info">
+                        <div><?php echo $_SESSION['loggedIn'] ? '<b>Username</b>' : 'Username'; ?></div>
+                        <div><?php echo $_SESSION['loggedIn'] ? '<b>Bio: </b>' : 'Bio: '; ?>Lorem ipsum</div>
+                        <div class="post-tags">
+                            <span class="tag" id="travel-tag">Travel</span>
+                            <span class="tag" id="family-tag">Family</span>
                         </div>
                     </div>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <div class="no-posts">No posts found.</div>
-            <?php endif; ?>
+                    <div class="timestamp">4:10pm, January 29th, 2025</div>
+                </div>
+                <!-- Rest of the post content remains the same -->
+            </div>
         </main>
-        
+
+        <!-- Profile sidebar with conditional rendering -->
         <aside class="profile-sidebar">
             <h2 class="profile-header">Profile:</h2>
             <div class="profile-card">
                 <img src="images/icon.png" alt="">
-                <div class="profile-username">
-                    <?php echo isset($_SESSION["username"]) ? htmlspecialchars($_SESSION["username"]) : "Guest"; ?>
-                </div>
+                <div class="profile-username">Username</div>
                 <div class="profile-bio">
-                    <?php
-                    if (isset($_SESSION["username"])) {
-                        $user_bio_sql = "SELECT bio FROM profile WHERE username = ?";
-                        $user_bio_stmt = $conn->prepare($user_bio_sql);
-                        $user_bio_stmt->bind_param("s", $_SESSION["username"]);
-                        $user_bio_stmt->execute();
-                        $user_bio_result = $user_bio_stmt->get_result();
-                        if ($user_bio_row = $user_bio_result->fetch_assoc()) {
-                            echo htmlspecialchars(substr($user_bio_row["bio"], 0, 100)) . '...';
-                        } else {
-                            echo "No bio available.";
-                        }
-                        $user_bio_stmt->close();
-                    } else {
-                        echo "Please log in to view your profile.";
-                    }
-                    ?>
+                    This is the text in the bio shown below
                 </div>
-                <div class="profile-tags">
-                    <div>Tags:</div>
-                    <div>
-                        <span class="tag" id="sports-tag">Sports</span>
-                        <span class="tag" id="food-tag">Food</span>
+                <?php if ($_SESSION['loggedIn']): ?>
+                    <div class="side-profile-tags">
+                        <div><b>Tags:</b></div>
+                        <div id="side-profile-tags-whitespace">
+                            <span class="tag" id="sports-tag">Sports</span>
+                            <span class="tag" id="food-tag">Food</span>
+                        </div>
                     </div>
-                </div>
+                <?php else: ?>
+                    <div class="profile-buttons">
+                        <button onclick="window.location.href='login.php'">Login</button>
+                        <button onclick="window.location.href='signup.php'">Sign-up</button>
+                    </div>
+                <?php endif; ?>
             </div>
         </aside>
     </div>
-    
+
     <script>
         function changeHeart(button) {
             if (button.textContent.includes('♡')) {
@@ -231,8 +96,3 @@ $result = $conn->query($sql);
     </script>
 </body>
 </html>
-
-<?php
-// Close the database connection
-$conn->close();
-?>
