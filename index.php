@@ -116,7 +116,7 @@ $posts_result = $conn->query($posts_sql);
                             </div>
                             <div class="timestamp"><?php echo date("g:ia, F jS, Y", strtotime($post["date"])); ?></div>
                         </div>
-                        <div class="post-title">Title: <?php echo htmlspecialchars($post["title"]); ?></div>
+                        <div class="post-title"><?php echo htmlspecialchars($post["title"]); ?></div>
                         <div class="post-content">
                             <?php echo htmlspecialchars($post["content"]) . (strlen($post["content"]) > 200 ? "..." : ""); ?>
                         </div>
@@ -143,7 +143,6 @@ $posts_result = $conn->query($posts_sql);
                                 while ($comment = $comment_result->fetch_assoc()) {
                             ?>
                                     <div class="comment">
-                                        <div class="comment-checkbox">□</div>
                                         <div class="comment-user"><?php echo htmlspecialchars($comment["author"]); ?>:</div>
                                         <div class="comment-body"><?php echo htmlspecialchars($comment["content"]); ?></div>
                                         <div class="comment-date"><?php echo date("m/d/y", strtotime($comment["date"])); ?></div>

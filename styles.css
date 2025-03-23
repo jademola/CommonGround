@@ -10,6 +10,23 @@ body {
     margin: 0 auto;
     /* background-image: url(images/background.jpeg); */
     background-color: lightblue;
+    overflow-x: hidden;
+}
+
+/* Hide scrollbars but keep scrolling functionality */
+/* For Webkit browsers (Chrome, Safari) */
+.feed::-webkit-scrollbar {
+    display: none;
+}
+
+/* For Firefox */
+.feed {
+    scrollbar-width: none;
+}
+
+/* For IE and Edge */
+.feed {
+    -ms-overflow-style: none;
 }
 
 /* ========================= */
@@ -22,6 +39,8 @@ body {
     padding: 10px;
     position: relative;
     margin-top: 10px;
+    height: 80px;
+    margin-bottom: 10px;
 }
 
 .site-name {
@@ -56,6 +75,8 @@ body {
     display: flex;
     background-color: white;
     padding: 10px;
+    height: 50px;
+    align-items: center;
 }
 
 .nav-item {
@@ -73,6 +94,8 @@ body {
 
 .main-content {
     display: flex;
+    height: calc(100vh - 140px); /* Subtract header height */
+    overflow: hidden; /* Prevent overall page scrolling */
 }
 
 /* =========================*/
@@ -83,6 +106,10 @@ body {
     width: 250px;
     padding: 15px;
     margin-left: 40px;
+    height: 100%;
+    overflow-y: auto;
+    position: sticky;
+    top: 140px;
 }
 
 .sidebar-header {
@@ -91,6 +118,11 @@ body {
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 15px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+    padding-top: 10px;
 }
 
 .popular-list {
@@ -98,6 +130,9 @@ body {
     margin-bottom: 20px;
     padding: 1rem;
     background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    min-height: 200px;
 }
 
 .popularPost a {
@@ -118,7 +153,8 @@ body {
     padding: 10px;
     margin-top: 20px;
     background-color: #bad6eb;
-    border-radius: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .userProfile {
@@ -128,6 +164,8 @@ body {
     font-size: large;
     margin-top: 10px;
     margin-right: 60px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .userProfile-header {
@@ -143,9 +181,18 @@ body {
 
 .profile-header {
     display: flex;
-    padding: 10px;
+    padding: 15px;
     background-color: white;
     border-radius: 15px;
+    height: 40px;
+    align-items: center;
+    margin-top: 0;
+    padding-top: 10px;
+    margin-bottom: 15px;
+    font-family: 'Trebuchet MS';
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
 }
 
 .profileBio-content {
@@ -166,6 +213,10 @@ body {
 .feed {
     flex: 2;
     padding: 15px;
+    overflow-y: auto;
+    height: 100%;
+    max-width: 800px; /* Limit width for better readability */
+    margin: 0 auto;
 }
 
 .feed-header {
@@ -174,16 +225,23 @@ body {
     margin-bottom: 15px;
     color: white;
     font-family: 'Trebuchet MS';
+    height: 40px;
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+    padding-top: 10px;
 }
 
 .post {
     margin-bottom: 20px;
     background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .post-header {
     display: flex;
-    padding: 10px;
+    padding: 15px;
     border-bottom: 1px solid #ccc;
 }
 
@@ -211,6 +269,7 @@ body {
 
 .post-title {
     font-family: 'Trebuchet MS';
+    font-weight: 500;
     padding: 5px;
     margin: 5px 0;
 }
@@ -289,7 +348,8 @@ body {
 
 .comment-form {
     display: flex;
-    margin-top: 10px;
+    margin-top: 15px;
+    flex-direction: column;
 }
 
 .comment-input {
@@ -297,8 +357,35 @@ body {
     margin-right: 10px;
 }
 
+/* Fixed comment textarea and button styles */
+.comment-form textarea {
+    width: 100%;
+    height: 80px;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: none; /* Prevent user resizing */
+    font-family: 'Trebuchet MS';
+}
+
 .post-comment-btn {
-    padding: 0.25rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 120px;
+    height: 36px;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    align-self: flex-end;
+    margin-top: 10px;
+}
+
+.post-comment-btn:hover {
+    background-color: #45a049;
 }
 
 #post-img {
@@ -334,19 +421,18 @@ body {
     width: 250px;
     padding: 15px;
     margin-right: 40px;
-}
-
-.profile-header {
-    font-family: 'Trebuchet MS';
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: white;
-    background: none;
+    height: 100%;
+    overflow-y: auto;
+    position: sticky;
+    top: 140px;
 }
 
 .profile-card {
     background-color: white;
-    padding: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    min-height: 200px;
 }
 
 .profile-avatar {
@@ -403,7 +489,8 @@ img {
 .new-post-form {
     background-color: whitesmoke;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 #titleContent {
@@ -493,7 +580,8 @@ img {
 #loginForm {
     background-color: whitesmoke;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 #login {
@@ -554,7 +642,8 @@ img {
 #signupForm {
     background-color: whitesmoke;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 #signUsername {
@@ -650,6 +739,7 @@ img {
     margin-top: 10px;
     border-top: 1px solid #eee;
     padding-top: 10px;
+    padding: 15px;
 }
 
 .comment {
@@ -674,31 +764,6 @@ img {
 .comment-date {
     color: #777;
     font-size: 0.8em;
-}
-
-.comment-form {
-    margin-top: 15px;
-}
-
-.comment-form textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.post-comment-btn {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: a6px 12px;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-.post-comment-btn:hover {
-    background-color: #45a049;
 }
 
 .error-message, .success-message {
