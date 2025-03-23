@@ -65,7 +65,7 @@ $posts_result = $conn->query($posts_sql);
 <body>
     <?php include "header.php"; ?>
 
-    <div class="main-content">
+    <div class="main-content" >
         <aside class="sidebar">
             <!-- Top three posts (by likes, in order) -->
             <div class="sidebar-section">

@@ -36,7 +36,7 @@
 
 
     <!-- Main Content -->
-    <div class="main-content">
+    <div class="main-content" id="mainFeed">
 
         <!-- Popular Post Sidebar -->
         <aside class="sidebar">
