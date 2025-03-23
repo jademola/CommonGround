@@ -12,6 +12,16 @@ body {
     background-color: lightblue;
 }
 
+/* ============== */
+/* Error Messages */
+/* ============== */
+.error-message {
+    color: red !important;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* ========================= */
 /* Header (Name and Nav bar) */
 /* ========================= */
@@ -247,6 +257,8 @@ body {
 /* ==================== */
 /* Post (main) Styling  */
 /* ==================== */
+
+/* Login Error */ 
 
 .post-content {
     font-family: 'Trebuchet MS';

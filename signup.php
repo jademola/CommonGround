@@ -1,3 +1,56 @@
+<?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL); 
+
+include "db_connect.php";
+
+session_start();
+$errorMessage = null;
+
+if ($_SESSION['loggedIn']) {
+  header("Location: profile.php");
+  exit();
+}
+
+// Handle form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $username = $_POST['signupUsername'];
+  $password = $_POST['signupPassword'];
+  $email = $_POST['signupEmail'];
+
+  $check_sql = "SELECT username FROM userInfo WHERE username = ? OR email = ?";
+  $check_stmt = $conn->prepare($check_sql);
+  $check_stmt->bind_param("ss", $username, $email);
+  $check_stmt->execute();
+  $check_stmt->store_result();
+
+  if ($check_stmt->num_rows == 0) {
+    // Query username and password 
+    $sql = "INSERT INTO userInfo (username, email, password) 
+            VALUES (?, ?, ?)";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $username, $password, $email);  // "sss" specifies the type (string)
+    $stmt->execute();
+
+    if ($stmt->affected_rows > 0) {
+      $_SESSION['loggedIn'] = true;
+      $_SESSION['username'] = $username;
+      header("Location: profile.php");
+      exit();
+    }
+    else {
+      header("Location: index.php");
+      exit();
+    }
+    $stmt->close();
+  }
+  else {
+    $errorMessage = "Username in use, Please try again.";
+  }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,7 +81,7 @@
       <h2 class="feed-header">Sign Up</h2>
 
       <!-- Sign Up Form -->
-      <form id="signupForm" class="auth-form">
+      <form id="signupForm" class="auth-form" method="post">
         <div id="signUsername">
           <label for="signupUsername">Username:</label>
           <input
@@ -68,6 +121,13 @@
             placeholder="Re-type your password"
             required>
         </div>
+
+        <!-- Server-Side Validation Error Message -->
+        <?php if (isset($errorMessage)): ?>
+          <div class="error-message">
+            <?php echo $errorMessage; ?>
+          </div>
+        <?php endif; ?>
 
         <button type="submit" id="signupButton">Sign Up</button>
         <p>
