@@ -142,26 +142,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
                     <?php echo htmlspecialchars($post["content"]); ?>
                 </div>
                 <div class="post-footer">
-                    <button class="like-btn" onclick="changeHeart(this)" data-post-id="<?php echo $post_id; ?>">
-                        <?php
-                        // Check if the current user has liked this post
-                        $like_check_sql = "SELECT * FROM post_likes WHERE post_id = ? AND user_id = ?";
-                        $like_check_stmt = $conn->prepare($like_check_sql);
-                        // Use a placeholder user ID if no session is available
-                        $user_id = $_SESSION["user_id"] ?? 1;
-                        $like_check_stmt->bind_param("ii", $post_id, $user_id);
-                        $like_check_stmt->execute();
-                        $like_result = $like_check_stmt->get_result();
-
-                        // Display filled heart if user has liked, empty heart otherwise
-                        if ($like_result->num_rows > 0) {
-                            echo "♥ Like";
-                        } else {
-                            echo "♡ Like";
-                        }
-                        $like_check_stmt->close();
-                        ?>
-                    </button>
+                    
+                
                 </div>
 
                 <!-- Comments Section -->
