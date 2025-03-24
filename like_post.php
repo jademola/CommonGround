@@ -1,9 +1,10 @@
 <?php
 /*
- Helper class for post:
- 1. Checks if user is logged in
- 2. Fetches post ID
- 3. Checks if user has already liked the post, then changes the status 
+like_post.php:
+Helper class for post:
+1. Checks if user is logged in
+2. Fetches post ID
+3. Checks if user has already liked the post, then changes the status 
 */
 session_start();
 require_once 'db_connect.php';
@@ -58,4 +59,5 @@ try {
 }
 
 $conn->close();
+// end of class
 ?>

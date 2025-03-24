@@ -1,4 +1,8 @@
 <?php
+/*
+db_connect.php:
+Initializes database connection:
+*/
 
 // Database connection details
 $servername = "localhost";   // Hostname
@@ -23,5 +27,6 @@ $conn->set_charset("utf8mb4");
     error_log("Database error: " . $e->getMessage()); 
     die("Database connection error");
 }
+// end of class
 ?>
 

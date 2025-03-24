@@ -1,6 +1,7 @@
 <?php
 session_start();
 /*
+profile.php:
 1. Checks user auth, includes sidebar 
 2. Fetches and displays user bio and tags 
 3. Renders profile page with editable section that redirects to "edit profile"
@@ -110,4 +111,5 @@ require_once "db_connect.php";
 <?php
 // Close the database connection
 $conn->close();
+//end of class
 ?>

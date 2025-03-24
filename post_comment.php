@@ -1,5 +1,6 @@
 <?php
 /*
+post_comment.php:
 Helper class for post:
 1. Checks if user is logged in
 2. Gets form data, validates inputs
@@ -71,4 +72,5 @@ try {
 }
 
 $conn->close();
+// end of class
 ?>

@@ -1,5 +1,6 @@
 <?php 
 /*
+editprofile.php:
 1. Session checks
 2. Validate and update email, bio, and tags
 3. Displays editable profile form with pre filled data
@@ -263,4 +264,5 @@ $tags = getUserTagsByUsername($_SESSION['username'], $conn);
 <?php
 // Close the database connection
 $conn->close();
+// end of class
 ?>

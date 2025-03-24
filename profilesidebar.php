@@ -1,7 +1,10 @@
 <?php
 /*
+profilesidebar.php:
 Helper class for profile/edit profile:
-
+1. Displays username and bio
+2. Retrieves and shows profile tags
+3. Shows login/signup buttons if user not logged in
 */
 // Session start and DB start handled in main file
 // Just in case
@@ -70,4 +73,5 @@ if (!isset($conn)) {
             <button onclick="window.location.href='signup.php'">Sign-up</button>
         </div>
     <?php endif; ?>
+    <!-- End of Class -->
 </div>

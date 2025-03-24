@@ -1,6 +1,7 @@
 
 <?php
 /*
+signup.php:
 Signup page:
 1. Session checks
 2. Input sanitization and checking - both server and client side
@@ -242,5 +243,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     });
   </script>
 </body>
-
+<!-- End of Class -->
 </html>

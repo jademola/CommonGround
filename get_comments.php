@@ -1,5 +1,6 @@
 <?php
 /*
+get_comments.php:
 Helper class for post:
 1. Fetches comments on the post
 2. Formats the comments for JSON response and returns them
@@ -50,4 +51,5 @@ echo json_encode(['comments' => $comments]);
 // Close resources
 $stmt->close();
 $conn->close();
+// end of class 
 ?>

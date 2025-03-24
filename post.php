@@ -1,5 +1,6 @@
 <?php
 /*
+post.php:
 Handles posts:
 1. Session checks
 2. Get post information
@@ -406,4 +407,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
 <?php
 // Close the database connection
 $conn->close();
+// end of class
 ?>
