@@ -23,12 +23,12 @@ if (!isset($_SESSION['loggedIn'])) {
             <a href="activity.php" class="nav-item">Activity</a>
             <a href="index.php" class="nav-item">Home</a>
             <a href="profile.php" class="nav-item">Profile</a>
-            <a href="search.html" class="nav-item">Search</a>
+            <a href="search.php" class="nav-item">Search</a>
         <?php else: ?>
             <a href="login.php" class="nav-item">New Post</a>
             <a href="login.php" class="nav-item">Activity</a>
             <a href="index.php" class="nav-item">Home</a>
             <a href="login.php" class="nav-item">Profile</a>
-            <a href="search.html" class="nav-item">Search</a>
+            <a href="search.php" class="nav-item">Search</a>
         <?php endif; ?>
     </nav>
