@@ -1,4 +1,6 @@
 <?php
+
+include "db_connect.php";
 session_start();
 
 if ($_SESSION['loggedIn']) {
@@ -11,15 +13,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $username = $_POST['loginUsername'];
   $password = $_POST['loginPassword'];
 
-  // TODO: Add database authentication using MySQL
-  if ($username && $password) {
-    $_SESSION['loggedIn'] = true;
-    $_SESSION['username'] = $username;
-    header("Location: profile.php");
-    exit();
-  }
+
+  // Query username and password 
+  $sql = "SELECT username, password FROM userInfo WHERE username = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("s", $username);  // "s" specifies the type (string)
+  $stmt->execute();
+  $stmt->bind_result($storedUsername, $storedPassword);
+
+    // Gets returned username, or produces error 
+    if ($stmt->fetch()) {
+      // Verifies password, or produces error
+      if ($password == $storedPassword){ 
+        $_SESSION['loggedIn'] = true;
+        $_SESSION['username'] = $username;
+        header("Location: profile.php");
+        exit();
+      }
+      else {
+        $errorMessage = "Incorrect password, Please try again.";
+      }
+      $errorMessage = "Incorrect username, Please try again.";
+    }
+    else {
+      $errorMessage = "Invalid credentials, Please try again.";
+    }
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,17 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-  <!-- Navigation (if we want main nav on login page) -->
-  <!-- TODO: I think we should remove the nav while logging in -->
-  <!-- <nav class="nav">
-    <a href="login.php" class="nav-item">New Post</a>
-    <a href="activity.html" class="nav-item">Activity</a>
-    <a href="index.php" class="nav-item">Home</a>
-    <a href="login.php" class="nav-item">Profile</a>
-    <a href="search.html" class="nav-item">Search</a>
-  </nav> -->
-
-  <!-- Header -->
+  
   <header class="header">
     <h1 class="site-name">Common Ground</h1>
     <!-- Replace this link -->
@@ -85,6 +97,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             placeholder="Enter password"
             required>
         </div>
+
+<!-- Server-Side Validation Error Message -->
+        <?php if (isset($errorMessage)): ?>
+          <div class="error-message">
+            <?php echo $errorMessage; ?>
+          </div>
+        <?php endif; ?>
 
         <button type="submit" id="loginButton">Login</button>
 
