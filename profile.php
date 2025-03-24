@@ -1,7 +1,7 @@
-<?php 
-    session_start();
-    $username = $_SESSION['username']; 
-?> 
+<?php
+session_start();
+$username = $_SESSION['username'];
+?>
 
 
 <!DOCTYPE html>
@@ -17,7 +17,7 @@
 <style>
     .tag {
         background-color: #9abdd6;
-            }
+    }
 </style>
 
 <body>
@@ -30,8 +30,8 @@
 
         <!-- Popular Post Sidebar -->
         <aside class="sidebar">
-           <?php include "popularsidebar.php"; ?> 
-        </br>
+            <?php include "popularsidebar.php"; ?>
+            </br>
             <!-- Notification Alert Bar -->
             <div class="notification-box">
                 7 new Notifications!
@@ -40,7 +40,7 @@
 
         <!-- Main: View Profile -->
         <main class="userProfile">
-            <h2 class="userProfile-header"><?php echo "@". $_SESSION['username'] ?></h2>
+            <h2 class="userProfile-header"><?php echo "@" . $_SESSION['username'] ?></h2>
             <div class="profile-header">
                 <div class="user-avatar">
                     <img src="images/profile1.jpg" alt="" id="#user-profile-img">
@@ -48,38 +48,44 @@
                 <div class="profileBio-content">
 
                     <div>
-                        <div id="username-display"><b>Username: <?php echo $_SESSION['username']?></b></div>
+                        <div id="username-display"><b>Username: <?php echo $_SESSION['username'] ?></b></div>
                     </div>
                     <div>
-                         <?php 
-                         $sql = "SELECT bio
+                        <?php
+                        $sql = "SELECT bio
                              FROM profile 
-                             WHERE username = ?"; 
-                             $stmt = $conn->prepare($sql);
-                             $stmt->bind_param("s", $_SESSION['username']);  // "s" specifies the type (string)
-                             $stmt->execute();
-                             $result = $stmt->get_result();
+                             WHERE username = ?";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bind_param("s", $_SESSION['username']);  // "s" specifies the type (string)
+                        $stmt->execute();
+                        $result = $stmt->get_result();
 
-                            // Check if any rows were returned
-                            if ($row = $result->fetch_assoc()) {
-                                // Display the bio
-                                echo "Bio: " . $row['bio'];
-                            } else {
-                                echo "No bio found for this user.";
-                            }
+                        // Check if any rows were returned
+                        if ($row = $result->fetch_assoc()) {
+                            // Display the bio
+                            echo "Bio: " . $row['bio'];
+                        } else {
+                            echo "No bio found for this user.";
+                        }
 
-                            $stmt->close();
+                        $stmt->close();
                         ?>
-                    <!-- Tags - Replace with DB-->
+                        <!-- Tags - Replace with DB-->
+                    </div>
+                    <!-- Edit Profile Button -->
+                    <div id="test">
+                        <a href="editprofile.php">
+                            <button class="edit-profile-btn">Edit Profile</button>
+                        </a>
                     </div>
                     <div class="profile-tags">
                         <p><b>User Tags:</b></p>
 
-                        <?php 
+                        <?php
                         $sql = "SELECT tags.name 
                         FROM profile_tags JOIN tags 
                         ON profile_tags.id = tags.id 
-                        WHERE username = ?"; 
+                        WHERE username = ?";
                         $stmt = $conn->prepare($sql);
                         $stmt->bind_param("s", $_SESSION['username']);  // "s" specifies the type (string)
                         $stmt->execute();
@@ -88,22 +94,17 @@
                         while ($row = $result->fetch_assoc()) {
                             echo "<span class='tag' id='funny-tag'>" . $row['name'] . "</span>"; // You can modify this as needed
                         }
-                        
+
                         if ($result->num_rows === 0) {
                             echo "No tags yet selected";
                         }
-                       $stmt->close();
-                        ?> 
+                        $stmt->close();
+                        ?>
                     </div>
                 </div>
 
             </div>
-            <!-- Edit Profile Button -->
-            <div id="test">
-                <a href="editprofile.php">
-                    <button class="edit-profile-btn">Edit Profile</button>
-                </a>
-            </div>
+
         </main>
     </div>
 
