@@ -60,28 +60,7 @@ if (!isset($_SESSION['loggedIn'])) {
 
         <!-- Profile sidebar with conditional rendering -->
         <aside class="profile-sidebar">
-            <h2 class="profile-header">Profile:</h2>
-            <div class="profile-card">
-                <img src="images/icon.png" alt="">
-                <div class="profile-username">Username</div>
-                <div class="profile-bio">
-                    This is the text in the bio shown below
-                </div>
-                <?php if ($_SESSION['loggedIn']): ?>
-                    <div class="side-profile-tags">
-                        <div><b>Tags:</b></div>
-                        <div id="side-profile-tags-whitespace">
-                            <span class="tag" id="sports-tag">Sports</span>
-                            <span class="tag" id="food-tag">Food</span>
-                        </div>
-                    </div>
-                <?php else: ?>
-                    <div class="profile-buttons">
-                        <button onclick="window.location.href='login.php'">Login</button>
-                        <button onclick="window.location.href='signup.php'">Sign-up</button>
-                    </div>
-                <?php endif; ?>
-            </div>
+            <?php include "profilesidebar.php"; ?>
         </aside>
     </div>
 

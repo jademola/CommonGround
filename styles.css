@@ -22,6 +22,7 @@ body {
     margin-right: auto;
 }
 
+
 /* ========================= */
 /* Header (Name and Nav bar) */
 /* ========================= */
@@ -226,6 +227,7 @@ body {
 }
 
 .tag {
+    background-color: #9abdd6;
     display: inline-block;
     font-family: 'Trebuchet MS';
     padding: 5px 10px;
@@ -429,7 +431,7 @@ img {
     margin-bottom: 5px;
 }
 
-#postTitle {
+#postTitle, #userEmail {
     width: 100%;
     padding: 8px;
     font-family: 'Trebuchet MS';
@@ -446,7 +448,7 @@ img {
     margin-bottom: 5px;
 }
 
-#postContent {
+#postContent, #profileBio {
     width: 100%;
     min-height: 150px;
     padding: 8px;
@@ -464,7 +466,7 @@ img {
     margin-bottom: 5px;
 }
 
-#postTags {
+#postTags, #profileTags {
     width: 50%;
     padding: 8px;
     font-family: 'Trebuchet MS';
