@@ -186,6 +186,9 @@ body {
     margin-right: 60px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .userProfile-header {
@@ -201,11 +204,12 @@ body {
 
 .profile-header {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: #F7F9FB;
     padding: 15px;
     border-radius: 15px;
-    height: 40px;
-    align-items: center;
+    height: auto;
     margin-top: 0;
     padding-top: 10px;
     margin-bottom: 15px;
@@ -228,6 +232,7 @@ body {
     margin-left: 10px;
     width: 200px;
     height: 200px;
+    border-radius: 50%;
 }
 
 .feed {
@@ -315,15 +320,27 @@ body {
 
 .edit-profile-btn {
     font-family: 'Trebuchet MS';
+    text-decoration: none;
     font-size: small;
     background-color: #7091D1;
-
+    color: #FFF9F0; /* Add text color */
     padding: 0.25rem;
     border-radius: 10px;
     height: 40px;
     width: 100px;
     margin-bottom: 20px;
-    margin-left: 85%;
+    margin-left: auto; 
+    margin-right: auto; 
+    display: block; 
+    cursor: pointer; 
+    border: none; 
+}
+
+#test {
+    width: 100%; 
+    display: flex; 
+    justify-content: center; 
+    margin-top: 20px; 
 }
 
 /* ==================== */
@@ -857,3 +874,4 @@ img {
     text-decoration: none;
     color: black;
 }
+
