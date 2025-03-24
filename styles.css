@@ -9,7 +9,7 @@ body {
     max-width: 100%;
     margin: 0 auto;
     /* background-image: url(images/background.jpeg); */
-    background-color: lightblue;
+    background-color: #BAD6EB;
     overflow-x: hidden;
 }
 
@@ -58,8 +58,9 @@ body {
     font-weight: bold;
     font-family: fantasy;
     margin: auto;
-    color: #fff9f0;
-    text-shadow: 4px 4px #081f5c;
+    color: #FFF9F0;
+    text-shadow: 4px 4px #081F5C;
+
     border-radius: 20px;
 }
 
@@ -68,8 +69,8 @@ body {
     font-family: 'Trebuchet MS';
     padding: 5px 10px;
     text-decoration: none;
-    color: #081f5c;
-    background-color: white;
+    color: #081F5C;
+    background-color: #F7F9FB;
 }
 
 .logout-btn {
@@ -77,13 +78,14 @@ body {
     font-family: 'Trebuchet MS';
     padding: 5px 10px;
     text-decoration: none;
-    color: #081f5c;
-    background-color: white;
+    color: #081F5C;
+    background-color: #F7F9FB;
+
 }
 
 .nav {
     display: flex;
-    background-color: white;
+    background-color: #F7F9FB;
     padding: 10px;
     height: 50px;
     align-items: center;
@@ -95,7 +97,8 @@ body {
     font-size: large;
     text-decoration: none;
     font-family: 'Trebuchet MS';
-    color: #081f5c;
+    color: #081F5C;
+
 }
 
 .nav-item:last-child {
@@ -129,7 +132,7 @@ body {
 
 .sidebar-header {
     font-family: 'Trebuchet MS';
-    color: white;
+    color: #FFF9F0;
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 15px;
@@ -144,7 +147,7 @@ body {
     list-style-type: none;
     margin-bottom: 20px;
     padding: 1rem;
-    background-color: white;
+    background-color: #F7F9FB;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     min-height: 200px;
@@ -152,7 +155,8 @@ body {
 
 .popularPost a {
     text-decoration: none;
-    color: black;
+    color: #081F5C;
+
 }
 
 .popular-list li {
@@ -167,7 +171,7 @@ body {
     font-weight: bold;
     padding: 10px;
     margin-top: 20px;
-    background-color: #bad6eb;
+    background-color: #7091D1;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
@@ -175,7 +179,7 @@ body {
 .userProfile {
     flex: 2;
     padding: 15px;
-    background-color: white;
+    background-color: #F7F9FB;
     font-size: large;
     margin-top: 10px;
     margin-right: 60px;
@@ -185,7 +189,7 @@ body {
 
 .userProfile-header {
     font-size: 1.5rem;
-    border-top: 2px solid black;
+    border-top: 2px solid #081F5C;
     font-family: 'Trebuchet MS';
     font-weight: bold;
     margin-top: 10px;
@@ -195,9 +199,9 @@ body {
 }
 
 .profile-header {
-    /* display: flex; */
+    display: flex;
+    background-color: #F7F9FB;
     padding: 15px;
-    background-color: white;
     border-radius: 15px;
     height: 40px;
     align-items: center;
@@ -215,7 +219,7 @@ body {
     padding: 15px;
     min-height: 100px;
     margin-left: 20px;
-    color: black;
+    color: #081F5C;
     margin-right: 20px;
 }
 
@@ -238,7 +242,7 @@ body {
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 15px;
-    color: white;
+    color: #FFF9F0;
     font-family: 'Trebuchet MS';
     height: 40px;
     display: flex;
@@ -249,21 +253,22 @@ body {
 
 .post {
     margin-bottom: 20px;
-    background-color: white;
+    background-color: #F7F9FB;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .post-header {
     display: flex;
-    padding: 15px;
-    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    border-bottom: 1px solid #7091D1;
+
 }
 
 .user-avatar {
     width: 50px;
     height: 50px;
-    border: 1px solid black;
+    border: 1px solid #081F5C;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -279,7 +284,7 @@ body {
 
 .timestamp {
     font-size: 0.8rem;
-    color: #666;
+    color: #334EAC;
 }
 
 .post-title {
@@ -309,7 +314,8 @@ body {
 .edit-profile-btn {
     font-family: 'Trebuchet MS';
     font-size: small;
-    background-color: #bad6eb;
+    background-color: #7091D1;
+
     padding: 0.25rem;
     border-radius: 10px;
     height: 40px;
@@ -321,8 +327,6 @@ body {
 /* ==================== */
 /* Post (main) Styling  */
 /* ==================== */
-
-/* Login Error */ 
 
 .post-content {
     font-family: 'Trebuchet MS';
@@ -340,11 +344,14 @@ body {
     border: none;
     cursor: pointer;
     font-size: 1.2rem;
+    color: #334EAC;
+
 }
 
 .comments-section {
     padding: 15px;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #7091D1;
+
 }
 
 .comment {
@@ -359,7 +366,7 @@ body {
 
 .comment-date {
     font-size: 0.8rem;
-    color: #666;
+    color: #334EAC;
     margin-left: auto;
 }
 
@@ -387,8 +394,8 @@ body {
 }
 
 .post-comment-btn {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #334EAC;
+    color: #FFF9F0;
     border: none;
     padding: 8px 12px;
     cursor: pointer;
@@ -412,17 +419,17 @@ body {
 /* View Single Post*/
 
 #results-return a {
-    color: white;
+    color: #FFF9F0;
     text-decoration: none;
 }
 
 /* Search Page */
 .search-bar {
-    color: white
+    color: #FFF9F0;
 }
 
 #bar {
-    background-color: white;
+    background-color: #F7F9FB;
     margin-top: 10px;
     height: 25px;
     width: 90%;
@@ -438,14 +445,23 @@ body {
     width: 250px;
     padding: 15px;
     margin-right: 40px;
+}
+
+.profile-header {
+    font-family: 'Trebuchet MS';
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #FFF9F0;
+    background: none;
+}
+
+
+.profile-card {
     height: 100%;
     overflow-y: auto;
     position: sticky;
     top: 140px;
-}
-
-.profile-card {
-    background-color: white;
+    background-color: #F7F9FB;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -455,7 +471,7 @@ body {
 .profile-avatar {
     width: 80px;
     height: 80px;
-    border: 1px solid black;
+    border: 1px solid #081F5C;
     margin: 0 auto 10px;
     display: flex;
     align-items: center;
@@ -470,7 +486,7 @@ body {
 
 .profile-bio {
     font-family: 'Trebuchet MS';
-    border: 1px solid #ccc;
+    border: 1px solid #7091D1;
     padding: 5px;
     margin: 10px 0;
     min-height: 60px;
@@ -494,7 +510,7 @@ img {
 /* ========================*/
 
 .sortby {
-    color: white;
+    color: #FFF9F0;
     text-align: end;
     margin-bottom: 0.25rem;
 }
@@ -504,7 +520,7 @@ img {
 /* ========================*/
 
 .new-post-form {
-    background-color: whitesmoke;
+    background-color: #F7F9FB;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -575,7 +591,7 @@ img {
 
 #submitBlog {
     padding: 8px 15px;
-    background-color: #bad6eb;
+    background-color: #334EAC;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -584,10 +600,11 @@ img {
     display: block;
     margin-left: auto;
     margin-right: 0;
+    color: #FFF9F0;
 }
 
 #submitBlog:hover {
-    background-color: #9abdd6;
+    background-color: #7091D1;
 }
 
 /* ========================*/
@@ -595,7 +612,8 @@ img {
 /* ========================*/
 
 #loginForm {
-    background-color: whitesmoke;
+    background-color: #F7F9FB;
+
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -637,7 +655,8 @@ img {
 
 #loginButton {
     padding: 8px 15px;
-    background-color: #bad6eb;
+    background-color: #334EAC;
+
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -646,10 +665,12 @@ img {
     display: block;
     margin-left: auto;
     margin-right: 0;
+    color: #FFF9F0;
 }
 
 #loginButton:hover {
-    background-color: #9abdd6;
+    background-color: #7091D1;
+
 }
 
 /* ========================*/
@@ -657,7 +678,8 @@ img {
 /* ========================*/
 
 #signupForm {
-    background-color: whitesmoke;
+    background-color: #F7F9FB;
+
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -733,7 +755,7 @@ img {
 
 #signupButton {
     padding: 8px 15px;
-    background-color: #bad6eb;
+    background-color: #334EAC;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -742,10 +764,12 @@ img {
     display: block;
     margin-left: auto;
     margin-right: 0;
+    color: #FFF9F0;
 }
 
 #signupButton:hover {
-    background-color: #9abdd6;
+    background-color: #7091D1;
+
 }
 
 /* ====================== */
@@ -754,7 +778,7 @@ img {
 
 .comments-section {
     margin-top: 10px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #7091D1;
     padding-top: 10px;
     padding: 15px;
 }
@@ -762,7 +786,8 @@ img {
 .comment {
     display: flex;
     padding: 8px 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #BAD6EB;
+
 }
 
 .comment-checkbox {
@@ -779,9 +804,35 @@ img {
 }
 
 .comment-date {
-    color: #777;
+    color: #334EAC;
     font-size: 0.8em;
 }
+
+.comment-form {
+    margin-top: 15px;
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #7091D1;
+    border-radius: 4px;
+}
+
+.post-comment-btn {
+    background-color: #334EAC;
+    color: #FFF9F0;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.post-comment-btn:hover {
+    background-color: #7091D1;
+}
+
 
 .error-message, .success-message {
     padding: 10px;
