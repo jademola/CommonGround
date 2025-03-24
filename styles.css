@@ -9,7 +9,24 @@ body {
     max-width: 100%;
     margin: 0 auto;
     /* background-image: url(images/background.jpeg); */
-    background-color: lightblue;
+    background-color: #BAD6EB;
+    overflow-x: hidden;
+}
+
+/* Hide scrollbars but keep scrolling functionality */
+/* For Webkit browsers (Chrome, Safari) */
+.feed::-webkit-scrollbar {
+    display: none;
+}
+
+/* For Firefox */
+.feed {
+    scrollbar-width: none;
+}
+
+/* For IE and Edge */
+.feed {
+    -ms-overflow-style: none;
 }
 
 /* ============== */
@@ -33,6 +50,8 @@ body {
     padding: 10px;
     position: relative;
     margin-top: 10px;
+    height: 80px;
+    margin-bottom: 10px;
 }
 
 .site-name {
@@ -40,8 +59,9 @@ body {
     font-weight: bold;
     font-family: fantasy;
     margin: auto;
-    color: #fff9f0;
-    text-shadow: 4px 4px #081f5c;
+    color: #FFF9F0;
+    text-shadow: 4px 4px #081F5C;
+
     border-radius: 20px;
 }
 
@@ -50,8 +70,8 @@ body {
     font-family: 'Trebuchet MS';
     padding: 5px 10px;
     text-decoration: none;
-    color: #081f5c;
-    background-color: white;
+    color: #081F5C;
+    background-color: #F7F9FB;
 }
 
 .logout-btn {
@@ -59,14 +79,17 @@ body {
     font-family: 'Trebuchet MS';
     padding: 5px 10px;
     text-decoration: none;
-    color: #081f5c;
-    background-color: white;
+    color: #081F5C;
+    background-color: #F7F9FB;
+
 }
 
 .nav {
     display: flex;
-    background-color: white;
+    background-color: #F7F9FB;
     padding: 10px;
+    height: 50px;
+    align-items: center;
 }
 
 .nav-item {
@@ -75,7 +98,8 @@ body {
     font-size: large;
     text-decoration: none;
     font-family: 'Trebuchet MS';
-    color: #081f5c;
+    color: #081F5C;
+
 }
 
 .nav-item:last-child {
@@ -84,6 +108,13 @@ body {
 
 .main-content {
     display: flex;
+    height: calc(100vh - 140px); /* Subtract header height */
+    overflow: hidden; /* Prevent overall page scrolling */
+    /* width: 100%; */
+}
+
+#mainFeed {
+    height: auto !important;
 }
 
 /* =========================*/
@@ -94,26 +125,39 @@ body {
     width: 250px;
     padding: 15px;
     margin-left: 40px;
+    height: 100%;
+    overflow-y: auto;
+    position: sticky;
+    top: 140px;
 }
 
 .sidebar-header {
     font-family: 'Trebuchet MS';
-    color: white;
+    color: #FFF9F0;
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 15px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+    padding-top: 10px;
 }
 
 .popular-list {
     list-style-type: none;
     margin-bottom: 20px;
     padding: 1rem;
-    background-color: white;
+    background-color: #F7F9FB;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    min-height: 200px;
 }
 
 .popularPost a {
     text-decoration: none;
-    color: black;
+    color: #081F5C;
+
 }
 
 .popular-list li {
@@ -128,22 +172,25 @@ body {
     font-weight: bold;
     padding: 10px;
     margin-top: 20px;
-    background-color: #bad6eb;
-    border-radius: 10px;
+    background-color: #7091D1;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .userProfile {
     flex: 2;
     padding: 15px;
-    background-color: white;
+    background-color: #F7F9FB;
     font-size: large;
     margin-top: 10px;
     margin-right: 60px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .userProfile-header {
     font-size: 1.5rem;
-    border-top: 2px solid black;
+    border-top: 2px solid #081F5C;
     font-family: 'Trebuchet MS';
     font-weight: bold;
     margin-top: 10px;
@@ -154,9 +201,18 @@ body {
 
 .profile-header {
     display: flex;
-    padding: 10px;
-    background-color: white;
+    background-color: #F7F9FB;
+    padding: 15px;
     border-radius: 15px;
+    height: 40px;
+    align-items: center;
+    margin-top: 0;
+    padding-top: 10px;
+    margin-bottom: 15px;
+    font-family: 'Trebuchet MS';
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
 }
 
 .profileBio-content {
@@ -164,7 +220,7 @@ body {
     padding: 15px;
     min-height: 100px;
     margin-left: 20px;
-    color: black;
+    color: #081F5C;
     margin-right: 20px;
 }
 
@@ -177,31 +233,43 @@ body {
 .feed {
     flex: 2;
     padding: 15px;
+    overflow-y: auto;
+    height: 100%;
+    max-width: 800px; /* Limit width for better readability */
+    margin: 0 auto;
 }
 
 .feed-header {
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 15px;
-    color: white;
+    color: #FFF9F0;
     font-family: 'Trebuchet MS';
+    height: 40px;
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+    padding-top: 10px;
 }
 
 .post {
     margin-bottom: 20px;
-    background-color: white;
+    background-color: #F7F9FB;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .post-header {
     display: flex;
     padding: 10px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #7091D1;
+
 }
 
 .user-avatar {
     width: 50px;
     height: 50px;
-    border: 1px solid black;
+    border: 1px solid #081F5C;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -217,11 +285,12 @@ body {
 
 .timestamp {
     font-size: 0.8rem;
-    color: #666;
+    color: #334EAC;
 }
 
 .post-title {
     font-family: 'Trebuchet MS';
+    font-weight: 500;
     padding: 5px;
     margin: 5px 0;
 }
@@ -247,7 +316,8 @@ body {
 .edit-profile-btn {
     font-family: 'Trebuchet MS';
     font-size: small;
-    background-color: #bad6eb;
+    background-color: #7091D1;
+
     padding: 0.25rem;
     border-radius: 10px;
     height: 40px;
@@ -259,8 +329,6 @@ body {
 /* ==================== */
 /* Post (main) Styling  */
 /* ==================== */
-
-/* Login Error */ 
 
 .post-content {
     font-family: 'Trebuchet MS';
@@ -278,11 +346,14 @@ body {
     border: none;
     cursor: pointer;
     font-size: 1.2rem;
+    color: #334EAC;
+
 }
 
 .comments-section {
     padding: 15px;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #7091D1;
+
 }
 
 .comment {
@@ -297,13 +368,14 @@ body {
 
 .comment-date {
     font-size: 0.8rem;
-    color: #666;
+    color: #334EAC;
     margin-left: auto;
 }
 
 .comment-form {
     display: flex;
-    margin-top: 10px;
+    margin-top: 15px;
+    flex-direction: column;
 }
 
 .comment-input {
@@ -311,8 +383,35 @@ body {
     margin-right: 10px;
 }
 
+/* Fixed comment textarea and button styles */
+.comment-form textarea {
+    width: 100%;
+    height: 80px;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: none; /* Prevent user resizing */
+    font-family: 'Trebuchet MS';
+}
+
 .post-comment-btn {
-    padding: 0.25rem;
+    background-color: #334EAC;
+    color: #FFF9F0;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 120px;
+    height: 36px;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
+    align-self: flex-end;
+    margin-top: 10px;
+}
+
+.post-comment-btn:hover {
+    background-color: #45a049;
 }
 
 #post-img {
@@ -322,17 +421,17 @@ body {
 /* View Single Post*/
 
 #results-return a {
-    color: white;
+    color: #FFF9F0;
     text-decoration: none;
 }
 
 /* Search Page */
 .search-bar {
-    color: white
+    color: #FFF9F0;
 }
 
 #bar {
-    background-color: white;
+    background-color: #F7F9FB;
     margin-top: 10px;
     height: 25px;
     width: 90%;
@@ -354,19 +453,27 @@ body {
     font-family: 'Trebuchet MS';
     font-size: 1.2rem;
     font-weight: bold;
-    color: white;
+    color: #FFF9F0;
     background: none;
 }
 
+
 .profile-card {
-    background-color: white;
-    padding: 10px;
+    height: 100%;
+    overflow-y: auto;
+    position: sticky;
+    top: 140px;
+    background-color: #F7F9FB;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    min-height: 200px;
 }
 
 .profile-avatar {
     width: 80px;
     height: 80px;
-    border: 1px solid black;
+    border: 1px solid #081F5C;
     margin: 0 auto 10px;
     display: flex;
     align-items: center;
@@ -381,7 +488,7 @@ body {
 
 .profile-bio {
     font-family: 'Trebuchet MS';
-    border: 1px solid #ccc;
+    border: 1px solid #7091D1;
     padding: 5px;
     margin: 10px 0;
     min-height: 60px;
@@ -405,7 +512,7 @@ img {
 /* ========================*/
 
 .sortby {
-    color: white;
+    color: #FFF9F0;
     text-align: end;
     margin-bottom: 0.25rem;
 }
@@ -415,9 +522,10 @@ img {
 /* ========================*/
 
 .new-post-form {
-    background-color: whitesmoke;
+    background-color: #F7F9FB;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 #titleContent {
@@ -485,7 +593,7 @@ img {
 
 #submitBlog {
     padding: 8px 15px;
-    background-color: #bad6eb;
+    background-color: #334EAC;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -494,10 +602,11 @@ img {
     display: block;
     margin-left: auto;
     margin-right: 0;
+    color: #FFF9F0;
 }
 
 #submitBlog:hover {
-    background-color: #9abdd6;
+    background-color: #7091D1;
 }
 
 /* ========================*/
@@ -505,9 +614,11 @@ img {
 /* ========================*/
 
 #loginForm {
-    background-color: whitesmoke;
+    background-color: #F7F9FB;
+
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 #login {
@@ -546,7 +657,8 @@ img {
 
 #loginButton {
     padding: 8px 15px;
-    background-color: #bad6eb;
+    background-color: #334EAC;
+
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -555,10 +667,12 @@ img {
     display: block;
     margin-left: auto;
     margin-right: 0;
+    color: #FFF9F0;
 }
 
 #loginButton:hover {
-    background-color: #9abdd6;
+    background-color: #7091D1;
+
 }
 
 /* ========================*/
@@ -566,9 +680,11 @@ img {
 /* ========================*/
 
 #signupForm {
-    background-color: whitesmoke;
+    background-color: #F7F9FB;
+
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 #signUsername {
@@ -641,7 +757,7 @@ img {
 
 #signupButton {
     padding: 8px 15px;
-    background-color: #bad6eb;
+    background-color: #334EAC;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -650,8 +766,94 @@ img {
     display: block;
     margin-left: auto;
     margin-right: 0;
+    color: #FFF9F0;
 }
 
 #signupButton:hover {
-    background-color: #9abdd6;
+    background-color: #7091D1;
+
+}
+
+/* ====================== */
+/* Comment Section Styling */
+/* ======================= */
+
+.comments-section {
+    margin-top: 10px;
+    border-top: 1px solid #7091D1;
+    padding-top: 10px;
+    padding: 15px;
+}
+
+.comment {
+    display: flex;
+    padding: 8px 0;
+    border-bottom: 1px solid #BAD6EB;
+
+}
+
+.comment-checkbox {
+    margin-right: 10px;
+}
+
+.comment-user {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.comment-body {
+    flex-grow: 1;
+}
+
+.comment-date {
+    color: #334EAC;
+    font-size: 0.8em;
+}
+
+.comment-form {
+    margin-top: 15px;
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #7091D1;
+    border-radius: 4px;
+}
+
+.post-comment-btn {
+    background-color: #334EAC;
+    color: #FFF9F0;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.post-comment-btn:hover {
+    background-color: #7091D1;
+}
+
+
+.error-message, .success-message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.error-message {
+    background-color: #ffdddd;
+    border-left: 6px solid #f44336;
+}
+
+.success-message {
+    background-color: #ddffdd;
+    border-left: 6px solid #4CAF50;
+}
+
+
+#titleLink {
+    text-decoration: none;
+    color: black;
 }

@@ -1,6 +1,6 @@
 <?php
-include "db_connect.php";
 
+include "db_connect.php";
 session_start();
 
 if ($_SESSION['loggedIn']) {
@@ -12,6 +12,7 @@ if ($_SESSION['loggedIn']) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $username = $_POST['loginUsername'];
   $password = $_POST['loginPassword'];
+
 
   // Query username and password 
   $sql = "SELECT username, password FROM userInfo WHERE username = ?";
@@ -52,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
- <!-- Header -->
+  
   <header class="header">
     <h1 class="site-name">Common Ground</h1>
     <!-- Replace this link -->
@@ -97,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             placeholder="Enter password"
             required>
         </div>
-      
+
 <!-- Server-Side Validation Error Message -->
         <?php if (isset($errorMessage)): ?>
           <div class="error-message">
