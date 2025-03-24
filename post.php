@@ -1,4 +1,16 @@
 <?php
+/*
+Handles posts. Large class
+1. Gets post data
+2. 
+*/
+session_start();
+
+// Generate CSRF token if not exists
+if (empty($_SESSION['csrf_token'])) {
+  $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 // Include the database connection
 require_once 'db_connect.php';
 
@@ -10,7 +22,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 }
 
 // Get the post ID from the URL
-$post_id = $_GET['id'];
+$post_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
 // Fetch the post data
 $post_sql = "SELECT p.*, u.username 
@@ -37,40 +49,43 @@ $post_stmt->close();
 $error_message = "";
 $success_message = "";
 
-// Process comment form submission
+// Process comment form submission (non-AJAX fallback)
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
     // Get form data
-    $comment_content = $_POST["comment_content"];
-
-    // Get current user - in a real application, this would come from a session
-    $current_user = $_SESSION["username"] ?? ""; // Assume username is stored in session
-
-    // For testing purposes, if no session is available, use a default user
-    if (empty($current_user)) {
-        $current_user = "TroyBoy78"; // Use an existing user from the database for testing
-    }
-
-    // Validate inputs
-    if (empty($comment_content)) {
-        $error_message = "Comment content cannot be empty.";
+    if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
+        $error_message = "You must be logged in to comment.";
     } else {
-        // Prepare and execute SQL query to insert comment
-        $stmt = $conn->prepare("INSERT INTO comments (author, content, post_id, date) VALUES (?, ?, ?, CURRENT_DATE())");
-        $stmt->bind_param("ssi", $current_user, $comment_content, $post_id);
 
-        if ($stmt->execute()) {
-            // Comment added successfully
-            $success_message = "Comment added successfully!";
+        $comment_content = htmlspecialchars(trim($_POST["comment_content"]));
+        $current_user = $_SESSION["username"];
 
-            // Redirect to avoid form resubmission
-            header("Location: post.php?id=" . $post_id);
-            exit();
+        // For testing purposes, if no session is available, use a default user
+     //   if (empty($current_user)) {
+     //       $current_user = "TroyBoy78"; // Use an existing user from the database for testing
+      //  }
+
+        // Validate inputs
+        if (empty($comment_content)) {
+            $error_message = "Comment content cannot be empty.";
         } else {
-            // Error occurred
-            $error_message = "Error adding comment: " . $conn->error;
-        }
+            // Prepare and execute SQL query to insert comment
+            $stmt = $conn->prepare("INSERT INTO comments (author, content, post_id, date) VALUES (?, ?, ?, NOW())");
+            $stmt->bind_param("ssi", $current_user, $comment_content, $post_id);
 
-        $stmt->close();
+            if ($stmt->execute()) {
+                // Comment added successfully
+                $success_message = "Comment added successfully!";
+
+                // Redirect to avoid form resubmission
+                header("Location: post.php?id=" . $post_id);
+                exit();
+            } else {
+                // Error occurred
+                $error_message = "Error adding comment: " . $conn->error;
+            }
+
+            $stmt->close();
+        }
     }
 }
 ?>
@@ -95,23 +110,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
                 <?php include "popularsidebar.php" ?>
                 <br>
                 <div class="notification-box">
-                    7 new Notifications
+                    <?php echo isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"] ? "7 new Notifications" : "Sign in to see notifications"; ?>
                 </div>
             </div>
         </aside>
 
         <main class="feed">
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb">
+                <a href="index.php">Home</a> &gt; 
+                <?php
+                // Fetch first tag for breadcrumb
+                $tag_sql = "SELECT t.name FROM tags t 
+                    JOIN post_tags pt ON t.id = pt.tag_id 
+                    WHERE pt.post_id = ? LIMIT 1";
+                $tag_stmt = $conn->prepare($tag_sql);
+                $tag_stmt->bind_param("i", $post_id);
+                $tag_stmt->execute();
+                $tag_result = $tag_stmt->get_result();
+                if ($tag_row = $tag_result->fetch_assoc()) {
+                    echo '<a href="search.php?tag=' . urlencode($tag_row['name']) . '">' . htmlspecialchars($tag_row['name']) . '</a> &gt; ';
+                }
+                $tag_stmt->close();
+                ?>
+                <span><?php echo htmlspecialchars($post["title"]); ?></span>
+            </div>
+
             <h2 class="feed-header" id="results-return"><a href="index.php">&lt; Return to Feed</a></h2>
 
             <?php if (!empty($error_message)): ?>
-                <div class="error-message"><?php echo $error_message; ?></div>
+                <div class="error-message"><?php echo htmlspecialchars($error_message); ?></div>
             <?php endif; ?>
 
             <?php if (!empty($success_message)): ?>
-                <div class="success-message"><?php echo $success_message; ?></div>
+                <div class="success-message"><?php echo htmlspecialchars($success_message); ?></div>
             <?php endif; ?>
 
-            <div class="post">
+            <div class="post" id="post-<?php echo $post_id; ?>">
                 <div class="post-header">
                     <img src="images/icon.png" alt="" id="post-img">
                     <div class="user-info">
@@ -139,126 +174,225 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
                 </div>
                 <div class="post-title"><?php echo htmlspecialchars($post["title"]); ?></div>
                 <div class="post-content">
-                    <?php echo htmlspecialchars($post["content"]); ?>
+                    <?php echo nl2br(htmlspecialchars($post["content"])); ?>
                 </div>
                 <div class="post-footer">
-                    
-                
+                    <button class="like-btn" onclick="likePost(this, <?php echo $post_id; ?>)" 
+                            data-post-id="<?php echo $post_id; ?>">♡ Like</button>
                 </div>
 
                 <!-- Comments Section -->
-                <div class="comments-section">
-                    <div>Comments:</div>
+                <div class="comments-section" id="comments-section">
+                    <h3>Comments:</h3>
 
-                    <?php
-                    // Fetch comments for this post
-                    $comment_sql = "SELECT c.*, u.username FROM comments c 
-                        JOIN userInfo u ON c.author = u.username 
-                        WHERE c.post_id = ? 
-                        ORDER BY c.date DESC";
-                    $comment_stmt = $conn->prepare($comment_sql);
-                    $comment_stmt->bind_param("i", $post_id);
-                    $comment_stmt->execute();
-                    $comment_result = $comment_stmt->get_result();
+                    <div id="comments-list">
+                        <?php
+                        // Fetch comments for this post
+                        $comment_sql = "SELECT c.*, u.username FROM comments c 
+                            JOIN userInfo u ON c.author = u.username 
+                            WHERE c.post_id = ? 
+                            ORDER BY c.date DESC";
+                        $comment_stmt = $conn->prepare($comment_sql);
+                        $comment_stmt->bind_param("i", $post_id);
+                        $comment_stmt->execute();
+                        $comment_result = $comment_stmt->get_result();
 
-                    if ($comment_result->num_rows > 0) {
-                        while ($comment = $comment_result->fetch_assoc()) {
-                    ?>
-                            <div class="comment">
-                                <div class="comment-checkbox">□</div>
-                                <div class="comment-user"><?php echo htmlspecialchars($comment["author"]); ?>:</div>
-                                <div class="comment-body"><?php echo htmlspecialchars($comment["content"]); ?></div>
-                                <div class="comment-date"><?php echo date("m/d/y", strtotime($comment["date"])); ?></div>
-                            </div>
-                    <?php
+                        if ($comment_result->num_rows > 0) {
+                            while ($comment = $comment_result->fetch_assoc()) {
+                        ?>
+                                <div class="comment" id="comment-<?php echo $comment['id']; ?>">
+                                    <div class="comment-user"><?php echo htmlspecialchars($comment["author"]); ?>:</div>
+                                    <div class="comment-body"><?php echo htmlspecialchars($comment["content"]); ?></div>
+                                    <div class="comment-date"><?php echo date("m/d/y g:ia", strtotime($comment["date"])); ?></div>
+                                </div>
+                        <?php
+                            }
+                        } else {
+                            echo '<div class="no-comments">No comments yet. Be the first to comment!</div>';
                         }
-                    } else {
-                        echo '<div class="no-comments">No comments yet. Be the first to comment!</div>';
-                    }
-                    $comment_stmt->close();
-                    ?>
+                        $comment_stmt->close();
+                        ?>
+                    </div>
 
                     <!-- Add Comment Form -->
-                    <form class="comment-form" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . "?id=" . $post_id; ?>">
-                        <textarea name="comment_content" placeholder="Write a comment..." required></textarea>
-                        <button type="submit" name="submit_comment" class="post-comment-btn">Post Comment</button>
-                    </form>
+                    <?php if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]): ?>
+                        <!-- AJAX Comment Form -->
+                        <form id="ajax-comment-form" class="comment-form">
+                            <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+                            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                            <textarea id="comment-content" name="comment_content" placeholder="Write a comment..." required></textarea>
+                            <button type="submit" class="post-comment-btn">Post Comment</button>
+                        </form>
+                    <?php else: ?>
+                        <!-- Non-AJAX form for fallback -->
+                        <div class="login-to-comment">
+                            <a href="login.php">Log in</a> to post a comment.
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </main>
 
         <aside class="profile-sidebar">
-            <h2 class="profile-header">Profile:</h2>
-            <div class="profile-card">
-                <img src="images/icon.png" alt="">
-                <div class="profile-username">
-                    <?php echo isset($_SESSION["username"]) ? htmlspecialchars($_SESSION["username"]) : "Guest"; ?>
-                </div>
-                <div class="profile-bio">
-                    <?php
-                    if (isset($_SESSION["username"])) {
-                        $user_bio_sql = "SELECT bio FROM profile WHERE username = ?";
-                        $user_bio_stmt = $conn->prepare($user_bio_sql);
-                        $user_bio_stmt->bind_param("s", $_SESSION["username"]);
-                        $user_bio_stmt->execute();
-                        $user_bio_result = $user_bio_stmt->get_result();
-                        if ($user_bio_row = $user_bio_result->fetch_assoc()) {
-                            echo htmlspecialchars($user_bio_row["bio"]);
-                        } else {
-                            echo "No bio available.";
-                        }
-                        $user_bio_stmt->close();
-                    } else {
-                        echo "Please log in to view your profile.";
-                    }
-                    ?>
-                </div>
-                <div class="profile-tags">
-                    <div><b>Tags:</b></div>
-                    <div>
-                        <?php
-                        // Fetch user tags if user is logged in
-                        if (isset($_SESSION["username"])) {
-                            $user_tags_sql = "SELECT t.name FROM tags t 
-                                             JOIN user_tags ut ON t.id = ut.tag_id 
-                                             JOIN userInfo u ON ut.user_id = u.id 
-                                             WHERE u.username = ?";
-                            $user_tags_stmt = $conn->prepare($user_tags_sql);
-                            $user_tags_stmt->bind_param("s", $_SESSION["username"]);
-                            $user_tags_stmt->execute();
-                            $user_tags_result = $user_tags_stmt->get_result();
-
-                            while ($tag = $user_tags_result->fetch_assoc()) {
-                                $tag_id = htmlspecialchars(strtolower($tag["name"])) . "-tag";
-                                echo '<span class="tag" id="' . $tag_id . '">' . htmlspecialchars($tag["name"]) . '</span>';
-                            }
-                            $user_tags_stmt->close();
-                        } else {
-                            // Show some default tags for guests
-                            echo '<span class="tag" id="sports-tag">Sports</span>';
-                            echo '<span class="tag" id="food-tag">Food</span>';
-                        }
-                        ?>
-                    </div>
-                </div>
-            </div>
+            <?php include "profilesidebar.php"; ?>
         </aside>
     </div>
 
     <script>
-        function changeHeart(button) {
-            const postId = button.getAttribute('data-post-id');
-
+        // Function to add a new comment to the page
+        function addCommentToDOM(comment) {
+            const commentsList = document.getElementById('comments-list');
+            const noCommentsMessage = document.querySelector('.no-comments');
+            
+            // Remove "no comments" message if it exists
+            if (noCommentsMessage) {
+                noCommentsMessage.remove();
+            }
+            
+            // Create new comment element
+            const commentDiv = document.createElement('div');
+            commentDiv.className = 'comment';
+            commentDiv.id = 'comment-' + comment.id;
+            
+            commentDiv.innerHTML = `
+                <div class="comment-user">${comment.author}:</div>
+                <div class="comment-body">${comment.content}</div>
+                <div class="comment-date">${comment.date}</div>
+            `;
+            
+            // Add to the top of the comments list
+            commentsList.insertBefore(commentDiv, commentsList.firstChild);
+        }
+        
+        // Function to load comments via AJAX
+        function loadComments() {
+            const postId = <?php echo $post_id; ?>;
+            
+            fetch('get_comments.php?post_id=' + postId)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error('Error loading comments:', data.error);
+                        return;
+                    }
+                    
+                    // Get existing comment IDs
+                    const existingComments = document.querySelectorAll('.comment');
+                    const existingIds = Array.from(existingComments).map(comment => {
+                        return parseInt(comment.id.replace('comment-', ''));
+                    });
+                    
+                    // Add new comments that aren't already displayed
+                    let newCommentsAdded = false;
+                    
+                    data.comments.forEach(comment => {
+                        if (!existingIds.includes(parseInt(comment.id))) {
+                            addCommentToDOM(comment);
+                            newCommentsAdded = true;
+                        }
+                    });
+                    
+                    // If no comments exist yet but we got some from server
+                    if (existingComments.length === 0 && data.comments.length > 0) {
+                        const noCommentsMessage = document.querySelector('.no-comments');
+                        if (noCommentsMessage) {
+                            noCommentsMessage.remove();
+                        }
+                        
+                        data.comments.forEach(comment => {
+                            addCommentToDOM(comment);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+        
+        // Function to handle post likes
+        function likePost(button, postId) {
+            // Visual feedback immediately
             if (button.textContent.includes('♡')) {
                 button.textContent = '♥ Like';
-                // You can add AJAX call here to update likes in the database
-                // Example: fetch('like.php?post_id=' + postId + '&action=like')
             } else {
                 button.textContent = '♡ Like';
-                // AJAX call to unlike
-                // Example: fetch('like.php?post_id=' + postId + '&action=unlike')
             }
+            
+            // AJAX implementation for likes
+            fetch('like_post.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'post_id=' + postId
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    // Revert if unsuccessful
+                    if (button.textContent.includes('♥')) {
+                        button.textContent = '♡ Like';
+                    } else {
+                        button.textContent = '♥ Like';
+                    }
+                    
+                    // If there's a message about not being logged in, redirect to login
+                    if (data.message && data.message.includes('logged in')) {
+                        window.location.href = 'login.php';
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
+        
+        // Event listener for comment form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const commentForm = document.getElementById('ajax-comment-form');
+            if (commentForm) {
+                commentForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const postId = this.querySelector('input[name="post_id"]').value;
+                    const csrfToken = this.querySelector('input[name="csrf_token"]').value;
+                    const content = document.getElementById('comment-content').value;
+                    
+                    if (!content.trim()) {
+                        alert('Comment cannot be empty');
+                        return;
+                    }
+                    
+                    // Submit comment via AJAX
+                    fetch('post_comment.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `post_id=${postId}&comment_content=${encodeURIComponent(content)}&csrf_token=${csrfToken}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Add the new comment to the page
+                            addCommentToDOM(data.comment);
+                            
+                            // Clear the comment form
+                            document.getElementById('comment-content').value = '';
+                        } else {
+                            alert(data.message || 'Error posting comment');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while posting your comment');
+                    });
+                });
+            }
+            
+            // Polling for new comments (every 10 seconds)
+            setInterval(loadComments, 10000);
+        });
     </script>
 </body>
 
