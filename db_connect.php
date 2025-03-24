@@ -5,10 +5,16 @@ Initializes database connection:
 */
 
 // Database connection details
-$servername = "localhost";   // Hostname
-$username = "root";          // XAMPP MySQL default username
-$password = "";              // XAMPP MySQL default password (blank)
-$dbname = "CommonGround";    // The name of your database
+//$servername = "localhost";   // Hostname
+//$username = "root";          // XAMPP MySQL default username
+//$password = "";              // XAMPP MySQL default password (blank)
+//$dbname = "CommonGround";    // The name of your database
+
+$servername = "localhost";           // Still localhost, correct
+$username = "tima01";                // Your CWL
+$password = "tima01";                // Unless you’ve changed it
+$dbname = "tima01";                  // Your DB name (same as CWL)
+
 
 // Try to connect
 try {
