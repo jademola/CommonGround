@@ -1,6 +1,10 @@
 <?php
 include "db_connect";
 
+
+// Not sure what this is supposed to do
+
+
 session_start();
 if (!isset($_SESSION['loggedIn'])) {
     $_SESSION['loggedIn'] = false;

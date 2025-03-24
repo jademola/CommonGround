@@ -1,5 +1,13 @@
 
 <?php
+/*
+Signup page:
+1. Session checks
+2. Input sanitization and checking - both server and client side
+3. Insert new signup into database , redirect to profile
+*/
+
+
 // Need to start session at beginning
 session_start();
 

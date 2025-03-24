@@ -1,8 +1,13 @@
 <?php
 /*
-Handles posts. Large class
-1. Gets post data
-2. 
+Handles posts:
+1. Session checks
+2. Get post information
+3. Non asynch fallback option if AJAX somehow doesn't function properly
+4. Display post content 
+5. Retrieve and display comments tied to post
+6. Sanitize and validate new comments beofre comitting to DB
+7. AJAX functionality with 10s polling
 */
 session_start();
 
