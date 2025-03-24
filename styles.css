@@ -849,3 +849,9 @@ img {
     background-color: #ddffdd;
     border-left: 6px solid #4CAF50;
 }
+
+
+#titleLink {
+    text-decoration: none;
+    color: black;
+}

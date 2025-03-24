@@ -116,7 +116,11 @@ $posts_result = $conn->query($posts_sql);
                             </div>
                             <div class="timestamp"><?php echo date("g:ia, F jS, Y", strtotime($post["date"])); ?></div>
                         </div>
-                        <div class="post-title"><?php echo htmlspecialchars($post["title"]); ?></div>
+                        <div class="post-title">
+                            <a id="titleLink" href="post.php?id=<?php echo $post['id']; ?>">
+                                <?php echo htmlspecialchars($post["title"]); ?>
+                            </a>
+                        </div>
                         <div class="post-content">
                             <?php echo htmlspecialchars($post["content"]) . (strlen($post["content"]) > 200 ? "..." : ""); ?>
                         </div>
