@@ -13,16 +13,13 @@
   <div class="main-content">
     <!-- Popular Post Sidebar -->
     <aside class="sidebar">
-      <h2 class="sidebar-header">Popular Topics</h2>
-      <ul class="popular-list">
-        <li id="popular-box-title">Popular:</li>
-          <li class="popularPost">1. The Secret to Building a Successful Morning Routine</li>
-          <li class="popularPost">2. The Best Books You’ve Never Heard of: A Reading List for the Curious</li>
-          <li class="popularPost">3. The Most Beautiful Places You’ve Never Seen: Iceland</li>
-          </ul>
-      <!-- Notifications Alert Bar -->
-      <div class="notification-box">No new notifications</div>
-    </aside>
+           <?php include "popularsidebar.php"; ?> 
+        </br>
+            <!-- Notification Alert Bar -->
+            <div class="notification-box">
+                7 new Notifications!
+            </div>
+        </aside>
 
     <!-- New Post Section -->
     <main class="feed">

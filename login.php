@@ -38,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     else {
       $errorMessage = "Invalid credentials, Please try again.";
     }
+    $stmt->close();
 }
 ?>
 
@@ -79,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
        <!-- Expand the size to match the V2 document -->
       <form id="loginForm" class="auth-form" method="post">
         <div id="login">
-          <label for="loginUsername">Username or Email:</label>
+          <label for="loginUsername">Username:</label>
           <input
             type="text"
             id="loginUsername"

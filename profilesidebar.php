@@ -3,10 +3,8 @@
     $username = $_SESSION['username']; 
 ?> 
 
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,39 +17,13 @@
         background-color: #9abdd6;
             }
 </style>
-
 <body>
-
-    <?php include "header.php" ?>
-
-
-    <!-- Main Content -->
-    <div class="main-content" id="mainFeed">
-
-        <!-- Popular Post Sidebar -->
-        <aside class="sidebar">
-           <?php include "popularsidebar.php"; ?> 
-        </br>
-            <!-- Notification Alert Bar -->
-            <div class="notification-box">
-                7 new Notifications!
-            </div>
-        </aside>
-
-        <!-- Main: View Profile -->
-        <main class="userProfile">
-            <h2 class="userProfile-header"><?php echo "@". $_SESSION['username'] ?></h2>
-            <div class="profile-header">
-                <div class="user-avatar">
-                    <img src="images/profile1.jpg" alt="" id="#user-profile-img">
-                </div>
-                <div class="profileBio-content">
-
-                    <div>
-                        <div id="username-display"><b>Username: <?php echo $_SESSION['username']?></b></div>
-                    </div>
-                    <div>
-                         <?php 
+<h2 class="profile-header">Profile:</h2>
+            <div class="profile-card">
+                <img src="images/icon.png" alt="">
+                <div class="profile-username"><?php echo $_SESSION['username'] ?></div>
+                <div class="profile-bio">
+                <?php 
                          $sql = "SELECT bio
                              FROM profile 
                              WHERE username = ?"; 
@@ -70,11 +42,11 @@
 
                             $stmt->close();
                         ?>
-                    <!-- Tags - Replace with DB-->
-                    </div>
-                    <div class="profile-tags">
-                        <p><b>User Tags:</b></p>
-
+                </div>
+                <?php if ($_SESSION['loggedIn']): ?>
+                    <div class="side-profile-tags">
+                        <div><b>Tags:</b></div>
+                        <div id="side-profile-tags-whitespace">
                         <?php 
                         $sql = "SELECT tags.name 
                         FROM profile_tags JOIN tags 
@@ -94,19 +66,13 @@
                         }
                        $stmt->close();
                         ?> 
+                        </div>
                     </div>
-                </div>
-
+                <?php else: ?>
+                    <div class="profile-buttons">
+                        <button onclick="window.location.href='login.php'">Login</button>
+                        <button onclick="window.location.href='signup.php'">Sign-up</button>
+                    </div>
+                <?php endif; ?>
             </div>
-            <!-- Edit Profile Button -->
-            <div id="test">
-                <a href="editprofile.php">
-                    <button class="edit-profile-btn">Edit Profile</button>
-                </a>
-            </div>
-        </main>
-    </div>
-
-</body>
-
-</html>
+    </body>
