@@ -6,13 +6,22 @@ $username = "root";          // XAMPP MySQL default username
 $password = "";              // XAMPP MySQL default password (blank)
 $dbname = "CommonGround";    // The name of your database
 
-// Create connection
+// Try to connect
+try {
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection 
 if ($conn->connect_error) {
-    // If there is an error, display a message 
-    die("Connection failed: " . $conn->connect_error);
-} 
+    error_log("Database connection failed: " . $conn->connect_error);
+    throw new Exception("Database connection failed");
+}
+
+// set charset to true UTF-8 encoding 
+$conn->set_charset("utf8mb4");
+
+} catch (Exception $e) {
+    error_log("Database error: " . $e->getMessage()); 
+    die("Database connection error");
+}
 ?>
 
