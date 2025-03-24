@@ -1,126 +1,51 @@
 <?php 
-     include "db_connect.php"; 
+    session_start();
 
-
-     function getUserBioByUsername($username, $conn) {
-        // Define the SQL query
-        $sql = "SELECT bio 
-                FROM profile  
-                WHERE username = ?";
-        
-        // Prepare the statement
-        if ($stmt = $conn->prepare($sql)) {
-            // Bind parameters
-            $stmt->bind_param("s", $username);  // "s" specifies the type (string)
-            
-            // Execute the query
-            $stmt->execute();
-            
-            // Bind the result variables
-            $stmt->bind_result($storedBio);
-    
-            // Check if any row was returned
-            if ($stmt->fetch()) {
-                // Return the bio
-                return $storedBio;
-            } else {
-                // If no bio found for the user, return an appropriate message
-                return "No bio found for this user.";
-            }
-            
-            // Close the statement
-            $stmt->close();
-        } else {
-            // If the statement failed to prepare, return an error message
-            return "Error preparing statement.";
-        }
-    }
-
-    function getUserEmailByUsername($username, $conn) {
-        // Define the SQL query
-        $sql = "SELECT email 
-                FROM userInfo  
-                WHERE username = ?";
-        
-        // Prepare the statement
-        if ($stmt = $conn->prepare($sql)) {
-            // Bind parameters
-            $stmt->bind_param("s", $username);  // "s" specifies the type (string)
-            
-            // Execute the query
-            $stmt->execute();
-            
-            // Bind the result variables
-            $stmt->bind_result($storedEmail);
-    
-            // Check if any row was returned
-            if ($stmt->fetch()) {
-                // Return the bio
-                return $storedEmail;
-            } else {
-                // If no bio found for the user, return an appropriate message
-                return "No bio found for this user.";
-            }
-            
-            // Close the statement
-            $stmt->close();
-        } else {
-            // If the statement failed to prepare, return an error message
-            return "Error preparing statement.";
-        }
-    }
-
-function getUserTagsByUsername($username, $conn) {
-    $sql = "SELECT tags.name 
-        FROM profile_tags JOIN tags 
-        ON profile_tags.id = tags.id 
-        WHERE username = ?"; 
-    // Prepare the statement
-    if ($stmt = $conn->prepare($sql)) {
-        // Bind parameters
-        $stmt->bind_param("s", $username);  // "s" specifies the type (string)
-        
-        // Execute the query
-        $stmt->execute();
-        
-        // Get the result set
-        $result = $stmt->get_result();
-        
-        // Initialize an array to store tags
-        $tags = [];
-        
-        // Check if any tags are returned
-        if ($result->num_rows > 0) {
-            // Fetch tags and store them in the $tags array
-            while ($row = $result->fetch_assoc()) {
-                $tags[] = $row['name'];  // Add the tag to the array
-            }
-        } else {
-            // If no tags are found, return a default message in the array
-            $tags[] = "No tags yet selected";
-        }
-        
-        // Close the statement
-        $stmt->close();
-        
-        // Return the list of tags
-        return $tags;
-    } else {
-        // If the query failed to prepare
-        return ["Error preparing the statement."];
-    }
-}
- 
+    include "db_connect.php"; 
+    include "queryFunctions.php";
     
 
     // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['userEmail'];
-    $password = $_POST['profileBio'];
-    //$password = $_POST['profileTags'];
-  
+    $email = $_POST['userEmail'];
+    $bio = $_POST['profileBio'];
+    $tags = $_POST['profileTags'];
+
+    // Update Bio 
+    $sql = "UPDATE profile SET bio = ? WHERE username = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $bio, $_SESSION['username']);  // "s" specifies the type (string)
+    $stmt->execute();
+
+    // Update Email 
+    $sqlB = "UPDATE userInfo SET email = ? WHERE username = ?";
+
+    $stmtB = $conn->prepare($sqlB);
+    $stmtB->bind_param("ss", $email, $_SESSION['username']);  // "s" specifies the type (string)
+    $stmtB->execute();
+
+    /*// Update Tags
+    $sqlB = "UPDATE profile_tags SET tag_name = ? WHERE username = ?";
+
+    $stmtB = $conn->prepare($sqlB);
+    $stmtB->bind_param("ss", $email, $_SESSION['username']);  // "s" specifies the type (string)
+    $stmtB->execute();
+    */
+
+    if ($stmt->affected_rows > 0 || $stmtB->affected_rows > 0) {
+      header("Location: profile.php");
+      exit();
+    }
+    else {
+      header("Location: editprofile.php");
+      exit();
+    }
+    $stmt->close();
+  }
+ 
+
     
-}
 ?>
 
 <!DOCTYPE html>
@@ -153,11 +78,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <form id="newPostForm" class="new-post-form" method="post">
         <div id="titleContent">
           <!-- Title -->
-          <label for="postTitle">Your Email:</label>
+          <label for="userEmail">Your Email:</label>
           <input 
             type="text" 
             id="userEmail" 
-            name="postTitle" 
+            name="userEmail" 
             value="<?php echo getUserEmailByUsername($_SESSION['username'], $conn);?>"; 
             required
           >
@@ -168,19 +93,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <label for="profileBio">Bio:</label>
           <textarea 
             id="profileBio" 
-            name="postContent" 
+            name="profileBio" 
             rows="6"  
             required
-          ><?php echo getUserBioByUsername($_SESSION['username'], $conn);?></textarea>
+          ><?php echo getUserBioByUsername($_SESSION['username'], $conn)?></textarea>
         </div>
 
         <div id="tagContent">
           <!-- Tags -->
-          <label for="postTags">Tags (comma-separated):</label>
+          <label for="profileTags">Tags (comma-separated):</label>
           <input 
             type="text" 
             id="profileTags" 
-            name="postTags" 
+            name="profileTags" 
             value="<?php 
                 $tags = getUserTagsByUsername($_SESSION['username'], $conn);
 
