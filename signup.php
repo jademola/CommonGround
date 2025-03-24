@@ -1,53 +1,99 @@
 
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL); 
-
-include "db_connect.php";
-
+// Need to start session at beginning
 session_start();
+
+// Session security code for later
+//ini_set('session.cookie_httponly', 1);
+//ini_set('session.cookie_secure', 1); // HTTPS
+//ini_set('session.use_only_cookies', 1);
+//session_regenerate_id(true); // Regenerate session ID when logging in
+
+// CSRF protection
+if (empty($_SESSION['csrf_token'])) {
+  $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $errorMessage = null;
 
-if ($_SESSION['loggedIn']) {
+// Need to check if session actually exists
+if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true) {
   header("Location: profile.php");
   exit();
 }
 
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $username = $_POST['signupUsername'];
-  $password = $_POST['signupPassword'];
-  $email = $_POST['signupEmail'];
+  // CSRF protection 
+  if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    $errorMessage = "Form submission error. Please try again.";
+  } else {
+    // Inputs need to be sanitized
+    $username = htmlspecialchars(trim($_POST['signupUsername']));
+    $email = filter_var($_POST['signupEmail'], FILTER_SANITIZE_EMAIL);
+    $password = $_POST['signupPassword'];
+    $confirmPassword = $_POST['confirmPassword'];
 
-  $check_sql = "SELECT username FROM userInfo WHERE username = ? OR email = ?";
-  $check_stmt = $conn->prepare($check_sql);
-  $check_stmt->bind_param("ss", $username, $email);
-  $check_stmt->execute();
-  $check_stmt->store_result();
+    // Server side validation
+    if (empty($username) || empty($email) || empty($password)) {
+      $errorMessage = "All fields are required.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $errorMessage = "Please enter a valid email address.";
+    } elseif (strlen($password) < 8) {
+      $errorMessage = "Password must be at least 8 characters long.";
+    } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', $password)) {
+      $errorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
+    } elseif ($password !== $confirmPassword) {
+      $errorMessage = "Passwords don't match. Please try again.";
+    } elseif (!preg_match('/^[a-zA-Z0-9_]{3,20}$/', $username)) {
+      $errorMessage = "Username must be 3-20 characters and contain only letters, numbers, and underscores.";
+    } else {
+      try {
+        // DB connection here to avoid loading it unnecessarily at start
+        include "db_connect.php";
+        
+        $check_sql = "SELECT username FROM userInfo WHERE username = ? OR email = ?";
+        $check_stmt = $conn->prepare($check_sql);
+        $check_stmt->bind_param("ss", $username, $email);
+        $check_stmt->execute();
+        $check_stmt->store_result();
 
-  if ($check_stmt->num_rows == 0) {
-    // Query username and password 
-    $sql = "INSERT INTO userInfo (username, email, password) 
-            VALUES (?, ?, ?)";
+        // Was potentially problematic check
+        if ($check_stmt->num_rows > 0) {
+          $errorMessage = "Username or email already in use. Please try again.";
+        } else {
+          // Passwords can't be stored in plain text that is a security risk 
+          $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+          
+          $sql = "INSERT INTO userInfo (username, email, password) VALUES (?, ?, ?)";
+          $stmt = $conn->prepare($sql);
+          $stmt->bind_param("sss", $username, $email, $hashedPassword);  // fields weren't in order
+          $stmt->execute();
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $username, $password, $email);  // "sss" specifies the type (string)
-    $stmt->execute();
+          if ($stmt->affected_rows > 0) {
 
-    if ($stmt->affected_rows > 0) {
-      $_SESSION['loggedIn'] = true;
-      $_SESSION['username'] = $username;
-      header("Location: profile.php");
-      exit();
-    }
-    else {
-      header("Location: index.php");
-      exit();
-    }
-    $stmt->close();
-  }
-  else {
-    $errorMessage = "Username in use, Please try again.";
+            $stmt->close();
+            $_SESSION['loggedIn'] = true;
+            $_SESSION['username'] = $username;
+
+            $conn->close();
+            // Redirect to profile 
+            header("Location: profile.php");
+            exit();
+          } else {
+            $stmt->close();
+            $conn->close();
+            $errorMessage = "Registration failed";
+            //header("Location: index.php");   Not sure about this come back later
+            // exit();
+          }
+        }
+      } catch (Exception $e) {
+        // Log error
+        error_log("Database error: " . $e->getMessage());
+        $errorMessage = "An error occurred during registration";
+      }
+    }   
   }
 }
 ?>
@@ -90,6 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             id="signupUsername"
             name="signupUsername"
             placeholder="Choose a username"
+            value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>"
             required>
         </div>
 
@@ -100,6 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             id="signupEmail"
             name="signupEmail"
             placeholder="Enter your email address"
+            value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"
             required>
         </div>
 
@@ -126,9 +174,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Server-Side Validation Error Message -->
         <?php if (isset($errorMessage)): ?>
           <div class="error-message">
-            <?php echo $errorMessage; ?>
+          <?php echo htmlspecialchars($errorMessage); ?>
           </div>
         <?php endif; ?>
+
+        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
 
         <button type="submit" id="signupButton">Sign Up</button>
         <p>
@@ -147,13 +197,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       const signupForm = document.getElementById('signupForm');
 
       signupForm.addEventListener('submit', (e) => {
+        const username = document.getElementById('signupUsername').value;
+        const email = document.getElementById('signupEmail').value;
         const password = document.getElementById('signupPassword').value;
         const confirm = document.getElementById('confirmPassword').value;
-
-        // Check if passwords match (shittiest security ever lmao)
+        
+        // Username validation
+        if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+          e.preventDefault();
+          alert("Username must be 3-20 characters and contain only letters, numbers, and underscores.");
+          return;
+        }
+        
+        // Email validation
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          e.preventDefault();
+          alert("Please enter a valid email address.");
+          return;
+        }
+        
+        // Password strength check
+        if (password.length < 8 || 
+          !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password)) {
+          e.preventDefault();
+          alert("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
+          return;
+        }
+        
+        // Password match check
         if (password !== confirm) {
           e.preventDefault();
           alert("Passwords don't match. Please re-type.");
+          return;
         }
       });
     });
