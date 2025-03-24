@@ -19,7 +19,7 @@ if (!isset($_SESSION['loggedIn'])) {
     <nav class="nav">
         <?php if ($_SESSION['loggedIn']): ?>
             <a href="newpost.php" class="nav-item">New Post</a>
-            <a href="activity.php" class="nav-item">Activity</a>
+            <a href="activity.html" class="nav-item">Activity</a>
             <a href="index.php" class="nav-item">Home</a>
             <a href="profile.php" class="nav-item">Profile</a>
             <a href="search.html" class="nav-item">Search</a>
