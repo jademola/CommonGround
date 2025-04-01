@@ -12,7 +12,7 @@ $username = $_SESSION['username'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Common Ground</title>
     <link rel="stylesheet" href="styles.css">
-    <?php include "db_connect.php"; 
+    <?php require_once "db_connect.php";
     $sql = "SELECT userType FROM userInfo WHERE username = ?";
     $admin = "admin";
     $stmt = $conn->prepare($sql);
@@ -22,12 +22,12 @@ $username = $_SESSION['username'];
 
     // Check if any rows were returned
     while ($row = $result->fetch_assoc()) {
-        if($row['adminType'] !== $admin) {
+        if ($row['adminType'] !== $admin) {
             echo "Unauthorized user";
             header("Location: index.php");
             exit();
         }
-    } 
+    }
     $stmt->close();
     ?>
 </head>
@@ -47,7 +47,7 @@ $username = $_SESSION['username'];
 
         <!-- Popular Post Sidebar -->
         <aside class="sidebar">
-            <?php include "popularsidebar.php"; ?>
+            <?php include "admin_sidebar.php"; ?>
             </br>
             <!-- Notification Alert Bar -->
             <div class="notification-box">
@@ -56,70 +56,27 @@ $username = $_SESSION['username'];
         </aside>
 
         <!-- Main: View Profile -->
-        <main class="userProfile">
-            <h2 class="userProfile-header"><?php echo "@" . $_SESSION['username'] ?></h2>
-            <div class="profile-header">
-                <div class="user-avatar">
-                    <img src="images/profile1.jpg" alt="" id="#user-profile-img">
-                </div>
-                <div class="profileBio-content">
+        <main class="adminDashboard">
+            <h2 class="adminDashboard-header">Administrator Dashboard</h2>
+            <div class="admin-search">
+                <form id="searchBox" action="admin.php" method="post">
+                    <input type="text" id="filteredSearch" name="filteredSearch" placeholder="Search comments, users or posts">
 
-                    <div>
-                        <div id="username-display"><b>Username: <?php echo $_SESSION['username'] ?></b></div>
-                    </div>
-                    <div>
-                        <?php
-                        $sql = "SELECT bio
-                             FROM profile 
-                             WHERE username = ?";
-                        $stmt = $conn->prepare($sql);
-                        $stmt->bind_param("s", $_SESSION['username']);  // "s" specifies the type (string)
-                        $stmt->execute();
-                        $result = $stmt->get_result();
+                    <select name="searchType" id="searchType">
+                        <option value="posts" selected>Choose Table</option>
+                        <option value="posts">Posts</option>
+                        <option value="users">Users</option>
+                        <option value="comments">Comments</option>
+                    </select>
 
-                        // Check if any rows were returned
-                        if ($row = $result->fetch_assoc()) {
-                            // Display the bio
-                            echo "Bio: " . $row['bio'];
-                        } else {
-                            echo "No bio found for this user.";
-                        }
-
-                        $stmt->close();
-                        ?>
-                        <!-- Tags - Replace with DB-->
-                    </div>
-                    <!-- Edit Profile Button -->
-                    <div id="test">
-                        <a href="editprofile.php">
-                            <button class="edit-profile-btn">Edit Profile</button>
-                        </a>
-                    </div>
-                    <div class="profile-tags">
-                        <p><b>User Tags:</b></p>
-
-                        <?php
-                        $sql = "SELECT tags.name 
-                        FROM profile_tags JOIN tags 
-                        ON profile_tags.id = tags.id 
-                        WHERE username = ?";
-                        $stmt = $conn->prepare($sql);
-                        $stmt->bind_param("s", $_SESSION['username']);  // "s" specifies the type (string)
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<span class='tag' id='funny-tag'>" . $row['name'] . "</span>"; // You can modify this as needed
-                        }
-
-                        if ($result->num_rows === 0) {
-                            echo "No tags yet selected";
-                        }
-                        $stmt->close();
-                        ?>
-                    </div>
-                </div>
-
+                    <input
+                        type="image"
+                        value="submit"
+                        name="submitted"
+                        id="searchButton"
+                        alt="Search Button"
+                        src="images/search_icon.png" />
+                </form>
             </div>
 
         </main>
