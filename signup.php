@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES (?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $username, $password, $email);  // "sss" specifies the type (string)
+    $stmt->bind_param("sss", $username, $email, $password);  // "sss" specifies the type (string)
     $stmt->execute();
 
     if ($stmt->affected_rows > 0) {
