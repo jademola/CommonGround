@@ -1,61 +1,3 @@
-/* CSS Variables */
-:root {
-    /* Colors */
-    --color-primary: #081F5C;
-    --color-secondary: #334EAC;
-    --color-accent: #7091D1;
-    --color-light: #BAD6EB;
-    --color-background: #F7F9FB;
-    --color-white: #FFF9F0;
-    
-    /* Font */
-    --font-family-main: 'Trebuchet MS', sans-serif;
-    
-    /* Spacing */
-    --spacing-xs: 5px;
-    --spacing-sm: 8px;
-    --spacing-md: 10px;
-    --spacing-lg: 15px;
-    --spacing-xl: 20px;
-    
-    /* Border radius */
-    --border-radius-sm: 4px;
-    --border-radius-md: 8px;
-    --border-radius-lg: 15px;
-    
-    /* Common dimensions */
-    --sidebar-width: 250px;
-    --header-height: 140px;
-}
-
-/* Common styles */
-.common-card {
-    background-color: var(--color-background);
-    border-radius: var(--border-radius-md);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: var(--spacing-lg);
-}
-
-.common-text {
-    font-family: var(--font-family-main);
-    color: var(--color-primary);
-}
-
-.common-button {
-    font-family: var(--font-family-main);
-    cursor: pointer;
-    border: none;
-    border-radius: var(--border-radius-sm);
-    padding: var(--spacing-sm) var(--spacing-lg);
-    color: var(--color-white);
-    background-color: var(--color-secondary);
-}
-
-.common-button:hover {
-    background-color: var(--color-accent);
-}
-
-/* Base styles */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -66,7 +8,8 @@
 body {
     max-width: 100%;
     margin: 0 auto;
-    background-color: var(--color-light);
+    /* background-image: url(images/background.jpeg); */
+    background-color: #BAD6EB;
     overflow-x: hidden;
 }
 
@@ -96,6 +39,7 @@ body {
     margin-right: auto;
 }
 
+
 /* ========================= */
 /* Header (Name and Nav bar) */
 /* ========================= */
@@ -103,11 +47,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--spacing-md);
+    padding: 10px;
     position: relative;
-    margin-top: var(--spacing-md);
+    margin-top: 10px;
     height: 80px;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: 10px;
 }
 
 .site-name {
@@ -115,33 +59,35 @@ body {
     font-weight: bold;
     font-family: fantasy;
     margin: auto;
-    color: var(--color-white);
-    text-shadow: 4px 4px var(--color-primary);
-    border-radius: var(--border-radius-lg);
+    color: #FFF9F0;
+    text-shadow: 4px 4px #081F5C;
+
+    border-radius: 20px;
 }
 
 .login-btn {
-    border-radius: var(--border-radius-sm);
-    font-family: var(--font-family-main);
-    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: 0.5rem;
+    font-family: 'Trebuchet MS';
+    padding: 5px 10px;
     text-decoration: none;
-    color: var(--color-primary);
-    background-color: var(--color-background);
+    color: #081F5C;
+    background-color: #F7F9FB;
 }
 
 .logout-btn {
-    border-radius: var(--border-radius-sm);
-    font-family: var(--font-family-main);
-    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: 0.5rem;
+    font-family: 'Trebuchet MS';
+    padding: 5px 10px;
     text-decoration: none;
-    color: var(--color-primary);
-    background-color: var(--color-background);
+    color: #081F5C;
+    background-color: #F7F9FB;
+
 }
 
 .nav {
     display: flex;
-    background-color: var(--color-background);
-    padding: var(--spacing-md);
+    background-color: #F7F9FB;
+    padding: 10px;
     height: 50px;
     align-items: center;
 }
@@ -151,8 +97,9 @@ body {
     text-align: center;
     font-size: large;
     text-decoration: none;
-    font-family: var(--font-family-main);
-    color: var(--color-primary);
+    font-family: 'Trebuchet MS';
+    color: #081F5C;
+
 }
 
 .nav-item:last-child {
@@ -161,8 +108,9 @@ body {
 
 .main-content {
     display: flex;
-    height: calc(100vh - var(--header-height));
-    overflow: hidden;
+    height: calc(100vh - 140px); /* Subtract header height */
+    overflow: hidden; /* Prevent overall page scrolling */
+    /* width: 100%; */
 }
 
 #mainFeed {
@@ -174,68 +122,69 @@ body {
 /* =========================*/
 
 .sidebar {
-    width: var(--sidebar-width);
-    padding: var(--spacing-lg);
-    margin-left: var(--spacing-xl);
+    width: 250px;
+    padding: 15px;
+    margin-left: 40px;
     height: 100%;
     overflow-y: auto;
     position: sticky;
-    top: var(--header-height);
+    top: 140px;
 }
 
 .sidebar-header {
-    font-family: var(--font-family-main);
-    color: var(--color-white);
+    font-family: 'Trebuchet MS';
+    color: #FFF9F0;
     font-size: 1.2rem;
     font-weight: bold;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: 15px;
     height: 40px;
     display: flex;
     align-items: center;
     margin-top: 0;
-    padding-top: var(--spacing-md);
+    padding-top: 10px;
 }
 
 .popular-list {
     list-style-type: none;
-    margin-bottom: var(--spacing-xl);
-    padding: var(--spacing-lg);
-    background-color: var(--color-background);
-    border-radius: var(--border-radius-md);
+    margin-bottom: 20px;
+    padding: 1rem;
+    background-color: #F7F9FB;
+    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     min-height: 200px;
 }
 
 .popularPost a {
     text-decoration: none;
-    color: var(--color-primary);
+    color: #081F5C;
+
 }
 
 .popular-list li {
-    margin-left: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
-    font-family: var(--font-family-main);
+    margin-left: 10px;
+    margin-bottom: 10px;
+    font-family: 'Trebuchet MS';
 }
 
 .notification-box {
-    font-family: var(--font-family-main);
+    font-family: 'Trebuchet MS';
     text-align: center;
     font-weight: bold;
-    padding: var(--spacing-md);
-    margin-top: var(--spacing-xl);
-    background-color: var(--color-accent);
-    border-radius: var(--border-radius-md);
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #7091D1;
+    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .userProfile {
     flex: 2;
-    padding: var(--spacing-lg);
-    background-color: var(--color-background);
+    padding: 15px;
+    background-color: #F7F9FB;
     font-size: large;
-    margin-top: var(--spacing-md);
-    margin-right: var(--spacing-xl);
-    border-radius: var(--border-radius-md);
+    margin-top: 10px;
+    margin-right: 60px;
+    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
@@ -244,43 +193,43 @@ body {
 
 .userProfile-header {
     font-size: 1.5rem;
-    border-top: 2px solid var(--color-primary);
-    font-family: var(--font-family-main);
+    border-top: 2px solid #081F5C;
+    font-family: 'Trebuchet MS';
     font-weight: bold;
-    margin-top: var(--spacing-md);
-    padding-top: var(--spacing-sm);
-    margin-bottom: var(--spacing-lg);
-    margin-left: var(--spacing-xl);
+    margin-top: 10px;
+    padding-top: 5px;
+    margin-bottom: 15px;
+    margin-left: 20px;
 }
 
 .profile-header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: var(--color-background);
-    padding: var(--spacing-lg);
-    border-radius: var(--border-radius-lg);
+    background-color: #F7F9FB;
+    padding: 15px;
+    border-radius: 15px;
     height: auto;
     margin-top: 0;
-    padding-top: var(--spacing-md);
-    margin-bottom: var(--spacing-lg);
-    font-family: var(--font-family-main);
+    padding-top: 10px;
+    margin-bottom: 15px;
+    font-family: 'Trebuchet MS';
     font-size: 1.2rem;
     font-weight: bold;
-    color: var(--color-white);
+    color: white;
 }
 
 .profileBio-content {
-    font-family: var(--font-family-main);
-    padding: var(--spacing-lg);
+    font-family: 'Trebuchet MS';
+    padding: 15px;
     min-height: 100px;
-    margin-left: var(--spacing-xl);
-    color: var(--color-primary);
-    margin-right: var(--spacing-xl);
+    margin-left: 20px;
+    color: #081F5C;
+    margin-right: 20px;
 }
 
 #user-profile-img {
-    margin-left: var(--spacing-md);
+    margin-left: 10px;
     width: 200px;
     height: 200px;
     border-radius: 50%;
@@ -288,99 +237,110 @@ body {
 
 .feed {
     flex: 2;
-    padding: var(--spacing-lg);
+    padding: 15px;
     overflow-y: auto;
     height: 100%;
-    max-width: 800px;
+    max-width: 800px; /* Limit width for better readability */
     margin: 0 auto;
 }
 
 .feed-header {
     font-size: 1.5rem;
     font-weight: bold;
-    margin-bottom: var(--spacing-lg);
-    color: var(--color-white);
-    font-family: var(--font-family-main);
+    margin-bottom: 15px;
+    color: #FFF9F0;
+    font-family: 'Trebuchet MS';
     height: 40px;
     display: flex;
     align-items: center;
     margin-top: 0;
-    padding-top: var(--spacing-md);
+    padding-top: 10px;
 }
 
 .post {
-    @extend .common-card;
+    margin-bottom: 20px;
+    background-color: #F7F9FB;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .post-header {
     display: flex;
-    padding: var(--spacing-md);
-    border-bottom: 1px solid var(--color-accent);
+    padding: 10px;
+    border-bottom: 1px solid #7091D1;
+
 }
 
 .user-avatar {
     width: 50px;
     height: 50px;
-    border: 1px solid var(--color-primary);
+    border: 1px solid #081F5C;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: var(--spacing-md);
+    margin-right: 10px;
 }
 
 .user-info {
     flex: 1;
-    font-family: var(--font-family-main);
-    margin-left: var(--spacing-md);
+    font-family: 'Trebuchet MS';
+    margin-left: 10px;
 }
 
 .timestamp {
     font-size: 0.8rem;
-    color: var(--color-secondary);
+    color: #334EAC;
 }
 
 .post-title {
-    @extend .common-text;
+    font-family: 'Trebuchet MS';
     font-weight: 500;
-    padding: var(--spacing-sm);
-    margin: var(--spacing-sm) 0;
+    padding: 5px;
+    margin: 5px 0;
 }
 
 .tag {
     background-color: #9abdd6;
     display: inline-block;
-    font-family: var(--font-family-main);
-    padding: var(--spacing-sm) var(--spacing-md);
-    margin-left: var(--spacing-sm);
-    border-radius: var(--border-radius-lg);
+    font-family: 'Trebuchet MS';
+    padding: 5px 10px;
+    margin-left: 5px;
+    border-radius: 15px;
 }
 
 .profile-tags {
-    margin-top: var(--spacing-xl);
+    margin-top: 20px;
     display: flex;
 }
 
 .post-tags {
-    margin-top: var(--spacing-md);
+    margin-top: 10px;
 }
 
 .edit-profile-btn {
-    @extend .common-button;
+    font-family: 'Trebuchet MS';
+    text-decoration: none;
     font-size: small;
+    background-color: #7091D1;
+    color: #FFF9F0; /* Add text color */
+    padding: 0.25rem;
+    border-radius: 10px;
     height: 40px;
     width: 100px;
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: 20px;
     margin-left: auto; 
     margin-right: auto; 
     display: block; 
+    cursor: pointer; 
+    border: none; 
 }
 
 #test {
     width: 100%; 
     display: flex; 
     justify-content: center; 
-    margin-top: var(--spacing-xl); 
+    margin-top: 20px; 
 }
 
 /* ==================== */
@@ -388,75 +348,87 @@ body {
 /* ==================== */
 
 .post-content {
-    font-family: var(--font-family-main);
-    padding: var(--spacing-lg);
+    font-family: 'Trebuchet MS';
+    padding: 15px;
     min-height: 100px;
 }
 
 .post-footer {
-    padding: var(--spacing-md);
+    padding: 10px;
 }
 
 .like-btn {
-    font-family: var(--font-family-main);
+    font-family: 'Trebuchet MS';
     background: none;
     border: none;
     cursor: pointer;
     font-size: 1.2rem;
-    color: var(--color-secondary);
+    color: #334EAC;
+
 }
 
 .comments-section {
-    padding: var(--spacing-lg);
-    border-top: 1px solid var(--color-accent);
+    padding: 15px;
+    border-top: 1px solid #7091D1;
+
 }
 
 .comment {
-    margin-bottom: var(--spacing-md);
-    font-family: var(--font-family-main);
+    margin-bottom: 10px;
+    font-family: 'Trebuchet MS';
     display: flex;
 }
 
 .comment-user {
-    @extend .common-text;
-    margin-right: var(--spacing-md);
+    margin-right: 10px;
 }
 
 .comment-date {
     font-size: 0.8rem;
-    color: var(--color-secondary);
+    color: #334EAC;
     margin-left: auto;
 }
 
 .comment-form {
     display: flex;
-    margin-top: var(--spacing-lg);
+    margin-top: 15px;
     flex-direction: column;
 }
 
 .comment-input {
     flex: 1;
-    margin-right: var(--spacing-md);
+    margin-right: 10px;
 }
 
 /* Fixed comment textarea and button styles */
 .comment-form textarea {
     width: 100%;
     height: 80px;
-    padding: var(--spacing-sm);
-    margin-bottom: var(--spacing-md);
+    padding: 8px;
+    margin-bottom: 10px;
     border: 1px solid #ddd;
-    border-radius: var(--border-radius-sm);
-    resize: none;
-    font-family: var(--font-family-main);
+    border-radius: 4px;
+    resize: none; /* Prevent user resizing */
+    font-family: 'Trebuchet MS';
 }
 
 .post-comment-btn {
-    @extend .common-button;
+    background-color: #334EAC;
+    color: #FFF9F0;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
     width: 120px;
     height: 36px;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
     align-self: flex-end;
-    margin-top: var(--spacing-md);
+    margin-top: 10px;
+}
+
+.post-comment-btn:hover {
+    background-color: #45a049;
 }
 
 #post-img {
@@ -466,80 +438,86 @@ body {
 /* View Single Post*/
 
 #results-return a {
-    color: var(--color-white);
+    color: #FFF9F0;
     text-decoration: none;
 }
 
 /* Search Page */
 .search-bar {
-    color: var(--color-white);
+    color: #FFF9F0;
 }
 
 #bar {
-    background-color: var(--color-background);
-    margin-top: var(--spacing-md);
+    background-color: #F7F9FB;
+    margin-top: 10px;
     height: 25px;
     width: 90%;
 }
+
+
 
 /* =====================*/
 /* User (Right) Sidebar */
 /* =====================*/
 
 .profile-sidebar {
-    width: var(--sidebar-width);
-    padding: var(--spacing-lg);
-    margin-right: var(--spacing-xl);
+    width: 250px;
+    padding: 15px;
+    margin-right: 40px;
 }
 
 .profile-header {
-    font-family: var(--font-family-main);
+    font-family: 'Trebuchet MS';
     font-size: 1.2rem;
     font-weight: bold;
-    color: var(--color-white);
+    color: #FFF9F0;
     background: none;
 }
 
+
 .profile-card {
-    @extend .common-card;
     height: 100%;
     overflow-y: auto;
     position: sticky;
-    top: var(--header-height);
+    top: 140px;
+    background-color: #F7F9FB;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     min-height: 200px;
 }
 
 .profile-avatar {
     width: 80px;
     height: 80px;
-    border: 1px solid var(--color-primary);
-    margin: 0 auto var(--spacing-md);
+    border: 1px solid #081F5C;
+    margin: 0 auto 10px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .profile-username {
-    @extend .common-text;
+    font-family: 'Trebuchet MS';
     font-weight: bold;
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: 5px;
 }
 
 .profile-bio {
-    font-family: var(--font-family-main);
-    border: 1px solid var(--color-accent);
-    padding: var(--spacing-sm);
-    margin: var(--spacing-md) 0;
+    font-family: 'Trebuchet MS';
+    border: 1px solid #7091D1;
+    padding: 5px;
+    margin: 10px 0;
     min-height: 60px;
 }
 
 .side-profile-tags {
-    margin-left: var(--spacing-sm);
-    margin-top: var(--spacing-sm);
+    margin-left: 5px;
+    margin-top: 5px;
 }
 
 #side-profile-tags-whitespace {
-    margin-top: var(--spacing-sm);
+    margin-top: 5px;
 }
 
 img {
@@ -551,9 +529,9 @@ img {
 /* ========================*/
 
 .sortby {
-    color: var(--color-white);
+    color: #FFF9F0;
     text-align: end;
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: 0.25rem;
 }
 
 /* ========================*/
@@ -561,81 +539,91 @@ img {
 /* ========================*/
 
 .new-post-form {
-    @extend .common-card;
+    background-color: #F7F9FB;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 #titleContent {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: 15px;
 }
 
 #titleContent label {
     display: block;
-    font-family: var(--font-family-main);
+    font-family: 'Trebuchet MS';
     font-weight: bold;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 5px;
 }
 
 #postTitle, #userEmail {
     width: 100%;
-    padding: var(--spacing-sm);
-    font-family: var(--font-family-main);
+    padding: 8px;
+    font-family: 'Trebuchet MS';
 }
 
 #blogContent {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: 15px;
 }
 
 #blogContent label {
     display: block;
-    font-family: var(--font-family-main);
+    font-family: 'Trebuchet MS';
     font-weight: bold;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 5px;
 }
 
 #postContent, #profileBio {
     width: 100%;
     min-height: 150px;
-    padding: var(--spacing-sm);
-    font-family: var(--font-family-main);
+    padding: 8px;
+    font-family: 'Trebuchet MS';
 }
 
 #tagContent {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: 15px;
 }
 
 #tagContent label {
     display: block;
-    font-family: var(--font-family-main);
+    font-family: 'Trebuchet MS';
     font-weight: bold;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 5px;
 }
 
 #postTags, #profileTags {
     width: 50%;
-    padding: var(--spacing-sm);
-    font-family: var(--font-family-main);
+    padding: 8px;
+    font-family: 'Trebuchet MS';
 }
 
 #uploadImage {
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: 20px;
 }
 
 #uploadImage label {
     display: block;
-    font-family: var(--font-family-main);
+    font-family: 'Trebuchet MS';
     font-weight: bold;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 5px;
 }
 
 #submitBlog {
-    @extend .common-button;
+    padding: 8px 15px;
+    background-color: #334EAC;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
     display: block;
     margin-left: auto;
     margin-right: 0;
+    color: #FFF9F0;
 }
 
 #submitBlog:hover {
-    background-color: var(--color-accent);
+    background-color: #7091D1;
 }
 
 /* ========================*/
@@ -643,52 +631,65 @@ img {
 /* ========================*/
 
 #loginForm {
-    @extend .common-card;
+    background-color: #F7F9FB;
+
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 #login {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: 15px;
 }
 
 #login label {
     display: block;
-    font-family: var(--font-family-main);
+    font-family: 'Trebuchet MS';
     font-weight: bold;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 5px;
 }
 
 #loginUsername {
     width: 100%;
-    padding: var(--spacing-sm);
-    font-family: var(--font-family-main);
+    padding: 8px;
+    font-family: 'Trebuchet MS';
 }
 
 #password {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: 15px;
 }
 
 #password label {
     display: block;
-    font-family: var(--font-family-main);
+    font-family: 'Trebuchet MS';
     font-weight: bold;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 5px;
 }
 
 #loginPassword {
     width: 100%;
-    padding: var(--spacing-sm);
-    font-family: var(--font-family-main);
+    padding: 8px;
+    font-family: 'Trebuchet MS';
 }
 
 #loginButton {
-    @extend .common-button;
+    padding: 8px 15px;
+    background-color: #334EAC;
+
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
     display: block;
     margin-left: auto;
     margin-right: 0;
+    color: #FFF9F0;
 }
 
 #loginButton:hover {
-    background-color: var(--color-accent);
+    background-color: #7091D1;
+
 }
 
 /* ========================*/
@@ -696,86 +697,98 @@ img {
 /* ========================*/
 
 #signupForm {
-    @extend .common-card;
+    background-color: #F7F9FB;
+
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 #signUsername {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: 15px;
 }
 
 #signUsername label {
     display: block;
-    font-family: var(--font-family-main);
+    font-family: 'Trebuchet MS';
     font-weight: bold;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 5px;
 }
 
 #signupUsername {
     width: 100%;
-    padding: var(--spacing-sm);
-    font-family: var(--font-family-main);
+    padding: 8px;
+    font-family: 'Trebuchet MS';
 }
 
 #signEmail {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: 15px;
 }
 
 #signEmail label {
     display: block;
-    font-family: var(--font-family-main);
+    font-family: 'Trebuchet MS';
     font-weight: bold;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 5px;
 }
 
 #signupEmail {
     width: 100%;
-    padding: var(--spacing-sm);
-    font-family: var(--font-family-main);
+    padding: 8px;
+    font-family: 'Trebuchet MS';
 }
 
 #signPassword {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: 15px;
 }
 
 #signPassword label {
     display: block;
-    font-family: var(--font-family-main);
+    font-family: 'Trebuchet MS';
     font-weight: bold;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 5px;
 }
 
 #signupPassword {
     width: 100%;
-    padding: var(--spacing-sm);
-    font-family: var(--font-family-main);
+    padding: 8px;
+    font-family: 'Trebuchet MS';
 }
 
 #confirmPass {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: 15px;
 }
 
 #confirmPass label {
     display: block;
-    font-family: var(--font-family-main);
+    font-family: 'Trebuchet MS';
     font-weight: bold;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 5px;
 }
 
 #confirmPassword {
     width: 100%;
-    padding: var(--spacing-sm);
-    font-family: var(--font-family-main);
+    padding: 8px;
+    font-family: 'Trebuchet MS';
 }
 
 #signupButton {
-    @extend .common-button;
+    padding: 8px 15px;
+    background-color: #334EAC;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Trebuchet MS';
+    font-weight: bold;
     display: block;
     margin-left: auto;
     margin-right: 0;
+    color: #FFF9F0;
 }
 
 #signupButton:hover {
-    background-color: var(--color-accent);
+    background-color: #7091D1;
+
 }
 
 /* ====================== */
@@ -783,26 +796,26 @@ img {
 /* ======================= */
 
 .comments-section {
-    margin-top: var(--spacing-md);
-    border-top: 1px solid var(--color-accent);
-    padding-top: var(--spacing-md);
-    padding: var(--spacing-lg);
+    margin-top: 10px;
+    border-top: 1px solid #7091D1;
+    padding-top: 10px;
+    padding: 15px;
 }
 
 .comment {
     display: flex;
-    padding: var(--spacing-sm) 0;
-    border-bottom: 1px solid var(--color-light);
+    padding: 8px 0;
+    border-bottom: 1px solid #BAD6EB;
+
 }
 
 .comment-checkbox {
-    margin-right: var(--spacing-md);
+    margin-right: 10px;
 }
 
 .comment-user {
-    @extend .common-text;
     font-weight: bold;
-    margin-right: var(--spacing-md);
+    margin-right: 10px;
 }
 
 .comment-body {
@@ -810,35 +823,40 @@ img {
 }
 
 .comment-date {
-    color: var(--color-secondary);
+    color: #334EAC;
     font-size: 0.8em;
 }
 
 .comment-form {
-    margin-top: var(--spacing-lg);
+    margin-top: 15px;
 }
 
 .comment-form textarea {
     width: 100%;
-    padding: var(--spacing-sm);
-    margin-bottom: var(--spacing-md);
-    border: 1px solid var(--color-accent);
-    border-radius: var(--border-radius-sm);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #7091D1;
+    border-radius: 4px;
 }
 
 .post-comment-btn {
-    @extend .common-button;
-    padding: var(--spacing-xs) var(--spacing-md);
+    background-color: #334EAC;
+    color: #FFF9F0;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
 .post-comment-btn:hover {
-    background-color: var(--color-accent);
+    background-color: #7091D1;
 }
 
+
 .error-message, .success-message {
-    padding: var(--spacing-md);
-    margin: var(--spacing-md) 0;
-    border-radius: var(--border-radius-sm);
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
 }
 
 .error-message {
@@ -850,6 +868,7 @@ img {
     background-color: #ddffdd;
     border-left: 6px solid #4CAF50;
 }
+
 
 #titleLink {
     text-decoration: none;
