@@ -890,3 +890,11 @@ img {
 /* ================== */
 /* Admin Page Styling */
 /* ================== */
+
+#searchBox {
+    max-width: max-content;
+}
+
+#searchButton {
+    width: 5%;
+}
