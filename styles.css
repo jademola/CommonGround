@@ -120,24 +120,15 @@ body {
     border-radius: var(--border-radius-lg);
 }
 
-.login-btn {
+.header-btn {
     border-radius: var(--border-radius-sm);
     font-family: var(--font-family-main);
     padding: var(--spacing-xs) var(--spacing-md);
     text-decoration: none;
     color: var(--color-primary);
     background-color: var(--color-background);
+    margin: var(--spacing-xs);
 }
-
-.logout-btn {
-    border-radius: var(--border-radius-sm);
-    font-family: var(--font-family-main);
-    padding: var(--spacing-xs) var(--spacing-md);
-    text-decoration: none;
-    color: var(--color-primary);
-    background-color: var(--color-background);
-}
-
 .nav {
     display: flex;
     background-color: var(--color-background);
@@ -860,4 +851,5 @@ img {
 /* ====================== */
 /* Admin Section Styling */
 /* ======================= */
+
 

@@ -15,25 +15,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
   // Query username and password 
-  $sql = "SELECT username, password FROM userInfo WHERE username = ?";
+  $sql = "SELECT username, password, userType FROM userInfo WHERE username = ?";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s", $username);  // "s" specifies the type (string)
   $stmt->execute();
-  $stmt->bind_result($storedUsername, $storedPassword);
+  $stmt->bind_result($storedUsername, $storedPassword, $storedUserType);
 
     // Gets returned username, or produces error 
     if ($stmt->fetch()) {
+      $errorMessage = "Incorrect username, Please try again.";
       // Verifies password, or produces error
       if ($password == $storedPassword){ 
         $_SESSION['loggedIn'] = true;
         $_SESSION['username'] = $username;
+        $_SESSION['userType'] = $storedUserType;
         header("Location: profile.php");
         exit();
       }
       else {
         $errorMessage = "Incorrect password, Please try again.";
       }
-      $errorMessage = "Incorrect username, Please try again.";
     }
     else {
       $errorMessage = "Invalid credentials, Please try again.";
