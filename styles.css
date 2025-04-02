@@ -28,33 +28,6 @@
     --header-height: 140px;
 }
 
-/* Common styles */
-.common-card {
-    background-color: var(--color-background);
-    border-radius: var(--border-radius-md);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: var(--spacing-lg);
-}
-
-.common-text {
-    font-family: var(--font-family-main);
-    color: var(--color-primary);
-}
-
-.common-button {
-    font-family: var(--font-family-main);
-    cursor: pointer;
-    border: none;
-    border-radius: var(--border-radius-sm);
-    padding: var(--spacing-sm) var(--spacing-lg);
-    color: var(--color-white);
-    background-color: var(--color-secondary);
-}
-
-.common-button:hover {
-    background-color: var(--color-accent);
-}
-
 /* Base styles */
 * {
     box-sizing: border-box;
@@ -68,6 +41,10 @@ body {
     margin: 0 auto;
     background-color: var(--color-light);
     overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
 }
 
 /* Hide scrollbars but keep scrolling functionality */
@@ -121,12 +98,13 @@ body {
 }
 
 .header-btn {
-    border-radius: var(--border-radius-sm);
+    border-radius: var(--border-radius-md);
     font-family: var(--font-family-main);
     padding: var(--spacing-xs) var(--spacing-md);
     text-decoration: none;
     color: var(--color-primary);
     background-color: var(--color-background);
+    margin: var(--spacing-xs);
 }
 .nav {
     display: flex;
@@ -299,7 +277,11 @@ body {
 }
 
 .post {
-    @extend .common-card;
+    background-color: var(--color-background);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
 }
 
 .post-header {
@@ -331,7 +313,8 @@ body {
 }
 
 .post-title {
-    @extend .common-text;
+    font-family: var(--font-family-main);
+    color: var(--color-primary);
     font-weight: 500;
     padding: var(--spacing-sm);
     margin: var(--spacing-sm) 0;
@@ -356,7 +339,13 @@ body {
 }
 
 .edit-profile-btn {
-    @extend .common-button;
+    font-family: var(--font-family-main);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    color: var(--color-white);
+    background-color: var(--color-secondary);
     font-size: small;
     height: 40px;
     width: 100px;
@@ -364,6 +353,10 @@ body {
     margin-left: auto; 
     margin-right: auto; 
     display: block; 
+}
+
+.edit-profile-btn:hover {
+    background-color: var(--color-accent);
 }
 
 #test {
@@ -408,7 +401,8 @@ body {
 }
 
 .comment-user {
-    @extend .common-text;
+    font-family: var(--font-family-main);
+    color: var(--color-primary);
     margin-right: var(--spacing-md);
 }
 
@@ -442,11 +436,21 @@ body {
 }
 
 .post-comment-btn {
-    @extend .common-button;
+    font-family: var(--font-family-main);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    color: var(--color-white);
+    background-color: var(--color-secondary);
     width: 120px;
     height: 36px;
     align-self: flex-end;
     margin-top: var(--spacing-md);
+}
+
+.post-comment-btn:hover {
+    background-color: var(--color-accent);
 }
 
 #post-img {
@@ -491,7 +495,10 @@ body {
 }
 
 .profile-card {
-    @extend .common-card;
+    background-color: var(--color-background);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: var(--spacing-lg);
     height: 100%;
     overflow-y: auto;
     position: sticky;
@@ -510,7 +517,8 @@ body {
 }
 
 .profile-username {
-    @extend .common-text;
+    font-family: var(--font-family-main);
+    color: var(--color-primary);
     font-weight: bold;
     margin-bottom: var(--spacing-xs);
 }
@@ -551,7 +559,10 @@ img {
 /* ========================*/
 
 .new-post-form {
-    @extend .common-card;
+    background-color: var(--color-background);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: var(--spacing-lg);
 }
 
 #titleContent {
@@ -618,7 +629,13 @@ img {
 }
 
 #submitBlog {
-    @extend .common-button;
+    font-family: var(--font-family-main);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    color: var(--color-white);
+    background-color: var(--color-secondary);
     display: block;
     margin-left: auto;
     margin-right: 0;
@@ -633,7 +650,10 @@ img {
 /* ========================*/
 
 #loginForm {
-    @extend .common-card;
+    background-color: var(--color-background);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: var(--spacing-lg);
 }
 
 #login {
@@ -671,7 +691,13 @@ img {
 }
 
 #loginButton {
-    @extend .common-button;
+    font-family: var(--font-family-main);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    color: var(--color-white);
+    background-color: var(--color-secondary);
     display: block;
     margin-left: auto;
     margin-right: 0;
@@ -686,7 +712,10 @@ img {
 /* ========================*/
 
 #signupForm {
-    @extend .common-card;
+    background-color: var(--color-background);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: var(--spacing-lg);
 }
 
 #signUsername {
@@ -758,7 +787,13 @@ img {
 }
 
 #signupButton {
-    @extend .common-button;
+    font-family: var(--font-family-main);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    color: var(--color-white);
+    background-color: var(--color-secondary);
     display: block;
     margin-left: auto;
     margin-right: 0;
@@ -790,7 +825,8 @@ img {
 }
 
 .comment-user {
-    @extend .common-text;
+    font-family: var(--font-family-main);
+    color: var(--color-primary);
     font-weight: bold;
     margin-right: var(--spacing-md);
 }
@@ -817,8 +853,13 @@ img {
 }
 
 .post-comment-btn {
-    @extend .common-button;
+    font-family: var(--font-family-main);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--border-radius-sm);
     padding: var(--spacing-xs) var(--spacing-md);
+    color: var(--color-white);
+    background-color: var(--color-secondary);
 }
 
 .post-comment-btn:hover {
@@ -846,9 +887,6 @@ img {
     color: black;
 }
 
-
-/* ====================== */
-/* Admin Section Styling */
-/* ======================= */
-
-
+/* ================== */
+/* Admin Page Styling */
+/* ================== */
