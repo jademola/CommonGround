@@ -127,7 +127,6 @@ body {
     text-decoration: none;
     color: var(--color-primary);
     background-color: var(--color-background);
-    margin: var(--spacing-xs);
 }
 .nav {
     display: flex;

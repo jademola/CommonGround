@@ -3,8 +3,8 @@ session_start();
 if (!isset($_SESSION['loggedIn'])) {
     $_SESSION['loggedIn'] = false;
 }
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 ?>
  <header class="header">
         <h1 class="site-name">Common Ground</h1>
