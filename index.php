@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Include the database connection
 require_once 'db_connect.php';
 
@@ -12,18 +13,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
     $post_id = $_POST["post_id"];
     $comment_content = $_POST["comment_content"];
 
-    // Get current user - in a real application, this would come from a session
-    $current_user = $_SESSION["username"] ?? ""; // Assume username is stored in session
-
-    // For testing purposes, if no session is available, use a default user
-    if (empty($current_user)) {
-        $current_user = "TroyBoy78"; // Use an existing user from the database for testing
-    }
 
     // Validate inputs
     if (empty($comment_content) || empty($post_id)) {
         $error_message = "Comment content cannot be empty.";
+    } else if (!isset($_SESSION["username"]) || empty($_SESSION['username'])) {
+        $error_message = "Must be logged in to comment.";
     } else {
+        $current_user = $_SESSION["username"] ?? ""; // Assume username is stored in session
+
         // Prepare and execute SQL query to insert comment
         $stmt = $conn->prepare("INSERT INTO comments (author, content, post_id, date) VALUES (?, ?, ?, CURRENT_DATE())");
         $stmt->bind_param("ssi", $current_user, $comment_content, $post_id);
@@ -65,7 +63,7 @@ $posts_result = $conn->query($posts_sql);
 <body>
     <?php include "header.php"; ?>
 
-    <div class="main-content" >
+    <div class="main-content">
         <aside class="sidebar">
             <!-- Top three posts (by likes, in order) -->
             <div class="sidebar-section">
