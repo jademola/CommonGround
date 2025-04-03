@@ -7,52 +7,25 @@
     --color-light: #BAD6EB;
     --color-background: #F7F9FB;
     --color-white: #FFF9F0;
-    
+
     /* Font */
     --font-family-main: 'Trebuchet MS', sans-serif;
-    
+
     /* Spacing */
     --spacing-xs: 5px;
     --spacing-sm: 8px;
     --spacing-md: 10px;
     --spacing-lg: 15px;
     --spacing-xl: 20px;
-    
+
     /* Border radius */
     --border-radius-sm: 4px;
     --border-radius-md: 8px;
     --border-radius-lg: 15px;
-    
+
     /* Common dimensions */
     --sidebar-width: 250px;
     --header-height: 140px;
-}
-
-/* Common styles */
-.common-card {
-    background-color: var(--color-background);
-    border-radius: var(--border-radius-md);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: var(--spacing-lg);
-}
-
-.common-text {
-    font-family: var(--font-family-main);
-    color: var(--color-primary);
-}
-
-.common-button {
-    font-family: var(--font-family-main);
-    cursor: pointer;
-    border: none;
-    border-radius: var(--border-radius-sm);
-    padding: var(--spacing-sm) var(--spacing-lg);
-    color: var(--color-white);
-    background-color: var(--color-secondary);
-}
-
-.common-button:hover {
-    background-color: var(--color-accent);
 }
 
 /* Base styles */
@@ -68,6 +41,10 @@ body {
     margin: 0 auto;
     background-color: var(--color-light);
     overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
 }
 
 /* Hide scrollbars but keep scrolling functionality */
@@ -120,22 +97,14 @@ body {
     border-radius: var(--border-radius-lg);
 }
 
-.login-btn {
-    border-radius: var(--border-radius-sm);
+.header-btn {
+    border-radius: var(--border-radius-md);
     font-family: var(--font-family-main);
     padding: var(--spacing-xs) var(--spacing-md);
     text-decoration: none;
     color: var(--color-primary);
     background-color: var(--color-background);
-}
-
-.logout-btn {
-    border-radius: var(--border-radius-sm);
-    font-family: var(--font-family-main);
-    padding: var(--spacing-xs) var(--spacing-md);
-    text-decoration: none;
-    color: var(--color-primary);
-    background-color: var(--color-background);
+    margin: var(--spacing-xs);
 }
 
 .nav {
@@ -202,7 +171,7 @@ body {
     padding: var(--spacing-lg);
     background-color: var(--color-background);
     border-radius: var(--border-radius-md);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     min-height: 200px;
 }
 
@@ -225,7 +194,7 @@ body {
     margin-top: var(--spacing-xl);
     background-color: var(--color-accent);
     border-radius: var(--border-radius-md);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .userProfile {
@@ -236,7 +205,7 @@ body {
     margin-top: var(--spacing-md);
     margin-right: var(--spacing-xl);
     border-radius: var(--border-radius-md);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -244,7 +213,6 @@ body {
 
 .userProfile-header {
     font-size: 1.5rem;
-    border-top: 2px solid var(--color-primary);
     font-family: var(--font-family-main);
     font-weight: bold;
     margin-top: var(--spacing-md);
@@ -309,7 +277,11 @@ body {
 }
 
 .post {
-    @extend .common-card;
+    background-color: var(--color-background);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
 }
 
 .post-header {
@@ -341,7 +313,8 @@ body {
 }
 
 .post-title {
-    @extend .common-text;
+    font-family: var(--font-family-main);
+    color: var(--color-primary);
     font-weight: 500;
     padding: var(--spacing-sm);
     margin: var(--spacing-sm) 0;
@@ -366,21 +339,31 @@ body {
 }
 
 .edit-profile-btn {
-    @extend .common-button;
+    font-family: var(--font-family-main);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    color: var(--color-white);
+    background-color: var(--color-secondary);
     font-size: small;
     height: 40px;
     width: 100px;
     margin-bottom: var(--spacing-xl);
-    margin-left: auto; 
-    margin-right: auto; 
-    display: block; 
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.edit-profile-btn:hover {
+    background-color: var(--color-accent);
 }
 
 #test {
-    width: 100%; 
-    display: flex; 
-    justify-content: center; 
-    margin-top: var(--spacing-xl); 
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: var(--spacing-xl);
 }
 
 /* ==================== */
@@ -418,7 +401,8 @@ body {
 }
 
 .comment-user {
-    @extend .common-text;
+    font-family: var(--font-family-main);
+    color: var(--color-primary);
     margin-right: var(--spacing-md);
 }
 
@@ -452,11 +436,21 @@ body {
 }
 
 .post-comment-btn {
-    @extend .common-button;
+    font-family: var(--font-family-main);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    color: var(--color-white);
+    background-color: var(--color-secondary);
     width: 120px;
     height: 36px;
     align-self: flex-end;
     margin-top: var(--spacing-md);
+}
+
+.post-comment-btn:hover {
+    background-color: var(--color-accent);
 }
 
 #post-img {
@@ -501,7 +495,10 @@ body {
 }
 
 .profile-card {
-    @extend .common-card;
+    background-color: var(--color-background);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: var(--spacing-lg);
     height: 100%;
     overflow-y: auto;
     position: sticky;
@@ -520,7 +517,8 @@ body {
 }
 
 .profile-username {
-    @extend .common-text;
+    font-family: var(--font-family-main);
+    color: var(--color-primary);
     font-weight: bold;
     margin-bottom: var(--spacing-xs);
 }
@@ -561,7 +559,10 @@ img {
 /* ========================*/
 
 .new-post-form {
-    @extend .common-card;
+    background-color: var(--color-background);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: var(--spacing-lg);
 }
 
 #titleContent {
@@ -575,7 +576,8 @@ img {
     margin-bottom: var(--spacing-sm);
 }
 
-#postTitle, #userEmail {
+#postTitle,
+#userEmail {
     width: 100%;
     padding: var(--spacing-sm);
     font-family: var(--font-family-main);
@@ -592,7 +594,8 @@ img {
     margin-bottom: var(--spacing-sm);
 }
 
-#postContent, #profileBio {
+#postContent,
+#profileBio {
     width: 100%;
     min-height: 150px;
     padding: var(--spacing-sm);
@@ -610,7 +613,8 @@ img {
     margin-bottom: var(--spacing-sm);
 }
 
-#postTags, #profileTags {
+#postTags,
+#profileTags {
     width: 50%;
     padding: var(--spacing-sm);
     font-family: var(--font-family-main);
@@ -628,7 +632,13 @@ img {
 }
 
 #submitBlog {
-    @extend .common-button;
+    font-family: var(--font-family-main);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    color: var(--color-white);
+    background-color: var(--color-secondary);
     display: block;
     margin-left: auto;
     margin-right: 0;
@@ -643,7 +653,10 @@ img {
 /* ========================*/
 
 #loginForm {
-    @extend .common-card;
+    background-color: var(--color-background);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: var(--spacing-lg);
 }
 
 #login {
@@ -681,7 +694,13 @@ img {
 }
 
 #loginButton {
-    @extend .common-button;
+    font-family: var(--font-family-main);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    color: var(--color-white);
+    background-color: var(--color-secondary);
     display: block;
     margin-left: auto;
     margin-right: 0;
@@ -696,7 +715,10 @@ img {
 /* ========================*/
 
 #signupForm {
-    @extend .common-card;
+    background-color: var(--color-background);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: var(--spacing-lg);
 }
 
 #signUsername {
@@ -768,7 +790,13 @@ img {
 }
 
 #signupButton {
-    @extend .common-button;
+    font-family: var(--font-family-main);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    color: var(--color-white);
+    background-color: var(--color-secondary);
     display: block;
     margin-left: auto;
     margin-right: 0;
@@ -800,7 +828,8 @@ img {
 }
 
 .comment-user {
-    @extend .common-text;
+    font-family: var(--font-family-main);
+    color: var(--color-primary);
     font-weight: bold;
     margin-right: var(--spacing-md);
 }
@@ -827,15 +856,21 @@ img {
 }
 
 .post-comment-btn {
-    @extend .common-button;
+    font-family: var(--font-family-main);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--border-radius-sm);
     padding: var(--spacing-xs) var(--spacing-md);
+    color: var(--color-white);
+    background-color: var(--color-secondary);
 }
 
 .post-comment-btn:hover {
     background-color: var(--color-accent);
 }
 
-.error-message, .success-message {
+.error-message,
+.success-message {
     padding: var(--spacing-md);
     margin: var(--spacing-md) 0;
     border-radius: var(--border-radius-sm);
@@ -856,3 +891,105 @@ img {
     color: black;
 }
 
+/* ================== */
+/* Admin Page Styling */
+/* ================== */
+
+
+.adminDashboard {
+    flex: 2;
+    padding: var(--spacing-lg);
+    background-color: var(--color-background);
+    font-size: large;
+    margin-top: var(--spacing-md);
+    margin-right: var(--spacing-xl);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.adminDashboard-header {
+    font-size: 1.5rem;
+    font-family: var(--font-family-main);
+    font-weight: bold;
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    margin-left: var(--spacing-xl);
+
+}
+
+.tableTitle {
+    text-transform: uppercase;
+    padding-bottom: 1rem;
+    font-family: var(--font-family-main);
+}
+
+.admin-search {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  #searchBox {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  #filteredSearch {
+    width: 100%;
+    padding: 8px 40px 8px 8px; 
+    border: 1px solid var(--color-accent);
+    border-radius: var(--border-radius-md);
+    font-family: var(--font-family-main);
+  }
+  
+  #searchType {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background-color: transparent;
+    font-family: var(--font-family-main);
+    color: var(--color-primary);
+    z-index: 2;
+    padding-right: 5px;
+  }
+  
+  #searchButton {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 25px;
+    height: 25px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--color-background);
+}
+
+th, td {
+    padding: 0.5rem;
+    border: 1px solid var(--color-primary);
+    border-radius: var(--border-radius-md);
+}
+
+thead {
+    background-color: grey;
+}
+
+#adminRow:hover {
+    background-color: lightgray;
+}

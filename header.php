@@ -3,15 +3,21 @@ session_start();
 if (!isset($_SESSION['loggedIn'])) {
     $_SESSION['loggedIn'] = false;
 }
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 ?>
  <header class="header">
         <h1 class="site-name">Common Ground</h1>
-        <?php if ($_SESSION['loggedIn']): ?>
-            <a href="logout.php" class="logout-btn">Logout</a>
+        <?php if ($_SESSION['userType'] === "admin"): ?>
+            <a href="admin.php" class="header-btn">Admin</a>
+            <a href="logout.php" class="header-btn">Logout</a>
+        <?php elseif ($_SESSION['loggedIn']): ?>
+            <a href="logout.php" class="header-btn">Logout</a>
+
         <?php else: ?>
             <div id="signin-buttons">
-                <a href="login.php" class="login-btn">Login</a>
-                <a href="signup.php" class="login-btn">Sign Up</a>
+                <a href="login.php" class="header-btn">Login</a>
+                <a href="signup.php" class="header-btn">Sign Up</a>
             </div>
         <?php endif; ?>
     </header>
