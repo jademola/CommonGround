@@ -993,3 +993,23 @@ thead {
 #adminRow:hover {
     background-color: lightgray;
 }
+
+/* =================== */
+/* Search Page Stlying */
+/* =================== */
+
+.main-search {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .search-results {
+    flex: 2;
+    padding: var(--spacing-lg);
+    overflow-y: auto;
+    height: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
