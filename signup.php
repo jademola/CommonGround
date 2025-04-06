@@ -150,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         const password = document.getElementById('signupPassword').value;
         const confirm = document.getElementById('confirmPassword').value;
 
-        // Check if passwords match (shittiest security ever lmao)
+        // Check if passwords match
         if (password !== confirm) {
           e.preventDefault();
           alert("Passwords don't match. Please re-type.");
