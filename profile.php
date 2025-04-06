@@ -1,6 +1,13 @@
 <?php
 session_start();
-$username = $_SESSION['username'];
+
+if (isset($_GET['id'])) {
+    $displayUser = $_GET['id']; 
+}
+else {
+    $displayUser = $_SESSION['username'];
+}
+
 ?>
 
 
@@ -40,7 +47,7 @@ $username = $_SESSION['username'];
 
         <!-- Main: View Profile -->
         <main class="userProfile">
-            <h2 class="userProfile-header"><?php echo "@" . $_SESSION['username'] ?></h2>
+            <h2 class="userProfile-header"><?php echo "@" . $displayUser ?></h2>
             <div class="profile-header">
                 <div class="user-avatar">
                     <img src="images/profile1.jpg" alt="" id="#user-profile-img">
@@ -48,7 +55,7 @@ $username = $_SESSION['username'];
                 <div class="profileBio-content">
 
                     <div>
-                        <div id="username-display"><b>Username: <?php echo $_SESSION['username'] ?></b></div>
+                        <div id="username-display"><b>Username: <?php echo $displayUser ?></b></div>
                     </div>
                     <div>
                         <?php
@@ -56,7 +63,7 @@ $username = $_SESSION['username'];
                              FROM profile 
                              WHERE username = ?";
                         $stmt = $conn->prepare($sql);
-                        $stmt->bind_param("s", $_SESSION['username']);  // "s" specifies the type (string)
+                        $stmt->bind_param("s", $displayUser);  // "s" specifies the type (string)
                         $stmt->execute();
                         $result = $stmt->get_result();
 
@@ -72,35 +79,44 @@ $username = $_SESSION['username'];
                         ?>
                         <!-- Tags - Replace with DB-->
                     </div>
-                    <!-- Edit Profile Button -->
-                    <div id="test">
-                        <a href="editprofile.php">
-                            <button class="edit-profile-btn">Edit Profile</button>
-                        </a>
-                    </div>
+                
                     <div class="profile-tags">
                         <p><b>User Tags:</b></p>
+                    
 
                         <?php
-                        $sql = "SELECT tags.name 
-                        FROM profile_tags JOIN tags 
-                        ON profile_tags.id = tags.id 
+                        $sql = "SELECT tags.name, tags.id 
+                        FROM tags JOIN profile_tags
+                        ON  tags.id = profile_tags.id
                         WHERE username = ?";
                         $stmt = $conn->prepare($sql);
-                        $stmt->bind_param("s", $_SESSION['username']);  // "s" specifies the type (string)
+                        $stmt->bind_param("s", $displayUser);  // "s" specifies the type (string)
                         $stmt->execute();
                         $result = $stmt->get_result();
 
                         while ($row = $result->fetch_assoc()) {
-                            echo "<span class='tag' id='funny-tag'>" . $row['name'] . "</span>"; // You can modify this as needed
-                        }
+                            $tag_id = htmlspecialchars(strtolower($row["name"])) . "-tag";
+                            echo '<span class="tag" id="' . $tag_id . '">' . htmlspecialchars($row["name"]) . '</span>';                        }
 
                         if ($result->num_rows === 0) {
                             echo "No tags yet selected";
                         }
+
+                        
                         $stmt->close();
                         ?>
                     </div>
+
+                    <!-- Edit Profile Button -->
+                     <?php
+                     if ($_SESSION['loggedIn'] = true && $displayUser == $_SESSION['username']){
+                        echo '<div id="test">
+                        <a href="editprofile.php">
+                            <button class="edit-profile-btn">Edit Profile</button>
+                        </a>
+                    </div>';
+                     }
+                     ?>
                 </div>
 
             </div>

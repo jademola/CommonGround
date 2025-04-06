@@ -320,6 +320,7 @@ a {
     margin: var(--spacing-sm) 0;
 }
 
+
 .tag {
     background-color: #9abdd6;
     display: inline-block;
@@ -328,6 +329,8 @@ a {
     margin-left: var(--spacing-sm);
     border-radius: var(--border-radius-lg);
 }
+
+
 
 .profile-tags {
     margin-top: var(--spacing-xl);
@@ -464,10 +467,6 @@ a {
     text-decoration: none;
 }
 
-/* Search Page */
-.search-bar {
-    color: var(--color-white);
-}
 
 #bar {
     background-color: var(--color-background);
@@ -576,8 +575,7 @@ img {
     margin-bottom: var(--spacing-sm);
 }
 
-#postTitle,
-#userEmail {
+#postTitle {
     width: 100%;
     padding: var(--spacing-sm);
     font-family: var(--font-family-main);
@@ -594,8 +592,7 @@ img {
     margin-bottom: var(--spacing-sm);
 }
 
-#postContent,
-#profileBio {
+#postContent {
     width: 100%;
     min-height: 150px;
     padding: var(--spacing-sm);
@@ -613,8 +610,7 @@ img {
     margin-bottom: var(--spacing-sm);
 }
 
-#postTags,
-#profileTags {
+#postTags {
     width: 50%;
     padding: var(--spacing-sm);
     font-family: var(--font-family-main);
@@ -1013,3 +1009,94 @@ thead {
     margin: 0 auto;
 }
 
+/* ==================== */
+/* User Profile Styling */
+/* ==================== */
+
+.update_profile {
+    background-color: var(--color-background);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: var(--spacing-lg);
+}
+
+#userEmailUpdate {
+    margin-bottom: var(--spacing-lg);
+}
+
+#userEmailUpdate label {
+    display: block;
+    font-family: var(--font-family-main);
+    font-weight: bold;
+    margin-bottom: var(--spacing-sm);
+}
+
+#userEmail {
+    width: 100%;
+    padding: var(--spacing-sm);
+    font-family: var(--font-family-main);
+}
+
+#profileBio {
+    margin-bottom: var(--spacing-lg);
+}
+
+#profileBio label {
+    display: block;
+    font-family: var(--font-family-main);
+    font-weight: bold;
+    margin-bottom: var(--spacing-sm);
+}
+
+#profileBio {
+    width: 100%;
+    min-height: 150px;
+    padding: var(--spacing-sm);
+    font-family: var(--font-family-main);
+}
+
+#profileTags {
+    width: 50%;
+    padding: var(--spacing-sm);
+    font-family: var(--font-family-main);
+}
+
+
+
+#oldPass, #newPassA, #newPassB {
+    display: block;
+    width: 50%;
+    padding: var(--spacing-sm);
+    font-family: var(--font-family-main);
+}
+
+#updatePasswordInput {
+    margin-bottom: var(--spacing-lg);
+}
+
+#updatePasswordInput label {
+    display: block;
+    font-family: var(--font-family-main);
+    font-weight: bold;
+    margin-bottom: var(--spacing-sm);
+}
+
+.input-row {
+    display: flex; 
+    gap: 10px; 
+}
+
+.input-row input {
+    width: 50%; /* Each input will take up approximately half the width */
+    padding: var(--spacing-sm);
+    font-family: var(--font-family-main);
+}
+
+.editTag {
+    background-color: #9abdd6;
+    display: inline-block;
+    font-family: var(--font-family-main);
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin-left: var(--spacing-sm);
+    border-radius: var(--border-radius-lg);
+}
