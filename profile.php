@@ -34,7 +34,7 @@ $username = $_SESSION['username'];
             </br>
             <!-- Notification Alert Bar -->
             <div class="notification-box">
-                7 new Notifications!
+                <a href="activity.php">7 new Notifications</a>
             </div>
         </aside>
 

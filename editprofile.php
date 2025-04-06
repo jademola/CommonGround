@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </br>
             <!-- Notification Alert Bar -->
             <div class="notification-box">
-                7 new Notifications!
+                <a href="activity.php">7 new Notifications</a>
             </div>
         </aside>
 

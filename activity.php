@@ -34,7 +34,7 @@ if (!isset($_SESSION['loggedIn'])) {
                 <?php include "popularsidebar.php"; ?> 
 
             <div class="notification-box">
-                7 new Notifications
+                <a href="activity.php">7 new Notifications</a>
             </div>
         </aside>
 
