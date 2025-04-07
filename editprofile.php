@@ -4,47 +4,93 @@ include "notifications.php";
 include "db_connect.php";
 include "queryFunctions.php";
 
-
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $email = $_POST['userEmail'];
-  $bio = $_POST['profileBio'];
-  $tags = $_POST['profileTags'];
+    $email = $_POST['userEmail'];
+    $bio = $_POST['profileBio'];
+    $oldPass = $_POST['oldPass'];
+    $newPass = $_POST['newPassA']; 
+    $tag_id = $_POST['tags'];
+    $removedTags = $_POST['removedTags']; 
 
-  // Update Bio 
-  $sql = "UPDATE profile SET bio = ? WHERE username = ?";
-
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("ss", $bio, $_SESSION['username']);  // "s" specifies the type (string)
-  $stmt->execute();
-
-  // Update Email 
-  $sqlB = "UPDATE userInfo SET email = ? WHERE username = ?";
-
-  $stmtB = $conn->prepare($sqlB);
-  $stmtB->bind_param("ss", $email, $_SESSION['username']);  // "s" specifies the type (string)
-  $stmtB->execute();
-
-  /*// Update Tags
-    $sqlB = "UPDATE profile_tags SET tag_name = ? WHERE username = ?";
-
+    // Update Email 
+    $sqlB = "UPDATE userInfo SET email = ? WHERE username = ?";
     $stmtB = $conn->prepare($sqlB);
-    $stmtB->bind_param("ss", $email, $_SESSION['username']);  // "s" specifies the type (string)
+    $stmtB->bind_param("ss", $email, $_SESSION['username']); 
     $stmtB->execute();
-    */
 
-  if ($stmt->affected_rows > 0 || $stmtB->affected_rows > 0) {
-    header("Location: profile.php");
-    exit();
-  } else {
-    header("Location: editprofile.php");
-    exit();
-  }
-  $stmt->close();
+    // Update Bio 
+    $sql = "UPDATE profile SET bio = ? WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $bio, $_SESSION['username']);
+    $stmt->execute();
+    
+    //Update Tags
+
+    //Remove tag
+    if (!empty($removedTags)){
+      $removedTagsArray = explode(',', $removedTags);
+
+      foreach ($removedTagsArray as $value){
+        $sql = "DELETE FROM profile_tags 
+        WHERE id = ? AND username = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $value, $_SESSION['username']);
+        $stmt->execute();
+      }
+    }
+
+    //Add new tag
+    if ($tag_id != 0){
+      $sqlB = "INSERT INTO profile_tags (id, username) 
+      VALUES (?, ?)";
+      $stmtB = $conn->prepare($sqlB);
+      $stmtB->bind_param("ss", $tag_id, $_SESSION['username']);
+      $stmtB->execute();
+    }
+    
+    // Update Profile Image
+
+    // Update Password:
+    if (isset($oldPass) && isset($newPass) && !empty($oldPass) && !empty($newPass)){
+
+      // Check current password is valid 
+      $sql = "SELECT password FROM userInfo WHERE username = ?";
+      $stmt = $conn->prepare($sql);
+      $stmt->bind_param("s", $username);
+      $stmt->execute();
+      $stmt->bind_result($storedPassword);
+
+      if ($stmt->fetch()) {
+        if ($newPass == $storedPassword){ 
+          $sql = "UPDATE userInfo SET password = ? WHERE username = ?";
+          $stmt = $conn->prepare($sqlB);
+          $stmt->bind_param("ss", $newPass, $_SESSION['username']);
+          $stmt->execute();
+        }
+        else {
+          $errorMessage = "Incorrect current password, please try again";
+        }
+      }
+      else {
+        $errorMessage = "Incorrect current password, please try again";
+      }
+      $stmt->close();
+    }
+    
+    // Re-direct after submission 
+    if (isset($errorMessage)) {
+      header("Location: editprofile.php");
+      exit();
+    }
+    else {
+      header("Location: profile.php");
+      exit();
+    }
+    $stmt->close();
+    $stmtB->close(); 
 }
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -52,11 +98,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
   <meta charset="UTF-8" />
-  <title>Common Ground - New Post</title>
+  <title>Common Ground - Edit Profile</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+  <style> 
+  .edittag {
+    background-color: #9abdd6;
+    display: inline-block;
+    font-family: var(--font-family-main);
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin-left: var(--spacing-sm);
+    border-radius: var(--border-radius-lg);
+    cursor: pointer;
+  }
+
+  .clicked {
+    background-color: gray; 
+    text-decoration: line-through; 
+  }
+  </style>
 
   <?php include "header.php" ?>
 
@@ -69,28 +131,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <!-- Notification Alert Bar -->
       <div class="notification-box">
         <a href="activity.php"><?php echo $_SESSION['notification_count']; ?> new Notifications</a>
-
       </div>
     </aside>
 
     <!-- New Post Section -->
     <main class="feed">
       <h2 class="feed-header">Update Profile Information</h2>
-
-      <form id="newPostForm" class="new-post-form" method="post">
-        <div id="titleContent">
-          <!-- Title -->
+      
+      <form id="update_profile" class="update_profile" method="post" action="editprofile.php">
+        <div id="userEmailUpdate">
+          <!-- User Email -->
           <label for="userEmail">Your Email:</label>
-          <input
-            type="text"
-            id="userEmail"
-            name="userEmail"
-            value="<?php echo getUserEmailByUsername($_SESSION['username'], $conn); ?>" ;
-            required>
-        </div id=tit>
+          <input 
+            type="email" 
+            id="userEmail" 
+            name="userEmail" 
+            value="<?php echo getUserEmailByUsername($_SESSION['username'], $conn);?>" 
+            required
+          >
+        </div>
 
-        <div id="blogContent">
-          <!-- Content -->
+        <div id="profileBio">
+          <!-- User Bio Content -->
           <label for="profileBio">Bio:</label>
           <textarea
             id="profileBio"
@@ -101,34 +163,91 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div id="tagContent">
           <!-- Tags -->
-          <label for="profileTags">Tags (comma-separated):</label>
-          <input
-            type="text"
-            id="profileTags"
-            name="profileTags"
-            value="<?php
-                    $tags = getUserTagsByUsername($_SESSION['username'], $conn);
+          <label for="tagList">User Tags: (Select Tag to Remove)</label>
 
-                    if (count($tags) > 0) {
-                      foreach ($tags as $tag) {
-                        echo "$tag, ";
-                      }
-                    } else {
-                      echo "No tags available.";
-                    } ?>" ;>
+          <!-- Displays selected tags -->
+          <?php
+              $sql = "SELECT tags.name, tags.id 
+              FROM tags JOIN profile_tags
+              ON  tags.id = profile_tags.id
+              WHERE username = ?";
+              $stmt = $conn->prepare($sql);
+              $stmt->bind_param("s", $_SESSION['username']);
+              $stmt->execute();
+              $result = $stmt->get_result();
+          ?>
+              <input type="hidden" name="removedTags" id="removedTags">
+          <?php
+              while ($row = $result->fetch_assoc()) {
+                  $tag_id = htmlspecialchars(strtolower($row["id"])) . "-tag";
+                  echo '<span class="edittag" id="' . $tag_id . '">' . htmlspecialchars($row["name"]) . '</span>';
+              }
+
+              if ($result->num_rows === 0) {
+                  echo "No tags yet selected";
+              }
+
+              $stmt->close();
+          ?>        
+          <select name="tags" id="tagList">
+            <option value="0">Add New Tag</option> 
+            <?php
+            $sql = "SELECT name, id FROM tags"; 
+            $stmt = $conn->prepare($sql); 
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            while ($row = $result->fetch_assoc()){
+              echo '<option value=' . $row['id'] . '> ' . $row['name'] . '</option>';
+            }
+            ?>
+          </select>
         </div>
 
         <div id="uploadImage">
           <!-- Adding image -->
-          <label for="postImage">Upload Image (optional):</label>
-          <input
-            type="file"
-            id="postImage"
+          <label for="postImage">Upload New Profile Image:</label>
+          <input 
+            type="file" 
+            id="postImage" 
             name="postImage"
             accept="image/*">
         </div>
 
-        <!-- Publish Button -->
+        <div id="updatePasswordInput"> 
+          <!-- Update Password Value -->
+           <label for="updatePassword">Update Password: </label> 
+           <input
+                type="password"
+                id="oldPass" 
+                name="oldPass" 
+                placeholder="Enter your Current Password"
+                ><br>
+
+              <div class="input-row">
+                <input
+                type="password"
+                id="newPassA" 
+                name="newPassA" 
+                placeholder="Enter New Password"
+                >
+
+                <input
+                type="password"
+                id="newPassB" 
+                name="newPassB" 
+                placeholder="Confirm New Password"
+                >
+              </div>
+        </div>
+
+        <?php if (isset($errorMessage)): ?>
+          <div class="error-message">
+            <?php echo $errorMessage; ?>
+          </div>
+        <?php endif; ?> 
+
+        <!-- Update Button -->
         <a href="editprofile.php">
           <button type="submit" id="submitBlog">Update</button>
         </a>
@@ -136,23 +255,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </main>
   </div>
 
-  <!-- Very basic client-side validation -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('newPostForm');
-      form.addEventListener('submit', (e) => {
-        const titleValue = document.getElementById('postTitle').value.trim();
-        const contentValue = document.getElementById('postContent').value.trim();
 
-        // Minimal check
-        if (!titleValue || !contentValue) {
-          e.preventDefault();
-          alert('Please fill out both the title and content fields.');
+      //Changes tag color when selected
+      const tagSpans = document.querySelectorAll('.edittag'); 
+      let removedTags = [];
+
+      tagSpans.forEach(function(span) {
+        span.addEventListener('click', function(event) {
+          const targetSpan = event.target; 
+          const tagId = targetSpan.getAttribute('id');
+          targetSpan.classList.toggle('clicked'); 
+
+          if (removedTags.includes(tagId)) {
+            removedTags = removedTags.filter(id => id !== tagId);
+          } else {
+            removedTags.push(tagId);
+          }
+          document.getElementById('removedTags').value = removedTags.join(',');
+        });
+      }); 
+      
+      const form = document.getElementById('update_profile');
+      form.addEventListener('submit', (e) => {
+        const emailValue = document.getElementById('userEmail').value.trim();
+        const BioValue = document.getElementById('profileBio').value.trim();
+        
+        if (!emailValue || !BioValue) {
+          e.preventDefault(); 
+          alert('Please fill out both the email and bio fields.');
         }
-        // Add more checks when more fields added
+
+        const password = document.getElementById('newPassA').value;
+        const confirm = document.getElementById('newPassB').value;
+        if (password !== confirm) {
+          e.preventDefault();
+          alert("New passwords don't match. Please try again.");
+        }
       });
     });
   </script>
 </body>
-
 </html>
