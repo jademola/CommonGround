@@ -21,25 +21,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $stmt->execute();
   $stmt->bind_result($storedUsername, $storedPassword, $storedUserType);
 
-    // Gets returned username, or produces error 
-    if ($stmt->fetch()) {
-      $errorMessage = "Incorrect username, Please try again.";
-      // Verifies password, or produces error
-      if ($password == $storedPassword){ 
-        $_SESSION['loggedIn'] = true;
-        $_SESSION['username'] = $username;
-        $_SESSION['userType'] = $storedUserType;
-        header("Location: profile.php");
-        exit();
-      }
-      else {
-        $errorMessage = "Incorrect password, Please try again.";
-      }
+  // Gets returned username, or produces error 
+  if ($stmt->fetch()) {
+    $errorMessage = "Incorrect username, Please try again.";
+    // Verifies password, or produces error
+    if ($password == $storedPassword) {
+      $_SESSION['loggedIn'] = true;
+      $_SESSION['username'] = $username;
+      $_SESSION['userType'] = $storedUserType;
+      header("Location: profile.php");
+      exit();
+    } else {
+      $errorMessage = "Incorrect password, Please try again.";
     }
-    else {
-      $errorMessage = "Invalid credentials, Please try again.";
-    }
-    $stmt->close();
+  } else {
+    $errorMessage = "Invalid credentials, Please try again.";
+  }
+  $stmt->close();
 }
 ?>
 
@@ -54,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-  
+
   <header class="header">
     <h1 class="site-name">Common Ground</h1>
     <!-- Replace this link -->
@@ -78,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <h2 class="feed-header">Login</h2>
 
       <!-- Login Form -->
-       <!-- Expand the size to match the V2 document -->
+      <!-- Expand the size to match the V2 document -->
       <form id="loginForm" class="auth-form" method="post">
         <div id="login">
           <label for="loginUsername">Username:</label>
@@ -100,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             required>
         </div>
 
-<!-- Server-Side Validation Error Message -->
+        <!-- Server-Side Validation Error Message -->
         <?php if (isset($errorMessage)): ?>
           <div class="error-message">
             <?php echo $errorMessage; ?>
@@ -110,12 +108,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <button type="submit" id="loginButton">Login</button>
 
         <p>
-        Don’t have an account?
-        <a href="signup.php">Sign Up</a>
-      </p>
+          Don’t have an account?
+          <a href="signup.php">Sign Up</a>
+        </p>
       </form>
 
-      
+
     </main>
   </div>
 

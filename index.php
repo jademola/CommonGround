@@ -70,7 +70,7 @@ $posts_result = $conn->query($posts_sql);
                 <?php include "popularsidebar.php" ?>
                 <br>
                 <div class="notification-box">
-                    7 new Notifications
+                    <a href="activity.php"><?php echo $_SESSION['notification_count']; ?> new Notifications</a>
                 </div>
         </aside>
 
