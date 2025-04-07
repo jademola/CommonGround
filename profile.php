@@ -46,10 +46,6 @@ $username = $_SESSION['username'];
                     <img src="images/profile1.jpg" alt="" id="#user-profile-img">
                 </div>
                 <div class="profileBio-content">
-
-                    <div>
-                        <div id="username-display"><b>Username: <?php echo $_SESSION['username'] ?></b></div>
-                    </div>
                     <div>
                         <?php
                         $sql = "SELECT bio
@@ -63,7 +59,7 @@ $username = $_SESSION['username'];
                         // Check if any rows were returned
                         if ($row = $result->fetch_assoc()) {
                             // Display the bio
-                            echo "Bio: " . $row['bio'];
+                            echo $row['bio'];
                         } else {
                             echo "No bio found for this user.";
                         }
