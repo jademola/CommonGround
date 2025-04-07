@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+include "notifications.php";
 include "db_connect.php";
 include "queryFunctions.php";
 
