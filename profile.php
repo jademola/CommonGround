@@ -41,7 +41,8 @@ else {
             </br>
             <!-- Notification Alert Bar -->
             <div class="notification-box">
-                7 new Notifications!
+                                    <a href="activity.php"><?php echo $_SESSION['notification_count']; ?> new Notifications</a>
+
             </div>
         </aside>
 
@@ -53,7 +54,6 @@ else {
                     <img src="images/profile1.jpg" alt="" id="#user-profile-img">
                 </div>
                 <div class="profileBio-content">
-
                     <div>
                         <div id="username-display"><b>Username: <?php echo $displayUser ?></b></div>
                     </div>
@@ -70,7 +70,7 @@ else {
                         // Check if any rows were returned
                         if ($row = $result->fetch_assoc()) {
                             // Display the bio
-                            echo "Bio: " . $row['bio'];
+                            echo $row['bio'];
                         } else {
                             echo "No bio found for this user.";
                         }
