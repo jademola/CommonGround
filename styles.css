@@ -22,6 +22,7 @@
     --border-radius-sm: 4px;
     --border-radius-md: 8px;
     --border-radius-lg: 15px;
+    --border-radius-xl: 30px;
 
     /* Common dimensions */
     --sidebar-width: 250px;
@@ -80,6 +81,7 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    text-align: center;
     padding: var(--spacing-md);
     position: relative;
     margin-top: var(--spacing-md);
@@ -88,13 +90,14 @@ a {
 }
 
 .site-name {
-    font-size: 3rem;
+    font-size: 1.75rem;
     font-weight: bold;
     font-family: fantasy;
     margin: auto;
     color: var(--color-white);
-    text-shadow: 4px 4px var(--color-primary);
-    border-radius: var(--border-radius-lg);
+    /* text-shadow: 4px 4px var(--color-primary); */
+    /* border-radius: var(--border-radius-lg); */
+
 }
 
 .header-btn {
@@ -113,6 +116,11 @@ a {
     padding: var(--spacing-md);
     height: 50px;
     align-items: center;
+    border-radius: var(--border-radius-xl);
+    border-bottom: 3px solid var(--color-primary);
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .nav-item {
@@ -122,6 +130,10 @@ a {
     text-decoration: none;
     font-family: var(--font-family-main);
     color: var(--color-primary);
+}
+
+.nav-item:hover {
+    color: var(--color-accent);
 }
 
 .nav-item:last-child {
@@ -221,23 +233,6 @@ a {
     margin-left: var(--spacing-xl);
 }
 
-.profile-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--color-background);
-    padding: var(--spacing-lg);
-    border-radius: var(--border-radius-lg);
-    height: auto;
-    margin-top: 0;
-    padding-top: var(--spacing-md);
-    margin-bottom: var(--spacing-lg);
-    font-family: var(--font-family-main);
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--color-white);
-}
-
 .profileBio-content {
     font-family: var(--font-family-main);
     padding: var(--spacing-lg);
@@ -281,7 +276,7 @@ a {
     border-radius: var(--border-radius-md);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
 }
 
 .post-header {
@@ -490,7 +485,6 @@ a {
     font-size: 1.2rem;
     font-weight: bold;
     color: var(--color-white);
-    background: none;
 }
 
 .profile-card {
@@ -500,7 +494,6 @@ a {
     padding: var(--spacing-lg);
     overflow-y: auto;
     position: sticky;
-    top: var(--header-height);
     min-height: 200px;
 }
 
@@ -529,7 +522,7 @@ a {
     min-height: 60px;
 }
 
-.profile-buttons > button {
+.profile-buttons>button {
     font-family: var(--font-family-main);
     cursor: pointer;
     border: none;
@@ -543,18 +536,19 @@ a {
     margin-top: var(--spacing-md);
 }
 
-.profile-buttons > button:hover {
+.profile-buttons>button:hover {
     background-color: var(--color-accent);
 }
 
 
 .side-profile-tags {
-    margin-left: var(--spacing-sm);
+    /* margin-left: var(--spacing-sm); */
     margin-top: var(--spacing-sm);
 }
 
-#side-profile-tags-whitespace {
-    margin-top: var(--spacing-sm);
+#side-profile-tags-whitespace>span {
+    margin-top: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
 }
 
 img {
@@ -944,25 +938,25 @@ img {
 .admin-search {
     width: 100%;
     margin-bottom: 20px;
-  }
-  
-  #searchBox {
+}
+
+#searchBox {
     display: flex;
     align-items: center;
     position: relative;
     width: 100%;
     max-width: 100%;
-  }
-  
-  #filteredSearch {
+}
+
+#filteredSearch {
     width: 100%;
-    padding: 8px 40px 8px 8px; 
+    padding: 8px 40px 8px 8px;
     border: 1px solid var(--color-accent);
     border-radius: var(--border-radius-md);
     font-family: var(--font-family-main);
-  }
-  
-  #searchType {
+}
+
+#searchType {
     position: absolute;
     right: 40px;
     top: 50%;
@@ -973,9 +967,9 @@ img {
     color: var(--color-primary);
     z-index: 2;
     padding-right: 5px;
-  }
-  
-  #searchButton {
+}
+
+#searchButton {
     position: absolute;
     right: 5px;
     top: 50%;
@@ -986,7 +980,7 @@ img {
     border: none;
     padding: 0;
     cursor: pointer;
-  }
+}
 
 table {
     width: 100%;
@@ -994,7 +988,8 @@ table {
     background-color: var(--color-background);
 }
 
-th, td {
+th,
+td {
     padding: 0.5rem;
     border: 1px solid var(--color-primary);
     border-radius: var(--border-radius-md);
@@ -1016,9 +1011,9 @@ thead {
     width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
-  }
+}
 
-  .search-results {
+.search-results {
     flex: 2;
     padding: var(--spacing-lg);
     overflow-y: auto;
@@ -1081,7 +1076,9 @@ thead {
 
 
 
-#oldPass, #newPassA, #newPassB {
+#oldPass,
+#newPassA,
+#newPassB {
     display: block;
     width: 50%;
     padding: var(--spacing-sm);
@@ -1100,12 +1097,13 @@ thead {
 }
 
 .input-row {
-    display: flex; 
-    gap: 10px; 
+    display: flex;
+    gap: 10px;
 }
 
 .input-row input {
-    width: 50%; /* Each input will take up approximately half the width */
+    width: 50%;
+    /* Each input will take up approximately half the width */
     padding: var(--spacing-sm);
     font-family: var(--font-family-main);
 }
