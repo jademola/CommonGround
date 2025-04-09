@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
             <div class="sidebar-section">
                 <?php include "popularsidebar.php" ?>
                 <div class="notification-box">
-                    7 new Notifications
+                    <a href="activity.php"><?php echo $_SESSION['notification_count']; ?> new Notifications</a>
                 </div>
             </div>
         </aside>

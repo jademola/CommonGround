@@ -1,5 +1,5 @@
 <?php
-include "sessions.php";
+// include "sessions.php";
 include "db_connect.php";
 
 if (isset($_SESSION['username'])) {
