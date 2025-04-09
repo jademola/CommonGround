@@ -1,5 +1,5 @@
 <?php 
-session_start();
+include "sessions.php";
 
 echo "Logout Successful";
 session_unset();

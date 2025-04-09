@@ -1,7 +1,8 @@
 <?php
 
+include "sessions.php";
 include "db_connect.php";
-session_start();
+
 
 if ($_SESSION['loggedIn']) {
   header("Location: profile.php");

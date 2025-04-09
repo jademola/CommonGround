@@ -1,6 +1,6 @@
 <?php
+include "sessions.php";
 include "db_connect.php";
-session_start();
 
 if (isset($_SESSION['username'])) {
     // Query to count total notifications (likes + comments) for user's posts
@@ -28,4 +28,5 @@ if (isset($_SESSION['username'])) {
     $_SESSION['notification_count'] = 0;
 }
 
-$conn->close();
+// $conn->close();
+?>

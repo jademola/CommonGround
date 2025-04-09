@@ -4,7 +4,7 @@ include 'db_connect.php';
 ini_set('display_errors', 1);
 error_reporting(E_ALL); 
 
-session_start();
+include "sessions.php";
 
 // If page is selected and an id has been passed through URL, it will use the username passed, 
 // otherwise, will display the session user

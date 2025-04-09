@@ -1,5 +1,5 @@
 <?php 
-    session_start();
+    include "sessions.php";
     include "notifications.php";
     $username = $_SESSION['username']; 
 
