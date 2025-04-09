@@ -158,6 +158,7 @@ a {
 .sidebar {
     width: 20%;
     padding: var(--spacing-lg);
+    padding-top: var(--spacing-xs);
     height: 100%;
     overflow-y: auto;
     position: sticky;
@@ -166,14 +167,12 @@ a {
 .sidebar-header {
     font-family: var(--font-family-main);
     color: var(--color-white);
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: var(--spacing-lg);
     height: 40px;
     display: flex;
     align-items: center;
-    margin-top: 0;
-    padding-top: var(--spacing-md);
 }
 
 .popular-list {
@@ -266,7 +265,6 @@ a {
 .feed-header {
     font-size: 1.5rem;
     font-weight: bold;
-    margin-bottom: var(--spacing-lg);
     color: var(--color-white);
     font-family: var(--font-family-main);
     height: 40px;

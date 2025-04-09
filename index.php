@@ -69,7 +69,6 @@ $posts_result = $conn->query($posts_sql);
             <!-- Top three posts (by likes, in order) -->
             <div class="sidebar-section">
                 <?php include "popularsidebar.php" ?>
-                <br>
                 <div class="notification-box">
                     <a href="activity.php"><?php echo $_SESSION['notification_count']; ?> new Notifications</a>
                 </div>

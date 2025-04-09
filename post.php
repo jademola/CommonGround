@@ -89,7 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
             <!-- Top three posts (by likes, in order) -->
             <div class="sidebar-section">
                 <?php include "popularsidebar.php" ?>
-                <br>
                 <div class="notification-box">
                     7 new Notifications
                 </div>
