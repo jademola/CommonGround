@@ -1,5 +1,6 @@
 <?php
 session_start();
+// include "notifications.php";
 // Include the database connection
 require_once 'db_connect.php';
 
@@ -70,7 +71,7 @@ $posts_result = $conn->query($posts_sql);
                 <?php include "popularsidebar.php" ?>
                 <br>
                 <div class="notification-box">
-                    7 new Notifications
+                    <a href="activity.php"><?php echo $_SESSION['notification_count']; ?> new Notifications</a>
                 </div>
         </aside>
 
@@ -122,7 +123,7 @@ $posts_result = $conn->query($posts_sql);
                             </a>
                         </div>
                         <div class="post-content">
-                            <?php echo htmlspecialchars($post["content"]) . (strlen($post["content"]) > 200 ? "..." : ""); ?>
+                            <?php echo htmlspecialchars($post["content"]); ?>
                         </div>
                         <div class="post-footer">
                             <button class="like-btn" onclick="changeHeart(this)" data-post-id="<?php echo $post['id']; ?>">♡ Like</button>
