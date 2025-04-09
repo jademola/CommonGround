@@ -91,7 +91,9 @@ $posts_result = $conn->query($posts_sql);
                 <?php while ($post = $posts_result->fetch_assoc()): ?>
                     <div class="post">
                         <div class="post-header">
-                            <img src="images/icon.png" alt="" id="post-img">
+                            <?php
+                            echo '<img src="getProfileImage.php?id='  . $post['author'] . '"alt="Profile Image" id="#user-profile-img">';
+                             ?>
                             <div class="user-info">
                                 <div><?php echo htmlspecialchars($post["author"]); ?></div>
                                 <div>
