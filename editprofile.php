@@ -159,7 +159,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Popular Post Sidebar -->
     <aside class="sidebar">
       <?php include "popularsidebar.php"; ?>
-      </br>
       <!-- Notification Alert Bar -->
       <div class="notification-box">
         <a href="activity.php"><?php echo $_SESSION['notification_count']; ?> new Notifications</a>

@@ -69,7 +69,6 @@ $posts_result = $conn->query($posts_sql);
             <!-- Top three posts (by likes, in order) -->
             <div class="sidebar-section">
                 <?php include "popularsidebar.php" ?>
-                <br>
                 <div class="notification-box">
                     <a href="activity.php"><?php echo $_SESSION['notification_count']; ?> new Notifications</a>
                 </div>
@@ -92,11 +91,11 @@ $posts_result = $conn->query($posts_sql);
                     <div class="post">
                         <div class="post-header">
                             <?php
-                            echo '<img src="getProfileImage.php?id='  . $post['author'] . '"alt="Profile Image" id="#user-profile-img">';
+                            echo '<img src="getProfileImage.php?id='  . $post['author'] . '"alt="Profile Image" id="user-profile-img">';
                              ?>
                             <div class="user-info">
                                 <div><?php echo htmlspecialchars($post["author"]); ?></div>
-                                <div>
+                                <div class="post-tags">
                                     <?php
                                     // Fetch tags for this post
                                     $tag_sql = "SELECT t.name, t.id FROM tags t 

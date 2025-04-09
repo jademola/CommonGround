@@ -89,7 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
             <!-- Top three posts (by likes, in order) -->
             <div class="sidebar-section">
                 <?php include "popularsidebar.php" ?>
-                <br>
                 <div class="notification-box">
                     7 new Notifications
                 </div>
@@ -110,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
             <div class="post">
                 <div class="post-header">
                 <?php
-                     echo '<img src="getProfileImage.php?id='  . $post['author'] . '"alt="Profile Image" id="#user-profile-img">';
+                     echo '<img src="getProfileImage.php?id='  . $post['author'] . '"alt="Profile Image" id="user-profile-img">';
                 ?>               
                  <div class="user-info">
                         <div><?php echo htmlspecialchars($post["author"]); ?></div>

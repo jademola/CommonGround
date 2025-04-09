@@ -1,19 +1,17 @@
 <?php
 session_start();
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL); 
+// ini_set('display_errors', 1);
+// error_reporting(E_ALL);
 
 
 if (isset($_GET['id'])) {
-    $displayUser = $_GET['id']; 
-}
-else if (isset($_SESSION['username'])) {
-    $displayUser = $_SESSION['username']; 
-}
-else {
+    $displayUser = $_GET['id'];
+} else if (isset($_SESSION['username'])) {
+    $displayUser = $_SESSION['username'];
+} else {
     header("Location: login.php");
-      exit();
+    exit();
 }
 
 ?>
@@ -45,11 +43,9 @@ else {
         <!-- Popular Post Sidebar -->
         <aside class="sidebar">
             <?php include "popularsidebar.php"; ?>
-            </br>
             <!-- Notification Alert Bar -->
             <div class="notification-box">
-                                    <a href="activity.php"><?php echo $_SESSION['notification_count']; ?> new Notifications</a>
-
+                <a href="activity.php"><?php echo $_SESSION['notification_count']; ?> new Notifications</a>
             </div>
         </aside>
 
@@ -58,8 +54,8 @@ else {
             <h2 class="userProfile-header"><?php echo "@" . $displayUser ?></h2>
             <div class="profile-header">
                 <div class="user-avatar">
-                    <?php 
-                        echo '<img src="getProfileImage.php?id='  . $displayUser . '"alt="Profile Image" id="#user-profile-img">';
+                    <?php
+                    echo '<img src="getProfileImage.php?id=' . $displayUser . '" alt="Profile Image" id="profile-picture">';
                     ?>
                 </div>
                 <div class="profileBio-content">
@@ -88,10 +84,10 @@ else {
                         ?>
                         <!-- Tags - Replace with DB-->
                     </div>
-                
+
                     <div class="profile-tags">
                         <p><b>User Tags:</b></p>
-                    
+
 
                         <?php
                         $sql = "SELECT tags.name, tags.id 
@@ -105,27 +101,28 @@ else {
 
                         while ($row = $result->fetch_assoc()) {
                             $tag_id = htmlspecialchars(strtolower($row["name"])) . "-tag";
-                            echo '<span class="tag" id="' . $tag_id . '">' . htmlspecialchars($row["name"]) . '</span>';                        }
+                            echo '<span class="tag" id="' . $tag_id . '">' . htmlspecialchars($row["name"]) . '</span>';
+                        }
 
                         if ($result->num_rows === 0) {
                             echo "No tags yet selected";
                         }
 
-                        
+
                         $stmt->close();
                         ?>
                     </div>
 
                     <!-- Edit Profile Button -->
-                     <?php
-                     if ($_SESSION['loggedIn'] = true && $displayUser == $_SESSION['username']){
+                    <?php
+                    if ($_SESSION['loggedIn'] = true && $displayUser == $_SESSION['username']) {
                         echo '<div id="test">
                         <a href="editprofile.php">
                             <button class="edit-profile-btn">Edit Profile</button>
                         </a>
                     </div>';
-                     }
-                     ?>
+                    }
+                    ?>
                 </div>
 
             </div>
