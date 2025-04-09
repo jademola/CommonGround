@@ -37,7 +37,7 @@
                                 // Display the bio
                                 echo "Bio: " . $row['bio'];
                             } else {
-                                echo "No bio found for this user.";
+                                echo "Login/Sign-up to view your profile information";
                             }
 
                             $stmt->close();

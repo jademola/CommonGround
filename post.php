@@ -43,33 +43,31 @@ $success_message = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
     // Get form data
     $comment_content = $_POST["comment_content"];
-    if(!isset($_SESSION["username"]) || empty($_SESSION['username'])) {
+    if (!isset($_SESSION["username"]) || empty($_SESSION['username'])) {
         $error_message = "Must be logged in to comment.";
     } else if (empty($comment_content)) {
         $error_message = "Comment content cannot be empty.";
     } // Validate inputs
     else {
-      $current_user = $_SESSION['username'];
+        $current_user = $_SESSION['username'];
         // Prepare and execute SQL query to insert comment
-       $stmt = $conn->prepare("INSERT INTO comments (author, content, post_id, date) VALUES (?, ?, ?, CURRENT_DATE())");
-       $stmt->bind_param("ssi", $current_user, $comment_content, $post_id);
+        $stmt = $conn->prepare("INSERT INTO comments (author, content, post_id, date) VALUES (?, ?, ?, CURRENT_DATE())");
+        $stmt->bind_param("ssi", $current_user, $comment_content, $post_id);
 
-       if ($stmt->execute()) {
-           // Comment added successfully
-           $success_message = "Comment added successfully!";
+        if ($stmt->execute()) {
+            // Comment added successfully
+            $success_message = "Comment added successfully!";
 
-           // Redirect to avoid form resubmission
-           header("Location: post.php?id=" . $post_id);
-           exit();
-       } else {
-           // Error occurred
-           $error_message = "Error adding comment: " . $conn->error;
-       }
+            // Redirect to avoid form resubmission
+            header("Location: post.php?id=" . $post_id);
+            exit();
+        } else {
+            // Error occurred
+            $error_message = "Error adding comment: " . $conn->error;
+        }
 
-       $stmt->close();
-   }
-
-    
+        $stmt->close();
+    }
 }
 ?>
 
@@ -142,8 +140,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
                     <?php echo htmlspecialchars($post["content"]); ?>
                 </div>
                 <div class="post-footer">
-                    
-                
+
+
                 </div>
 
                 <!-- Comments Section -->
@@ -185,7 +183,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
                 </div>
             </div>
         </main>
-
        <aside class="profile-sidebar">
             <?php include "profilesidebar.php"; ?>
         </aside>

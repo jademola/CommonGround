@@ -27,7 +27,7 @@
 <?php include "header.php" ?>
 
     <!-- Main Content -->     
-    <div class="main-content" id="mainFeed">
+    <div class="main-content">
 
     <!-- Popular sidebar --> 
     <aside class="sidebar">
