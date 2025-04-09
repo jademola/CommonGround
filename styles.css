@@ -246,7 +246,11 @@ a {
 #user-profile-img {
     /* margin-left: var(--spacing-md); */
     width: 10%;
-    border-radius: 25%;
+    border-radius: 50%;
+}
+
+#sidebar-pfp {
+    width: 100%;
 }
 
 .feed {

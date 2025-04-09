@@ -19,7 +19,7 @@
 </style>
 <body>
             <div class="profile-card">
-            <img src="getProfileImage.php" alt="Profile Image" id="user-profile-img">
+            <img src="getProfileImage.php" alt="Profile Image" id="sidebar-pfp">
             <div class="profile-username"><?php echo $_SESSION['username'] ?></div>
                 <div class="profile-bio">
                 <?php 
