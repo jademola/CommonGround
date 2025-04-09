@@ -26,7 +26,7 @@
 
     /* Common dimensions */
     --sidebar-width: 250px;
-    --header-height: 100px;
+    --header-height: 90px;
 }
 
 /* Base styles */
@@ -244,10 +244,9 @@ a {
 }
 
 #user-profile-img {
-    margin-left: var(--spacing-md);
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
+    /* margin-left: var(--spacing-md); */
+    width: 10%;
+    border-radius: 25%;
 }
 
 .feed {
@@ -475,9 +474,9 @@ a {
 /* =====================*/
 
 .profile-sidebar {
-    width: var(--sidebar-width);
+    width: 20%;
     padding: var(--spacing-lg);
-    margin-right: var(--spacing-xl);
+    margin-right: var(--spacing-xs);
 }
 
 .profile-header {
@@ -494,7 +493,7 @@ a {
     padding: var(--spacing-lg);
     overflow-y: auto;
     position: sticky;
-    min-height: 200px;
+    width: 100%;
 }
 
 .profile-avatar {
@@ -551,9 +550,6 @@ a {
     margin-bottom: var(--spacing-xs);
 }
 
-img {
-    width: 100%;
-}
 
 /* ========================*/
 /* Search results (centre) */

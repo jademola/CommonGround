@@ -59,7 +59,7 @@ else {
             <div class="profile-header">
                 <div class="user-avatar">
                     <?php 
-                        echo '<img src="getProfileImage.php?id='  . $displayUser . '"alt="Profile Image" id="#user-profile-img">';
+                        echo '<img src="getProfileImage.php?id='  . $displayUser . '"alt="Profile Image" id="user-profile-img">';
                     ?>
                 </div>
                 <div class="profileBio-content">

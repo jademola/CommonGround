@@ -1,7 +1,6 @@
 <?php
 include "db_connect.php";
 
-session_start();
 // include "notifications.php";
 if (!isset($_SESSION['loggedIn'])) {
     $_SESSION['loggedIn'] = false;
