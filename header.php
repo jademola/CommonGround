@@ -8,7 +8,21 @@ if (!isset($_SESSION['loggedIn'])) {
 ?>
  <header class="header">
         <h1 class="site-name">Common Ground</h1>
-        <nav class="nav">
+        <?php if ($_SESSION['userType'] === "admin"): ?>
+            <a href="admin.php" class="header-btn">Admin</a>
+            <a href="logout.php" class="header-btn">Logout</a>
+        <?php elseif ($_SESSION['loggedIn']): ?>
+            <a href="logout.php" class="header-btn">Logout</a>
+
+        <?php else: ?>
+            <div id="signin-buttons">
+                <a href="login.php" class="header-btn">Login</a>
+                <a href="signup.php" class="header-btn">Sign Up</a>
+            </div>
+        <?php endif; ?>
+    </header>
+
+    <nav class="nav">
         <?php if ($_SESSION['loggedIn']): ?>
             <a href="newpost.php" class="nav-item">New Post</a>
 
@@ -24,18 +38,3 @@ if (!isset($_SESSION['loggedIn'])) {
             <a href="search.php" class="nav-item">Search</a>
         <?php endif; ?>
     </nav>
-        <?php if ($_SESSION['userType'] === "admin"): ?>
-            <a href="admin.php" class="header-btn">Admin</a>
-            <a href="logout.php" class="header-btn">Logout</a>
-        <?php elseif ($_SESSION['loggedIn']): ?>
-            <a href="logout.php" class="header-btn">Logout</a>
-
-        <?php else: ?>
-            <div id="signin-buttons">
-                <a href="login.php" class="header-btn">Login</a>
-                <a href="signup.php" class="header-btn">Sign Up</a>
-            </div>
-        <?php endif; ?>
-    </header>
-
-    

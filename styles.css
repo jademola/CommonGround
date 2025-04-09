@@ -933,6 +933,11 @@ img {
     text-transform: uppercase;
     padding-bottom: 1rem;
     font-family: var(--font-family-main);
+    color: var(--color-white);
+}
+
+.adminTable > .tableTitle {
+    color: var(--color-primary);
 }
 
 .admin-search {
