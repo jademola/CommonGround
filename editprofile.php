@@ -4,6 +4,9 @@
     include "db_connect.php"; 
     include "queryFunctions.php";
 
+    ini_set('display_errors', 1);
+error_reporting(E_ALL); 
+
 
     // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -52,10 +55,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $stmtB = $conn->prepare($sqlB);
       $stmtB->bind_param("ss", $tag_id, $_SESSION['username']);  // "s" specifies the type (string)
       $stmtB->execute();
-
     }
     
     // Update Profile Image
+    if (isset($_FILES['image']) && !empty($_FILES['image']['name'])) {
+      
+      $imagedata = file_get_contents($_FILES['image']['tmp_name']); 
+
+      $fileType = $_FILES['image']['type'];
+      
+      /*
+      $sql = "UPDATE userImages 
+        SET contentType = ?, image = ? 
+        WHERE username = ?";
+        */
+
+        $sql = "INSERT INTO userImages (contentType, image, username) 
+          VALUES (?, ?, ?)";
+
+      $stmt = mysqli_stmt_init($conn);
+      
+      mysqli_stmt_prepare($stmt, $sql);
+
+      mysqli_stmt_bind_param($stmt, "sbs", $fileType, $data, $_SESSION['username']);
+
+      mysqli_stmt_send_long_data($stmt, 1, $imagedata);
+
+      // This sends the binary data to the third variable location in the // prepared statement (starting from 0).
+      $result = mysqli_stmt_execute($stmt) or die(mysqli_stmt_error($stmt)); // run the statement
+      mysqli_stmt_close($stmt); // and dispose of the statement.
+      }
 
 
     // Update Password:
@@ -151,7 +180,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <main class="feed">
       <h2 class="feed-header">Update Profile Information</h2>
       
-      <form id="update_profile" class="update_profile" method="post" action="editprofile.php">
+      <form id="update_profile" class="update_profile" method="post" action="editprofile.php" enctype="multipart/form-data">
         <div id="userEmailUpdate">
           <!-- User Email -->
           <label for="userEmail">Your Email:</label>
@@ -223,11 +252,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div id="uploadImage">
           <!-- Adding image -->
-          <label for="postImage">Upload New Profile Image:</label>
+          <label for="image">Upload New Profile Image:</label>
           <input 
             type="file" 
-            id="postImage" 
-            name="postImage"
+            id="image" 
+            name="image"
             accept="image/*"
           >
         </div>
