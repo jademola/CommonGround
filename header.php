@@ -7,7 +7,7 @@ if (!isset($_SESSION['loggedIn'])) {
 // ini_set('display_errors', 1);
 ?>
 <header class="header">
-    <h1 class="site-name">Common Ground</h1>
+    <h1 class="site-name">COMMON GROUND</h1>
 
     <nav class="nav">
         <?php if ($_SESSION['loggedIn']): ?>
