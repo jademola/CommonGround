@@ -1,5 +1,5 @@
 <?php
-session_start();
+include "sessions.php";
 include "notifications.php";
 include "db_connect.php";
 include "queryFunctions.php";

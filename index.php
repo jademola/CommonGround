@@ -1,6 +1,6 @@
 <?php
-session_start();
-// include "notifications.php";
+include "sessions.php";
+include "notifications.php";
 // Include the database connection
 require_once 'db_connect.php';
 

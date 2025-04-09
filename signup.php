@@ -1,11 +1,10 @@
 
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL); 
-
+// ini_set('display_errors', 1);
+// error_reporting(E_ALL); 
+include "sessions.php";
 include "db_connect.php";
 
-session_start();
 $errorMessage = null;
 
 if ($_SESSION['loggedIn']) {
