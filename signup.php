@@ -34,6 +34,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sss", $username, $email, $password);  // "sss" specifies the type (string)
     $stmt->execute();
 
+    $sqlP = "INSERT INTO profile (username) 
+    VALUES (?)";
+
+    $stmtC = $conn->prepare($sqlP);
+    $stmtC->bind_param("s", $username);  // "s" specifies the type (string)
+    $stmtC->execute();
+    $stmtC->close();
+    
+    
+    // Profile Image upload 
+    if (isset($_FILES['image'])) {
+
+    $imagedata = file_get_contents($_FILES['image']['tmp_name']); 
+
+      $fileType = $_FILES['image']['type'];
+      
+      $sqlI = "INSERT INTO userImages (username, contentType, image) 
+          VALUES (?, ?, ?)";
+
+      $stmtB = mysqli_stmt_init($conn);
+      
+      mysqli_stmt_prepare($stmtB, $sqlI);
+
+      mysqli_stmt_bind_param($stmtB, "ssb", $username, $fileType, $data);
+
+      mysqli_stmt_send_long_data($stmtB, 2, $imagedata);
+
+      // This sends the binary data to the third variable location in the // prepared statement (starting from 0).
+      $resultB = mysqli_stmt_execute($stmtB) or die(mysqli_stmt_error($stmtB)); // run the statement
+      mysqli_stmt_close($stmtB); // and dispose of the statement.
+    }
+    else {
+      header("Location: signup.php");
+      exit();
+    }
+
     if ($stmt->affected_rows > 0) {
       $_SESSION['loggedIn'] = true;
       $_SESSION['username'] = $username;
@@ -41,10 +77,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       exit();
     }
     else {
-      header("Location: index.php");
+      header("Location: signup.php");
       exit();
     }
+
     $stmt->close();
+    $stmtB->close();
+
   }
   else {
     $errorMessage = "Username in use, Please try again.";
@@ -82,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <h2 class="feed-header">Sign Up</h2>
 
       <!-- Sign Up Form -->
-      <form id="signupForm" class="auth-form" method="post">
+      <form id="signupForm" class="auth-form" method="post" enctype="multipart/form-data">
         <div id="signUsername">
           <label for="signupUsername">Username:</label>
           <input
@@ -122,6 +161,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             placeholder="Re-type your password"
             required>
         </div>
+
+        <div id="uploadImage">
+          <!-- Adding image -->
+          <label for="postImage">Upload Profile Image:</label>
+          <input 
+            type="file" 
+            id="image" 
+            name="image"
+            accept="image/*"
+          >
+        </div>
+
 
         <!-- Server-Side Validation Error Message -->
         <?php if (isset($errorMessage)): ?>

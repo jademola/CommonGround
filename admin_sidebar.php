@@ -5,34 +5,33 @@ include "db_connect.php";
 <html lang="en">
 <!-- HTML for structuring list -->
 <ul class='popular-list'>
-<li id='popular-box-title'><strong>STATISTICS:</strong></li>
-<?php
-// Get User Count
-$sql = "SELECT COUNT(*) AS userCount FROM userInfo";
-$result = $conn->query($sql);
-// Check if there are any rows returned
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()){
-        $userCount = $row['userCount'];
-        echo "<li class='popularPost'>Total Registered Users: $userCount</li>";
+    <li id='popular-box-title'><strong>STATISTICS:</strong></li>
+    <?php
+    // Get User Count
+    $sql = "SELECT COUNT(*) AS userCount FROM userInfo";
+    $result = $conn->query($sql);
+    // Check if there are any rows returned
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $userCount = $row['userCount'];
+            echo "<li class='popularPost'>Total Registered Users: $userCount</li>";
+        }
+    } else {
+        echo "No results found.";
     }
-}
-else {
-    echo "No results found.";
-}
 
-// Get Post Count
-$sql = "SELECT COUNT(*) AS postCount FROM post";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()){
-        $postCount = $row['postCount'];
-        echo "<li class='popularPost'>Total Posts: $postCount</li>";
+    // Get Post Count
+    $sql = "SELECT COUNT(*) AS postCount FROM post";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $postCount = $row['postCount'];
+            echo "<li class='popularPost'>Total Posts: $postCount</li>";
+        }
     }
-}
 
-// Get Average Interactions
-$sql = "SELECT 
+    // Get Average Interactions
+    $sql = "SELECT 
     ROUND(AVG(likes + comments), 1) AS avgInteractions 
     FROM (
         SELECT 
@@ -44,13 +43,13 @@ $sql = "SELECT
         LEFT JOIN comments c ON p.id = c.post_id
         GROUP BY p.id
     ) as interactions";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()){
-        $avgInteractions = $row['avgInteractions'];
-        echo "<li class='popularPost'>Average Interactions Per Post: $avgInteractions</li>";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $avgInteractions = $row['avgInteractions'];
+            echo "<li class='popularPost'>Average Interactions Per Post: $avgInteractions</li>";
+        }
     }
-}
-?>
-<!-- Close unordered list -->
+    ?>
+    <!-- Close unordered list -->
 </ul>

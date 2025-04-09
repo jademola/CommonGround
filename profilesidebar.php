@@ -20,8 +20,8 @@
 <body>
 <h2 class="profile-header">Profile:</h2>
             <div class="profile-card">
-                <img src="images/icon.png" alt="">
-                <div class="profile-username"><?php echo $_SESSION['username'] ?></div>
+            <img src="getProfileImage.php" alt="Profile Image" id="#user-profile-img">
+            <div class="profile-username"><?php echo $_SESSION['username'] ?></div>
                 <div class="profile-bio">
                 <?php 
                          $sql = "SELECT bio

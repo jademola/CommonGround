@@ -1,15 +1,22 @@
 <?php
 session_start();
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL); 
+
+
 if (isset($_GET['id'])) {
     $displayUser = $_GET['id']; 
 }
+else if (isset($_SESSION['username'])) {
+    $displayUser = $_SESSION['username']; 
+}
 else {
-    $displayUser = $_SESSION['username'];
+    header("Location: login.php");
+      exit();
 }
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +48,8 @@ else {
             </br>
             <!-- Notification Alert Bar -->
             <div class="notification-box">
-                7 new Notifications!
+                                    <a href="activity.php"><?php echo $_SESSION['notification_count']; ?> new Notifications</a>
+
             </div>
         </aside>
 
@@ -50,10 +58,11 @@ else {
             <h2 class="userProfile-header"><?php echo "@" . $displayUser ?></h2>
             <div class="profile-header">
                 <div class="user-avatar">
-                    <img src="images/profile1.jpg" alt="" id="#user-profile-img">
+                    <?php 
+                        echo '<img src="getProfileImage.php?id='  . $displayUser . '"alt="Profile Image" id="#user-profile-img">';
+                    ?>
                 </div>
                 <div class="profileBio-content">
-
                     <div>
                         <div id="username-display"><b>Username: <?php echo $displayUser ?></b></div>
                     </div>
@@ -70,7 +79,7 @@ else {
                         // Check if any rows were returned
                         if ($row = $result->fetch_assoc()) {
                             // Display the bio
-                            echo "Bio: " . $row['bio'];
+                            echo $row['bio'];
                         } else {
                             echo "No bio found for this user.";
                         }

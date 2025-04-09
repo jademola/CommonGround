@@ -109,8 +109,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
 
             <div class="post">
                 <div class="post-header">
-                    <img src="images/icon.png" alt="" id="post-img">
-                    <div class="user-info">
+                <?php
+                     echo '<img src="getProfileImage.php?id='  . $post['author'] . '"alt="Profile Image" id="#user-profile-img">';
+                ?>               
+                 <div class="user-info">
                         <div><?php echo htmlspecialchars($post["author"]); ?></div>
                         <div>
                             <?php
@@ -181,9 +183,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
                 </div>
             </div>
         </main>
-
-        <aside class="profile-sidebar">
-            <?php include "profilesidebar.php" ?>
+       <aside class="profile-sidebar">
+            <?php include "profilesidebar.php"; ?>
         </aside>
     </div>
 

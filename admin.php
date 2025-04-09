@@ -1,5 +1,6 @@
 <?php
 session_start();
+// include "notifications.php";
 $username = $_SESSION['username'];
 ?>
 
@@ -51,7 +52,8 @@ $username = $_SESSION['username'];
             </br>
             <!-- Notification Alert Bar -->
             <div class="notification-box">
-                7 new Notifications!
+                <a href="activity.php"><?php echo $_SESSION['notification_count']; ?> new Notifications</a>
+
             </div>
         </aside>
 
