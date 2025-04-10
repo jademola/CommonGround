@@ -61,8 +61,6 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 // Get the post ID from the URL
 
 $post_id = $_GET['id'];
-echo $post_id;
-
 // Fetch the post data
 $post_sql = "SELECT p.*, u.username 
              FROM post p 
