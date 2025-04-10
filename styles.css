@@ -35,7 +35,7 @@
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    resize: none;
+    resize: vertical;
 }
 
 body {
@@ -47,6 +47,10 @@ body {
 
 a {
     text-decoration: none;
+}
+
+textarea {
+    min-height: 55px;
 }
 
 /* Hide scrollbars but keep scrolling functionality */
