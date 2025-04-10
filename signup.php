@@ -1,7 +1,7 @@
 
 <?php
-// ini_set('display_errors', 1);
-// error_reporting(E_ALL); 
+ini_set('display_errors', 1);
+error_reporting(E_ALL); 
 include "sessions.php";
 include "db_connect.php";
 
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     
     // Profile Image upload 
-    if (isset($_FILES['image'])) {
+    if ($_FILES["image"]["size"]>0) {
 
     $imagedata = file_get_contents($_FILES['image']['tmp_name']); 
 
@@ -65,8 +65,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       mysqli_stmt_close($stmtB); // and dispose of the statement.
     }
     else {
-      header("Location: signup.php");
-      exit();
+      $defaultImagePath = './images/icon.png';
+      $imagedata = file_get_contents($defaultImagePath);
+      $fileType = 'image/png';
+
+      $sqlI = "INSERT INTO userImages (username, contentType, image) 
+        VALUES (?, ?, ?)";
+
+      $stmtB = mysqli_stmt_init($conn);
+      mysqli_stmt_prepare($stmtB, $sqlI);
+      mysqli_stmt_bind_param($stmtB, "ssb", $username, $fileType, $data);
+      mysqli_stmt_send_long_data($stmtB, 2, $imagedata);
+      mysqli_stmt_execute($stmtB);
+      mysqli_stmt_close($stmtB);
     }
 
     if ($stmt->affected_rows > 0) {
