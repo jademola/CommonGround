@@ -139,7 +139,7 @@ $posts_result = $conn->query($posts_sql);
                     <div class="post">
                         <div class="post-header">
                             <?php
-                            echo '<img src="getProfileImage.php?id='  . $post['author'] . '"alt="Profile Image" id="user-profile-img">';
+                            echo '<img src="getProfileImage.php?username='  . $post['author'] . '"alt="Profile Image" id="user-profile-img">';
                              ?>
                             <div class="user-info">
                                 <div><?php echo htmlspecialchars($post["author"]); ?></div>

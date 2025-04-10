@@ -55,7 +55,7 @@ if (isset($_GET['id'])) {
             <div class="profile-header">
                 <div class="user-avatar">
                     <?php
-                    echo '<img src="getProfileImage.php?id=' . $displayUser . '" alt="Profile Image" id="profile-picture">';
+                    echo '<img src="getProfileImage.php?username=' . $displayUser . '" alt="Profile Image" id="profile-picture">';
                     ?>
                 </div>
                 <div class="profileBio-content">
