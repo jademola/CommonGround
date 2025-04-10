@@ -25,7 +25,7 @@ if (!isset($_SESSION['loggedIn'])) {
         <?php endif; ?>
     </nav>
 
-    <?php if ($_SESSION['userType'] === "admin"): ?>
+    <?php if (isset($_SESSION['userType']) && $_SESSION['userType'] === "admin"): ?>
         <a href="admin.php" class="header-btn">Admin</a>
         <a href="logout.php" class="header-btn">Logout</a>
     <?php elseif ($_SESSION['loggedIn']): ?>
