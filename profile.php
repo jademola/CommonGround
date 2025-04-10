@@ -55,7 +55,7 @@ if (isset($_GET['id'])) {
             <div class="profile-header">
                 <div class="user-avatar">
                     <?php
-                    echo '<img src="getProfileImage.php?id=' . $displayUser . '" alt="Profile Image" id="profile-picture">';
+                    echo '<img src="getProfileImage.php?username=' . $displayUser . '" alt="Profile Image" id="profile-picture">';
                     ?>
                 </div>
                 <div class="profileBio-content">
@@ -116,9 +116,12 @@ if (isset($_GET['id'])) {
                     <!-- Edit Profile Button -->
                     <?php
                     if ($_SESSION['loggedIn'] = true && $displayUser == $_SESSION['username']) {
-                        echo '<div id="test">
+                        echo '<div id="profile-buttons">
                         <a href="editprofile.php">
                             <button class="edit-profile-btn">Edit Profile</button>
+                        </a>
+                        <a href="userHistory.php">
+                            <button class="edit-profile-btn">Comment History</button>
                         </a>
                     </div>';
                     }

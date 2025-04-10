@@ -1,4 +1,52 @@
 <?php
+// Handle AJAX requests first before any HTML output
+if (isset($_POST['action']) && $_POST['action'] === 'toggleLike') {
+    header('Content-Type: application/json');
+    
+    include "sessions.php";
+    require_once 'db_connect.php';
+    
+    if (!isset($_SESSION['username'])) {
+        echo json_encode(['success' => false, 'message' => 'Must be logged in to like posts']);
+        exit;
+    }
+
+    $post_id = $_POST['post_id'];
+    $username = $_SESSION['username'];
+    
+    // Check if already liked
+    $check_stmt = $conn->prepare("SELECT * FROM post_likes WHERE post_id = ? AND author = ?");
+    $check_stmt->bind_param("is", $post_id, $username);
+    $check_stmt->execute();
+    $result = $check_stmt->get_result();
+    $already_liked = $result->num_rows > 0;
+    $check_stmt->close();
+
+    try {
+        if ($already_liked) {
+            // Unlike
+            $stmt = $conn->prepare("DELETE FROM post_likes WHERE post_id = ? AND author = ?");
+            $stmt->bind_param("is", $post_id, $username);
+            $success = $stmt->execute();
+            $response = ['success' => true, 'liked' => false, 'heart' => '♡'];
+        } else {
+            // Like
+            $stmt = $conn->prepare("INSERT INTO post_likes (post_id, author, date) VALUES (?, ?, CURRENT_DATE())");
+            $stmt->bind_param("is", $post_id, $username);
+            $success = $stmt->execute();
+            $response = ['success' => true, 'liked' => true, 'heart' => '♥'];
+        }
+        $stmt->close();
+        
+        echo json_encode($response);
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'message' => 'Database error']);
+    }
+    $conn->close();
+    exit;
+}
+
+// Regular page load continues here
 include "sessions.php";
 include "notifications.php";
 // Include the database connection
@@ -91,7 +139,7 @@ $posts_result = $conn->query($posts_sql);
                     <div class="post">
                         <div class="post-header">
                             <?php
-                            echo '<img src="getProfileImage.php?id='  . $post['author'] . '"alt="Profile Image" id="user-profile-img">';
+                            echo '<img src="getProfileImage.php?username='  . $post['author'] . '"alt="Profile Image" id="user-profile-img">';
                              ?>
                             <div class="user-info">
                                 <div><?php echo htmlspecialchars($post["author"]); ?></div>
@@ -125,7 +173,23 @@ $posts_result = $conn->query($posts_sql);
                             <?php echo htmlspecialchars($post["content"]); ?>
                         </div>
                         <div class="post-footer">
-                            <button class="like-btn" onclick="changeHeart(this)" data-post-id="<?php echo $post['id']; ?>">♡ Like</button>
+                            <?php
+                            // Check if user has already liked this post
+                            $liked = false;
+                            if (isset($_SESSION['username'])) {
+                                $like_check = $conn->prepare("SELECT * FROM post_likes WHERE post_id = ? AND author = ?");
+                                $like_check->bind_param("is", $post['id'], $_SESSION['username']);
+                                $like_check->execute();
+                                $liked = $like_check->get_result()->num_rows > 0;
+                                $like_check->close();
+                            }
+                            $heart = $liked ? '♥' : '♡';
+                            ?>
+                            <button class="like-btn" onclick="changeHeart(this)" 
+                                data-post-id="<?php echo $post['id']; ?>"
+                                data-liked="<?php echo $liked ? 'true' : 'false'; ?>">
+                                <span class="heart-icon"><?php echo $heart; ?></span> Like
+                            </button>
                         </div>
 
                         <!-- Comments Section -->
@@ -177,18 +241,122 @@ $posts_result = $conn->query($posts_sql);
             <?php include "profilesidebar.php"; ?>
         </aside>
     </div>
-
     <script>
-        function changeHeart(button) {
-            if (button.textContent.includes('♡')) {
-                button.textContent = '♥ Like';
-            } else {
-                button.textContent = '♡ Like';
-            }
+    function changeHeart(button) {
+        if (!<?php echo isset($_SESSION['username']) ? 'true' : 'false'; ?>) {
+            window.location.href = 'login.php';
+            return;
         }
+
+        const postId = button.getAttribute('data-post-id');
+        const formData = new FormData();
+        formData.append('action', 'toggleLike');
+        formData.append('post_id', postId);
+
+        fetch(window.location.href, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const heartIcon = button.querySelector('.heart-icon');
+                heartIcon.textContent = data.heart;
+                button.setAttribute('data-liked', data.liked ? 'true' : 'false');
+            } else {
+                throw new Error(data.message || 'Error processing like');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error processing like. Please try again.');
+        });
+    }
+
+    // Add new functions for feed updates
+    function getLastPostId() {
+        const posts = document.querySelectorAll('.post');
+        if (posts.length === 0) return 0;
+        
+        let maxId = 0;
+        posts.forEach(post => {
+            const likeBtn = post.querySelector('.like-btn');
+            if (likeBtn) {
+                const postId = parseInt(likeBtn.getAttribute('data-post-id'));
+                maxId = Math.max(maxId, postId);
+            }
+        });
+        return maxId;
+    }
+
+    function createPostElement(post) {
+        const liked = <?php echo isset($_SESSION['username']) ? 'true' : 'false'; ?> && 
+            post.liked_by_user ? 'true' : 'false';
+        const heart = liked === 'true' ? '♥' : '♡';
+        
+        const tags = post.tags.map(tag => 
+            `<span class="tag" id="${tag.name.toLowerCase()}-tag">${tag.name}</span>`
+        ).join('');
+
+        return `
+            <div class="post">
+                <div class="post-header">
+                    <img src="getProfileImage.php?username=${post.author}" alt="Profile Image" id="user-profile-img">
+                    <div class="user-info">
+                        <div>${post.author}</div>
+                        <div class="post-tags">${tags}</div>
+                    </div>
+                    <div class="timestamp">${post.formatted_date}</div>
+                </div>
+                <div class="post-title">
+                    <a id="titleLink" href="post.php?id=${post.id}">${post.title}</a>
+                </div>
+                <div class="post-content">${post.content}</div>
+                <div class="post-footer">
+                    <button class="like-btn" onclick="changeHeart(this)" 
+                        data-post-id="${post.id}"
+                        data-liked="${liked}">
+                        <span class="heart-icon">${heart}</span> Like
+                    </button>
+                </div>
+                <div class="comments-section">
+                    <div>Comments:</div>
+                    <div class="no-comments">No comments yet. Be the first to comment!</div>
+                    <form class="comment-form" method="POST">
+                        <input type="hidden" name="post_id" value="${post.id}">
+                        <textarea name="comment_content" placeholder="Write a comment..." required></textarea>
+                        <button type="submit" name="submit_comment" class="post-comment-btn">Post Comment</button>
+                    </form>
+                </div>
+            </div>
+        `;
+    }
+
+    function checkNewPosts() {
+        const lastPostId = getLastPostId();
+        fetch(`fetch_new_posts.php?last_post_id=${lastPostId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.posts && data.posts.length > 0) {
+                    const feed = document.querySelector('.feed');
+                    const feedHeader = feed.querySelector('.feed-header');
+                    
+                    data.posts.reverse().forEach(post => {
+                        const postElement = createPostElement(post);
+                        feed.insertBefore(
+                            document.createRange().createContextualFragment(postElement),
+                            feedHeader.nextSibling
+                        );
+                    });
+                }
+            })
+            .catch(error => console.error('Error fetching new posts:', error));
+    }
+
+    // Check for new posts every 30 seconds
+    setInterval(checkNewPosts, 30000);
     </script>
 </body>
-
 </html>
 
 <?php

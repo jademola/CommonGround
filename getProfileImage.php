@@ -8,8 +8,8 @@ include "sessions.php";
 
 // If page is selected and an id has been passed through URL, it will use the username passed, 
 // otherwise, will display the session user
-if (isset($_GET['id']) && !empty($_GET['id'])) {
-    $displayUser = $_GET['id']; 
+if (isset($_GET['username']) && !empty($_GET['username'])) {
+    $displayUser = $_GET['username']; 
 }
 else {
     $displayUser = $_SESSION['username'];
