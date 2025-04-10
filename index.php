@@ -241,16 +241,6 @@ $posts_result = $conn->query($posts_sql);
             <?php include "profilesidebar.php"; ?>
         </aside>
     </div>
-    <?php
-    // Function to check if user has liked the post
-    function hasUserLikedPost($conn, $post_id, $username) {
-        $stmt = $conn->prepare("SELECT * FROM likes WHERE post_id = ? AND username = ?");
-        $stmt->bind_param("is", $post_id, $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->num_rows > 0;
-    }
-    ?>
     <script>
     function changeHeart(button) {
         if (!<?php echo isset($_SESSION['username']) ? 'true' : 'false'; ?>) {
@@ -282,9 +272,91 @@ $posts_result = $conn->query($posts_sql);
             alert('Error processing like. Please try again.');
         });
     }
+
+    // Add new functions for feed updates
+    function getLastPostId() {
+        const posts = document.querySelectorAll('.post');
+        if (posts.length === 0) return 0;
+        
+        let maxId = 0;
+        posts.forEach(post => {
+            const likeBtn = post.querySelector('.like-btn');
+            if (likeBtn) {
+                const postId = parseInt(likeBtn.getAttribute('data-post-id'));
+                maxId = Math.max(maxId, postId);
+            }
+        });
+        return maxId;
+    }
+
+    function createPostElement(post) {
+        const liked = <?php echo isset($_SESSION['username']) ? 'true' : 'false'; ?> && 
+            post.liked_by_user ? 'true' : 'false';
+        const heart = liked === 'true' ? '♥' : '♡';
+        
+        const tags = post.tags.map(tag => 
+            `<span class="tag" id="${tag.name.toLowerCase()}-tag">${tag.name}</span>`
+        ).join('');
+
+        return `
+            <div class="post">
+                <div class="post-header">
+                    <img src="getProfileImage.php?username=${post.author}" alt="Profile Image" id="user-profile-img">
+                    <div class="user-info">
+                        <div>${post.author}</div>
+                        <div class="post-tags">${tags}</div>
+                    </div>
+                    <div class="timestamp">${post.formatted_date}</div>
+                </div>
+                <div class="post-title">
+                    <a id="titleLink" href="post.php?id=${post.id}">${post.title}</a>
+                </div>
+                <div class="post-content">${post.content}</div>
+                <div class="post-footer">
+                    <button class="like-btn" onclick="changeHeart(this)" 
+                        data-post-id="${post.id}"
+                        data-liked="${liked}">
+                        <span class="heart-icon">${heart}</span> Like
+                    </button>
+                </div>
+                <div class="comments-section">
+                    <div>Comments:</div>
+                    <div class="no-comments">No comments yet. Be the first to comment!</div>
+                    <form class="comment-form" method="POST">
+                        <input type="hidden" name="post_id" value="${post.id}">
+                        <textarea name="comment_content" placeholder="Write a comment..." required></textarea>
+                        <button type="submit" name="submit_comment" class="post-comment-btn">Post Comment</button>
+                    </form>
+                </div>
+            </div>
+        `;
+    }
+
+    function checkNewPosts() {
+        const lastPostId = getLastPostId();
+        fetch(`fetch_new_posts.php?last_post_id=${lastPostId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.posts && data.posts.length > 0) {
+                    const feed = document.querySelector('.feed');
+                    const feedHeader = feed.querySelector('.feed-header');
+                    
+                    data.posts.reverse().forEach(post => {
+                        const postElement = createPostElement(post);
+                        feed.insertBefore(
+                            document.createRange().createContextualFragment(postElement),
+                            feedHeader.nextSibling
+                        );
+                    });
+                }
+            })
+            .catch(error => console.error('Error fetching new posts:', error));
+    }
+
+    // Check for new posts every 30 seconds
+    setInterval(checkNewPosts, 30000);
     </script>
 </body>
-
 </html>
 
 <?php
