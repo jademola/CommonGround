@@ -1,4 +1,52 @@
 <?php
+// Handle AJAX requests first before any HTML output
+if (isset($_POST['action']) && $_POST['action'] === 'toggleLike') {
+    header('Content-Type: application/json');
+    
+    include "sessions.php";
+    require_once 'db_connect.php';
+    
+    if (!isset($_SESSION['username'])) {
+        echo json_encode(['success' => false, 'message' => 'Must be logged in to like posts']);
+        exit;
+    }
+
+    $post_id = $_POST['post_id'];
+    $username = $_SESSION['username'];
+    
+    // Check if already liked
+    $check_stmt = $conn->prepare("SELECT * FROM post_likes WHERE post_id = ? AND author = ?");
+    $check_stmt->bind_param("is", $post_id, $username);
+    $check_stmt->execute();
+    $result = $check_stmt->get_result();
+    $already_liked = $result->num_rows > 0;
+    $check_stmt->close();
+
+    try {
+        if ($already_liked) {
+            // Unlike
+            $stmt = $conn->prepare("DELETE FROM post_likes WHERE post_id = ? AND author = ?");
+            $stmt->bind_param("is", $post_id, $username);
+            $success = $stmt->execute();
+            $response = ['success' => true, 'liked' => false, 'heart' => '♡'];
+        } else {
+            // Like
+            $stmt = $conn->prepare("INSERT INTO post_likes (post_id, author, date) VALUES (?, ?, CURRENT_DATE())");
+            $stmt->bind_param("is", $post_id, $username);
+            $success = $stmt->execute();
+            $response = ['success' => true, 'liked' => true, 'heart' => '♥'];
+        }
+        $stmt->close();
+        
+        echo json_encode($response);
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'message' => 'Database error']);
+    }
+    $conn->close();
+    exit;
+}
+
+// Regular page load continues here
 include "sessions.php";
 include "notifications.php";
 // Include the database connection
@@ -125,7 +173,23 @@ $posts_result = $conn->query($posts_sql);
                             <?php echo htmlspecialchars($post["content"]); ?>
                         </div>
                         <div class="post-footer">
-                            <button class="like-btn" onclick="changeHeart(this)" data-post-id="<?php echo $post['id']; ?>">♡ Like</button>
+                            <?php
+                            // Check if user has already liked this post
+                            $liked = false;
+                            if (isset($_SESSION['username'])) {
+                                $like_check = $conn->prepare("SELECT * FROM post_likes WHERE post_id = ? AND author = ?");
+                                $like_check->bind_param("is", $post['id'], $_SESSION['username']);
+                                $like_check->execute();
+                                $liked = $like_check->get_result()->num_rows > 0;
+                                $like_check->close();
+                            }
+                            $heart = $liked ? '♥' : '♡';
+                            ?>
+                            <button class="like-btn" onclick="changeHeart(this)" 
+                                data-post-id="<?php echo $post['id']; ?>"
+                                data-liked="<?php echo $liked ? 'true' : 'false'; ?>">
+                                <span class="heart-icon"><?php echo $heart; ?></span> Like
+                            </button>
                         </div>
 
                         <!-- Comments Section -->
@@ -177,15 +241,47 @@ $posts_result = $conn->query($posts_sql);
             <?php include "profilesidebar.php"; ?>
         </aside>
     </div>
-
+    <?php
+    // Function to check if user has liked the post
+    function hasUserLikedPost($conn, $post_id, $username) {
+        $stmt = $conn->prepare("SELECT * FROM likes WHERE post_id = ? AND username = ?");
+        $stmt->bind_param("is", $post_id, $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0;
+    }
+    ?>
     <script>
-        function changeHeart(button) {
-            if (button.textContent.includes('♡')) {
-                button.textContent = '♥ Like';
-            } else {
-                button.textContent = '♡ Like';
-            }
+    function changeHeart(button) {
+        if (!<?php echo isset($_SESSION['username']) ? 'true' : 'false'; ?>) {
+            window.location.href = 'login.php';
+            return;
         }
+
+        const postId = button.getAttribute('data-post-id');
+        const formData = new FormData();
+        formData.append('action', 'toggleLike');
+        formData.append('post_id', postId);
+
+        fetch(window.location.href, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const heartIcon = button.querySelector('.heart-icon');
+                heartIcon.textContent = data.heart;
+                button.setAttribute('data-liked', data.liked ? 'true' : 'false');
+            } else {
+                throw new Error(data.message || 'Error processing like');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error processing like. Please try again.');
+        });
+    }
     </script>
 </body>
 
