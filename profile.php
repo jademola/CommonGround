@@ -1,17 +1,17 @@
 <?php
 include "sessions.php";
 
-// ini_set('display_errors', 1);
-// error_reporting(E_ALL);
-
-
-if (isset($_GET['id'])) {
-    $displayUser = $_GET['id'];
-} else if (isset($_SESSION['username'])) {
-    $displayUser = $_SESSION['username'];
-} else {
+// First check if user is logged in
+if (!isset($_SESSION['loggedIn']) || !$_SESSION['loggedIn']) {
     header("Location: login.php");
     exit();
+}
+
+// Then handle the profile display logic
+if (isset($_GET['id'])) {
+    $displayUser = $_GET['id'];
+} else {
+    $displayUser = $_SESSION['username'];
 }
 
 ?>
@@ -55,7 +55,7 @@ if (isset($_GET['id'])) {
             <div class="profile-header">
                 <div class="user-avatar">
                     <?php
-                    echo '<img src="getProfileImage.php?id=' . $displayUser . '" alt="Profile Image" id="profile-picture">';
+                    echo '<img src="getProfileImage.php?username=' . $displayUser . '" alt="Profile Image" id="profile-picture">';
                     ?>
                 </div>
                 <div class="profileBio-content">
@@ -115,10 +115,13 @@ if (isset($_GET['id'])) {
 
                     <!-- Edit Profile Button -->
                     <?php
-                    if ($_SESSION['loggedIn'] = true && $displayUser == $_SESSION['username']) {
-                        echo '<div id="test">
+                    if ($_SESSION['loggedIn'] && $displayUser == $_SESSION['username']) {
+                        echo '<div id="profile-buttons">
                         <a href="editprofile.php">
                             <button class="edit-profile-btn">Edit Profile</button>
+                        </a>
+                        <a href="userHistory.php">
+                            <button class="edit-profile-btn">Comment History</button>
                         </a>
                     </div>';
                     }

@@ -1,4 +1,51 @@
 <?php
+// Handle AJAX requests first before any HTML output
+if (isset($_POST['action']) && $_POST['action'] === 'addComment') {
+    header('Content-Type: application/json');
+    
+    include "sessions.php";
+    require_once 'db_connect.php';
+    
+    if (!isset($_SESSION['username'])) {
+        echo json_encode(['success' => false, 'message' => 'Must be logged in to comment']);
+        exit;
+    }
+
+    $post_id = $_POST['post_id'];
+    $comment_content = $_POST['comment_content'];
+    $username = $_SESSION['username'];
+    
+    if (empty($comment_content)) {
+        echo json_encode(['success' => false, 'message' => 'Comment cannot be empty']);
+        exit;
+    }
+
+    try {
+        $stmt = $conn->prepare("INSERT INTO comments (author, content, post_id, date) VALUES (?, ?, ?, CURRENT_DATE())");
+        $stmt->bind_param("ssi", $username, $comment_content, $post_id);
+        $success = $stmt->execute();
+        
+        if ($success) {
+            $response = [
+                'success' => true,
+                'comment' => [
+                    'author' => $username,
+                    'content' => $comment_content,
+                    'date' => date("m/d/y")
+                ]
+            ];
+        } else {
+            $response = ['success' => false, 'message' => 'Error adding comment'];
+        }
+        $stmt->close();
+        
+        echo json_encode($response);
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'message' => 'Database error']);
+    }
+    $conn->close();
+    exit;
+}
 
 include "sessions.php";
 // Include the database connection
@@ -12,8 +59,8 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 }
 
 // Get the post ID from the URL
-$post_id = $_GET['id'];
 
+$post_id = $_GET['id'];
 // Fetch the post data
 $post_sql = "SELECT p.*, u.username 
              FROM post p 
@@ -35,40 +82,7 @@ if ($post_result->num_rows == 0) {
 $post = $post_result->fetch_assoc();
 $post_stmt->close();
 
-// Initialize message variables
-$error_message = "";
-$success_message = "";
 
-// Process comment form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
-    // Get form data
-    $comment_content = $_POST["comment_content"];
-    if (!isset($_SESSION["username"]) || empty($_SESSION['username'])) {
-        $error_message = "Must be logged in to comment.";
-    } else if (empty($comment_content)) {
-        $error_message = "Comment content cannot be empty.";
-    } // Validate inputs
-    else {
-        $current_user = $_SESSION['username'];
-        // Prepare and execute SQL query to insert comment
-        $stmt = $conn->prepare("INSERT INTO comments (author, content, post_id, date) VALUES (?, ?, ?, CURRENT_DATE())");
-        $stmt->bind_param("ssi", $current_user, $comment_content, $post_id);
-
-        if ($stmt->execute()) {
-            // Comment added successfully
-            $success_message = "Comment added successfully!";
-
-            // Redirect to avoid form resubmission
-            header("Location: post.php?id=" . $post_id);
-            exit();
-        } else {
-            // Error occurred
-            $error_message = "Error adding comment: " . $conn->error;
-        }
-
-        $stmt->close();
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -90,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
             <div class="sidebar-section">
                 <?php include "popularsidebar.php" ?>
                 <div class="notification-box">
-                    7 new Notifications
+                    <a href="activity.php"><?php echo $_SESSION['notification_count']; ?> new Notifications</a>
                 </div>
             </div>
         </aside>
@@ -108,19 +122,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
 
             <div class="post">
                 <div class="post-header">
-                <?php
-                     echo '<img src="getProfileImage.php?id='  . $post['author'] . '"alt="Profile Image" id="user-profile-img">';
-                ?>               
-                 <div class="user-info">
+                    <?php
+                    echo '<img src="getProfileImage.php?username='  . $post['author'] . '"alt="Profile Image" id="user-profile-img">';
+                    ?>
+                    <div class="user-info">
                         <div><?php echo htmlspecialchars($post["author"]); ?></div>
-                        <div>
+                        <div class="post-tags">
                             <?php
                             // Fetch tags for this post
                             $tag_sql = "SELECT t.name, t.id FROM tags t 
                                 JOIN post_tags pt ON t.id = pt.tag_id 
                                 WHERE pt.post_id = ?";
                             $tag_stmt = $conn->prepare($tag_sql);
-                            $tag_stmt->bind_param("i", $post_id);
+                            $tag_stmt->bind_param("i", $post['id']);
                             $tag_stmt->execute();
                             $tag_result = $tag_stmt->get_result();
 
@@ -139,8 +153,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
                     <?php echo htmlspecialchars($post["content"]); ?>
                 </div>
                 <div class="post-footer">
-
-
                 </div>
 
                 <!-- Comments Section -->
@@ -154,7 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
                         WHERE c.post_id = ? 
                         ORDER BY c.date DESC";
                     $comment_stmt = $conn->prepare($comment_sql);
-                    $comment_stmt->bind_param("i", $post_id);
+                    $comment_stmt->bind_param("i", $post['id']);
                     $comment_stmt->execute();
                     $comment_result = $comment_stmt->get_result();
 
@@ -173,40 +185,78 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
                     }
                     $comment_stmt->close();
                     ?>
-
-                    <!-- Add Comment Form -->
-                    <form class="comment-form" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . "?id=" . $post_id; ?>">
-                        <textarea name="comment_content" placeholder="Write a comment..." required></textarea>
-                        <button type="submit" name="submit_comment" class="post-comment-btn">Post Comment</button>
-                    </form>
                 </div>
+
+                <!-- Add Comment Form -->
+                <form class="comment-form" id="commentForm">
+                    <textarea name="comment_content" id="commentContent" placeholder="Write a comment..." required></textarea>
+                    <button type="submit" class="post-comment-btn">Post Comment</button>
+                </form>
             </div>
         </main>
-       <aside class="profile-sidebar">
+        <aside class="profile-sidebar">
             <?php include "profilesidebar.php"; ?>
         </aside>
     </div>
 
     <script>
-        function changeHeart(button) {
-            const postId = button.getAttribute('data-post-id');
-
-            if (button.textContent.includes('♡')) {
-                button.textContent = '♥ Like';
-                // You can add AJAX call here to update likes in the database
-                // Example: fetch('like.php?post_id=' + postId + '&action=like')
-            } else {
-                button.textContent = '♡ Like';
-                // AJAX call to unlike
-                // Example: fetch('like.php?post_id=' + postId + '&action=unlike')
-            }
+    document.getElementById('commentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (!<?php echo isset($_SESSION['username']) ? 'true' : 'false'; ?>) {
+            window.location.href = 'login.php';
+            return;
         }
+
+        const formData = new FormData();
+        formData.append('action', 'addComment');
+        formData.append('post_id', '<?php echo $post['id']; ?>');
+        formData.append('comment_content', document.getElementById('commentContent').value);
+
+        fetch(window.location.href, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Create new comment element
+                const commentDiv = document.createElement('div');
+                commentDiv.className = 'comment';
+                commentDiv.innerHTML = `
+                    <div class="comment-user">${data.comment.author}:</div>
+                    <div class="comment-body">${data.comment.content}</div>
+                    <div class="comment-date">${data.comment.date}</div>
+                `;
+                
+                // Add new comment to top of comments section
+                const commentsSection = document.querySelector('.comments-section');
+                const firstComment = commentsSection.querySelector('.comment');
+                if (firstComment) {
+                    commentsSection.insertBefore(commentDiv, firstComment);
+                } else {
+                    commentsSection.appendChild(commentDiv);
+                }
+                
+                // Clear the form
+                document.getElementById('commentContent').value = '';
+                
+                // Remove "no comments" message if it exists
+                const noComments = document.querySelector('.no-comments');
+                if (noComments) {
+                    noComments.remove();
+                }
+            } else {
+                alert(data.message || 'Error adding comment');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error adding comment. Please try again.');
+        });
+    });
     </script>
 </body>
-
 </html>
 
-<?php
-// Close the database connection
-$conn->close();
-?>
+<?php $conn->close(); ?>

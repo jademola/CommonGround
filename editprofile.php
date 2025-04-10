@@ -7,8 +7,9 @@ include "queryFunctions.php";
 ini_set('display_errors', 1);
 error_reporting(E_ALL); 
 
+define('MAX_IMAGE_SIZE', 65536); // 64KB in bytes
 
-    // Handle form submission
+// Handle form submission
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['userEmail'];
@@ -57,32 +58,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     // Update Profile Image
     if (isset($_FILES['image']) && !empty($_FILES['image']['name'])) {
-      
-      $imagedata = file_get_contents($_FILES['image']['tmp_name']); 
+        if ($_FILES["image"]["size"] > MAX_IMAGE_SIZE) {
+            $errorMessage = "Image size too large. Maximum size allowed is 64KB. Please resize your image or choose a smaller one.";
+            // Skip rest of processing if image is too large
+        } else {
+            $imagedata = file_get_contents($_FILES['image']['tmp_name']); 
 
-      $fileType = $_FILES['image']['type'];
-      
-      /*
-      $sql = "UPDATE userImages 
-        SET contentType = ?, image = ? 
-        WHERE username = ?";
-        */
+            $fileType = $_FILES['image']['type'];
+            
+            $sql = "UPDATE userImages 
+              SET contentType = ?, image = ? 
+              WHERE username = ?";
 
-        $sql = "INSERT INTO userImages (contentType, image, username) 
-          VALUES (?, ?, ?)";
+            $stmt = mysqli_stmt_init($conn);
+            
+            mysqli_stmt_prepare($stmt, $sql);
 
-      $stmt = mysqli_stmt_init($conn);
-      
-      mysqli_stmt_prepare($stmt, $sql);
+            mysqli_stmt_bind_param($stmt, "sbs", $fileType, $data, $_SESSION['username']);
 
-      mysqli_stmt_bind_param($stmt, "sbs", $fileType, $data, $_SESSION['username']);
+            mysqli_stmt_send_long_data($stmt, 1, $imagedata);
 
-      mysqli_stmt_send_long_data($stmt, 1, $imagedata);
-
-      // This sends the binary data to the third variable location in the // prepared statement (starting from 0).
-      $result = mysqli_stmt_execute($stmt) or die(mysqli_stmt_error($stmt)); // run the statement
-      mysqli_stmt_close($stmt); // and dispose of the statement.
-      }
+            // This sends the binary data to the third variable location in the // prepared statement (starting from 0).
+            $result = mysqli_stmt_execute($stmt) or die(mysqli_stmt_error($stmt)); // run the statement
+            mysqli_stmt_close($stmt); // and dispose of the statement.
+        }
+    }
 
     // Update Password:
     if (isset($oldPass) && isset($newPass) && !empty($oldPass) && !empty($newPass)){

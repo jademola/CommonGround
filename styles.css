@@ -49,6 +49,10 @@ a {
     text-decoration: none;
 }
 
+textarea {
+    min-height: 55px;
+}
+
 /* Hide scrollbars but keep scrolling functionality */
 /* For Webkit browsers (Chrome, Safari) */
 .feed::-webkit-scrollbar {
@@ -383,6 +387,21 @@ a {
     cursor: pointer;
     font-size: 1.2rem;
     color: var(--color-secondary);
+}
+
+.delete-btn {
+    font-family: var(--font-family-main);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #f44336;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    margin-left: auto;
+    font-size: 0.9rem;
+}
+
+.delete-btn:hover {
+    text-decoration: underline;
 }
 
 .comments-section {

@@ -23,7 +23,7 @@ $username = $_SESSION['username'];
 
     // Check if any rows were returned
     while ($row = $result->fetch_assoc()) {
-        if ($row['adminType'] !== $admin) {
+        if ($row['userType'] !== $admin) {
             echo "Unauthorized user";
             header("Location: index.php");
             exit();
