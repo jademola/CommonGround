@@ -14,6 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $username = $_POST['loginUsername'];
   $password = $_POST['loginPassword'];
 
+  $hashedPass = md5($password);
+
 
   // Query username and password 
   $sql = "SELECT username, password, userType FROM userInfo WHERE username = ?";
@@ -26,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if ($stmt->fetch()) {
     $errorMessage = "Incorrect username, Please try again.";
     // Verifies password, or produces error
-    if ($password == $storedPassword) {
+    if ($hashedPass == $storedPassword) {
       $_SESSION['loggedIn'] = true;
       $_SESSION['username'] = $username;
       $_SESSION['userType'] = $storedUserType;

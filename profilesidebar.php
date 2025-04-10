@@ -20,7 +20,11 @@ $username = $_SESSION['username'];
 
 <body>
     <div class="profile-card">
-        <img src="getProfileImage.php" alt="Profile Image" id="sidebar-pfp">
+        <?php 
+        if ($_SESSION['LoggedIn'] == true){
+            echo '<img src="getProfileImage.php" alt="Profile Image" id="sidebar-pfp">';
+        }
+        ?>
         <div class="profile-username"><?php echo $_SESSION['username'] ?></div>
         <div class="profile-bio">
             <?php

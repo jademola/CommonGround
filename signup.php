@@ -22,6 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if ($_FILES["image"]["size"] > 0 && $_FILES["image"]["size"] > MAX_IMAGE_SIZE) {
     $errorMessage = "Image size too large. Maximum size allowed is 64KB. Please resize your image or choose a smaller one.";
   } else {
+    $hashedPass = md5($password);
+    
     $check_sql = "SELECT username FROM userInfo WHERE username = ? OR email = ?";
     $check_stmt = $conn->prepare($check_sql);
     $check_stmt->bind_param("ss", $username, $email);
@@ -34,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               VALUES (?, ?, ?)";
 
       $stmt = $conn->prepare($sql);
-      $stmt->bind_param("sss", $username, $email, $password);
+      $stmt->bind_param("sss", $username, $email, $hashedPass);
       
       try {
         $stmt->execute();
