@@ -44,13 +44,14 @@ if (isset($_POST['action']) && $_POST['action'] === 'getNotificationCount') {
 
 // Regular page load - initialize notifications
 if (isset($_SESSION['username'])) {
-    // Initial count set to 0 - will be updated by AJAX
     $_SESSION['notification_count'] = $_SESSION['notification_count'] ?? 0;
 } else {
     $_SESSION['notification_count'] = 0;
 }
-?>
 
+// Only output JavaScript if this is not an AJAX request
+if (!isset($_POST['action'])) {
+?>
 <script>
 function updateNotificationCount() {
     const formData = new FormData();
@@ -78,3 +79,6 @@ setInterval(updateNotificationCount, 30000);
 // Initial update
 document.addEventListener('DOMContentLoaded', updateNotificationCount);
 </script>
+<?php
+}
+?>
