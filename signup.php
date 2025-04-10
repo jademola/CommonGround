@@ -18,6 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $password = $_POST['signupPassword'];
   $email = $_POST['signupEmail'];
 
+  //Has Password 
+  $hashedPass = md5($password); 
+
   $check_sql = "SELECT username FROM userInfo WHERE username = ? OR email = ?";
   $check_stmt = $conn->prepare($check_sql);
   $check_stmt->bind_param("ss", $username, $email);
@@ -30,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES (?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $username, $email, $password);  // "sss" specifies the type (string)
+    $stmt->bind_param("sss", $username, $email, $hashedPass);  // "sss" specifies the type (string)
     $stmt->execute();
 
     $sqlP = "INSERT INTO profile (username) 

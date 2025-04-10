@@ -87,19 +87,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Update Password:
     if (isset($oldPass) && isset($newPass) && !empty($oldPass) && !empty($newPass)){
 
+      // Hash user password 
+      $hashedPass = md5($newPass);
+
       // Check current password is valid 
       $sql = "SELECT password FROM userInfo WHERE username = ?";
       $stmt = $conn->prepare($sql);
-      $stmt->bind_param("s", $username);
+      $stmt->bind_param("s", $_SESSION['username']);
       $stmt->execute();
+      $stmt->store_result();
       $stmt->bind_result($storedPassword);
 
       if ($stmt->fetch()) {
-        if ($newPass == $storedPassword){ 
-          $sql = "UPDATE userInfo SET password = ? WHERE username = ?";
-          $stmt = $conn->prepare($sqlB);
-          $stmt->bind_param("ss", $newPass, $_SESSION['username']);
-          $stmt->execute();
+        if ($oldPass == $storedPassword){ 
+          $sqlN = "UPDATE userInfo SET password = ? WHERE username = ?";
+          $stmtN = $conn->prepare($sqlN);
+          $stmtN->bind_param("ss", $hashedPass, $_SESSION['username']);
+          $stmtN->execute();
+          $stmtN->close();
         }
         else {
           $errorMessage = "Incorrect current password, please try again";
@@ -107,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       }
       else {
         $errorMessage = "Incorrect current password, please try again";
-      }
+      } 
       $stmt->close();
     }
     
